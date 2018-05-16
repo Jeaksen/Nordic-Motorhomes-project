@@ -1,10 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>New Motorhome</title>
 </head>
 <body>
-$END$
+<form action="/create" method="post">
+
+    <p>First Name:</p>
+    <input type="text" name="name" />
+    <p>Last Name:</p>
+    <input type="text" name="lastName" />
+    <p>Enrollment date:</p>
+    <input type="date" name="enrollmentDate" />
+    <p>CPR:</p>
+    <input type="text" name="cpr" />
+    <p>
+        <input type="submit" value="Create" class="btn btn-create"/>
+    </p>
+</form>
+
+
 </body>
 </html>

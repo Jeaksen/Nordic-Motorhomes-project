@@ -1,0 +1,39 @@
+body{
+    margin:0;
+    font-family: Montserrat, sans-serif;
+    background: url("https://ih0.redbubble.net/image.444173704.6876/flat,800x800,070,f.jpg") center center fixed no-repeat;
+    background-size: 600px 600px ;
+
+}
+
+div{
+    margin-left: 1%;
+    margin-top:1.5%;
+}
+
+.button{
+    background-color: darkred;
+    color: white;
+    font-size: 20px;
+    padding: 15px 30px;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.button:hover {
+    background-color: black;
+    color: white;
+}
+a{
+    text-decoration: none;
+}
+
+img{
+    margin-left: 43.5%;
+    margin-top: 22%;
+}
+p{  font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+}

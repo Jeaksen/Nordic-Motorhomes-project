@@ -1,10 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Nordic Fleet</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-$END$
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="reservations">Reservations</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <h1> List of motorhomes</h1>
+    <a class="button">Add new motorhome</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>License Plate</th>
+            <th>Status</th>
+            <th></th>
+
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>1</td>
+            <td>Mercedes</td>
+            <td>1234</td>
+            <td>DK 23456</td>
+            <td>Reserved</td>
+            <td> <a class="button button-details">Details</a><a class="button button-update">Update</a><a class="button button-delete">Delete</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
 </body>
 </html>
