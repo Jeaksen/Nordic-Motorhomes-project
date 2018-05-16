@@ -1,18 +1,29 @@
 package motorhomes.com.examproject.model;
 
-public class Motorhomes {
+public class Motorhome {
 
     private int motorhomeId;
     private String licensePlate;
     private String motorhomeStatus;
 
-    public Motorhomes(int motorhomeId, String licensePlate, String motorhomeStatus) {
+    private MotorhomeDescription motorhomeDescription;
+
+    public Motorhome(int motorhomeId, String licensePlate, String motorhomeStatus, MotorhomeDescription motorhomeDescription) {
         this.motorhomeId = motorhomeId;
         this.licensePlate = licensePlate;
         this.motorhomeStatus = motorhomeStatus;
+        this.motorhomeDescription = motorhomeDescription;
     }
 
-    public Motorhomes() {
+    public Motorhome() {
+    }
+
+    public MotorhomeDescription getMotorhomeDescription() {
+        return motorhomeDescription;
+    }
+
+    public void setMotorhomeDescription(MotorhomeDescription motorhomeDescription) {
+        this.motorhomeDescription = motorhomeDescription;
     }
 
     public int getMotorhomeId() {
@@ -42,7 +53,7 @@ public class Motorhomes {
 
     @Override
     public String toString() {
-        return "Motorhomes{" +
+        return "Motorhome{" +
                 "id=" + motorhomeId +
                 ", licensePlate='" + licensePlate + '\'' +
                 ", status='" + motorhomeStatus + '\'' +

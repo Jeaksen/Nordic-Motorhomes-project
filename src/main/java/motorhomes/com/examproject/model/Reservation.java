@@ -1,32 +1,34 @@
 package motorhomes.com.examproject.model;
 
 import java.util.Date;
+import java.util.Map;
 
-public class Reservations {
+public class Reservation {
 
     private int reservationId;
     private String customersName;
     private Date  startDate;
     private Date endDate;
-    private boolean pickUp;
-    private boolean dropOff;
-    private boolean accessories;
+    private boolean hasPickUp;
+    private boolean hasDropOff;
+    private boolean hasAccessories;
     private int price;
     private String reservationStatus;
+    private Map  <Accessory, Integer> accessories;
 
-    public Reservations() {
+    public Reservation() {
     }
 
-    public Reservations(int reservationId, String customersName, Date startDate,
-                        Date endDate, boolean pickUp, boolean dropOff,
-                        boolean accessories, int price, String reservationStatus) {
+    public Reservation(int reservationId, String customersName, Date startDate,
+                       Date endDate, boolean hasPickUp, boolean hasDropOff,
+                       boolean hasAccessories, int price, String reservationStatus) {
         this.reservationId = reservationId;
         this.customersName = customersName;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.pickUp = pickUp;
-        this.dropOff = dropOff;
-        this.accessories = accessories;
+        this.hasPickUp = hasPickUp;
+        this.hasDropOff = hasDropOff;
+        this.hasAccessories = hasAccessories;
         this.price = price;
         this.reservationStatus = reservationStatus;
     }
@@ -63,28 +65,28 @@ public class Reservations {
         this.endDate = endDate;
     }
 
-    public boolean isPickUp() {
-        return pickUp;
+    public boolean isHasPickUp() {
+        return hasPickUp;
     }
 
-    public void setPickUp(boolean pickUp) {
-        this.pickUp = pickUp;
+    public void setHasPickUp(boolean hasPickUp) {
+        this.hasPickUp = hasPickUp;
     }
 
-    public boolean isDropOff() {
-        return dropOff;
+    public boolean isHasDropOff() {
+        return hasDropOff;
     }
 
-    public void setDropOff(boolean dropOff) {
-        this.dropOff = dropOff;
+    public void setHasDropOff(boolean hasDropOff) {
+        this.hasDropOff = hasDropOff;
     }
 
-    public boolean isAccessories() {
-        return accessories;
+    public boolean isHasAccessories() {
+        return hasAccessories;
     }
 
-    public void setAccessories(boolean accessories) {
-        this.accessories = accessories;
+    public void setHasAccessories(boolean hasAccessories) {
+        this.hasAccessories = hasAccessories;
     }
 
     public int getPrice() {
@@ -105,14 +107,14 @@ public class Reservations {
 
     @Override
     public String toString() {
-        return "Reservations{" +
+        return "Reservation{" +
                 "reservationId=" + reservationId +
                 ", customersName='" + customersName + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", pickUp=" + pickUp +
-                ", dropOff=" + dropOff +
-                ", accessories=" + accessories +
+                ", hasPickUp=" + hasPickUp +
+                ", hasDropOff=" + hasDropOff +
+                ", hasAccessories=" + hasAccessories +
                 ", price=" + price +
                 ", status='" + reservationStatus + '\'' +
                 '}';
