@@ -47,4 +47,5 @@ public class User {
                 ", password='" + password + '\'' +
                 '}';
     }
+    //IM BAD AS WELL HAHAHA
 }
