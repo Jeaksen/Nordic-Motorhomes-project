@@ -1,0 +1,93 @@
+body{
+    margin:0;
+    font-family: Montserrat, sans-serif;
+}
+
+.container {
+    width: 1024px;
+    margin-left: 16%;
+}
+ul {
+    list-style-type: none;
+    margin:0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a {
+    font-size: 16px;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover {
+    background-color: #111;
+}
+.logo{
+    margin-left:100px;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+h1{
+    margin-bottom:30px;
+}
+table{
+    border-collapse: collapse;
+    width:100%;
+    margin-top:15px;
+}
+
+td,th{
+    font-size: 12px;
+    border: 1px solid #dddddd;
+    text-align:center;
+    padding: 9px 10px 9px 10px;
+}
+tr:nth-child(even){
+    background-color: #dddddd;
+}
+
+.button {
+    font-family: Montserrat, sans-serif;
+    background-color: lightgreen;
+    color: black;
+    font-size: 16px;
+    padding: 7px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.button:hover {
+    background-color: black;
+    color:white;
+}
+
+.button-details{
+    font-size:14px;
+    background-color: lightseagreen;
+    margin: 0 5px 0 0;
+}
+
+.button-update{
+    font-size:14px;
+    background-color: lightblue;
+    margin: 0 5px 0 0;
+}
+
+.button-delete{
+    font-size: 14px;
+    background-color: lightcoral;
+    margin: 0 5px 0 0;
+}

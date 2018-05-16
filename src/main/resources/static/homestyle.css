@@ -1,0 +1,53 @@
+/*Alexandra*/
+body{
+    margin:0;
+    background: url("http://www.freebiesgallery.com/wp-content/uploads/2014/02/dotted-world-map-vector-2.png") no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container{
+    position: absolute;
+    font-family: Montserrat, sans-serif;
+    text-align: center;
+    color:white;
+    margin-left: 31%;
+    margin-top: 10%;
+}
+
+#logo{
+    font-size: 60px;
+    padding-bottom: 20px;
+}
+.text{
+    font-size: 40px;
+    padding-bottom: 10px;
+}
+
+#italic{
+    font-style: italic;
+    font-size: 20px;
+    padding-bottom: 50px;
+}
+
+#second{
+    margin-left: 5%;
+}
+
+.button {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+
+}
+
+.button:hover {
+    background-color: #492270;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+}
