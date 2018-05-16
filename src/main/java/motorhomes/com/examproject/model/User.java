@@ -48,4 +48,5 @@ public class User {
                 '}';
     }
     //IM BAD AS WELL HAHAHA
+    //IM A BAD PERSON AND DESTROY TINGSSSSS
 }
