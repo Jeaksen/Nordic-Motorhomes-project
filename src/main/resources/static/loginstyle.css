@@ -1,20 +1,27 @@
+* {
+    color:white;
+    font-family: Montserrat, serif;
+}
+
+
 body{
     margin:0;
     background: url("http://www.freebiesgallery.com/wp-content/uploads/2014/02/dotted-world-map-vector-2.png") no-repeat center center fixed;
     background-size: cover;
-
 }
 
 .container{
-    color:white;
-    position: absolute;
-    font-family: Montserrat;
     text-align: center;
-    margin-left: 38%;
-    margin-top: 8%;
+    position: relative;
+    top: 20vh;
+    left: 35vw;
+    //margin-left: 38%;
+    //margin-top: 8%;
     font-size: 30px;
+    max-width: 30vw;
 }
 input[type=text],input[type=password]{
+    color: black;
     border: 2px solid #492270;
     border-radius: 4px;
     width:100%;
@@ -32,6 +39,12 @@ input[type=text],input[type=password]{
     cursor: pointer;
     border-radius: 5px;
     text-align: center;
+}
+
+#error_message{
+    position: relative;
+    top: 5%;
 
 }
+
 

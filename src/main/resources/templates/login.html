@@ -1,22 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <link rel="stylesheet" href="loginstyle.css"/>
     <title>Login</title>
 </head>
 <body>
 <div class="container">
+<div>
     <h1>Signup</h1>
-    <form>
 
+    <form action="/login" method="post">
         <p>Username:</p>
-        <input type="text" />
+        <input type="text" name="username" />
         <p>Password:</p>
-        <input type="password"/>
-        <p>
-            <input type="submit" value="Login" class="button"/>
-        </p>
+        <input type="password" name="password"/>
+        <p><input type="submit" value="Login" formaction="/login" class="button"/></p>
+        <p><input type="submit" value="Register" formaction="/register" class="button"/></p>
     </form>
+</div>
+    <p th:text="${error_message}" id="error_message"></p>
 </div>
 
 </body>
