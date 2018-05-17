@@ -17,7 +17,7 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    public AccessoriesDbRepository(){
+    public AccessoriesDbRepository() throws SQLException {
         this.connection = DbConnection.getConnection();
         this.accessories = new ArrayList<>();
     }
