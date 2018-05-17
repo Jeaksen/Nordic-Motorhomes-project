@@ -6,15 +6,19 @@
 </head>
 <body>
 <div class="container">
-    <h1>Signup</h1>
-    <form>
 
+    <h1>Signup</h1>
+
+    <form action="/login" method="post">
         <p>Username:</p>
-        <input type="text" />
+            <input type="text" name="username" />
         <p>Password:</p>
-        <input type="password"/>
+            <input type="password" name="password"/>
         <p>
-            <input type="submit" value="Login" class="button"/>
+            <input type="submit" value="Login" formaction="/login" class="button"/>
+        </p>
+        <p>
+            <input type="submit" value="Register" formaction="/register" class="button"/>
         </p>
     </form>
 </div>
