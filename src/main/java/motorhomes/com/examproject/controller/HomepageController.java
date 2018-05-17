@@ -84,7 +84,7 @@ public class HomepageController {
                 model.addAttribute("error_message", "An error occurred while getting the data, please retry");
                 break;
             case -1:
-                model.addAttribute("error_message", "Please enter a password, please retry");
+                model.addAttribute("error_message", "Please enter a password");
                 break;
             case -2:
                 model.addAttribute("error_message", "Please enter a valid username");
