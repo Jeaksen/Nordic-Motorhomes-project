@@ -21,8 +21,6 @@ public class UsersDBRepository {
     }
 
     public User read(String username) throws SQLException {
-        //return new User(1, "Popo", "*");
-
         for (int i = 0; i < 2; i++) {
             try {
                 statement = connection.prepareStatement("SELECT user_id, password FROM users WHERE username=?;");

@@ -10,19 +10,11 @@ public class DbConnection {
         private final static String CONNSTRING = "jdbc:mysql://den1.mysql4.gear.host/motorhomes4?useSSL=false";
         private static Connection connection;
 
-        public static Connection getConnection() {
-
-            try {
-                System.out.println("I'm here");
-                if (connection == null || !connection.isValid(1)){
-                    connection = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
-                }
-                return connection;
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+        public static Connection getConnection() throws SQLException {
+            System.out.println("I'm here");
+            if (connection == null || !connection.isValid(1)){
+                connection = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
             }
-
-            return null;
+            return connection;
         }
 }
