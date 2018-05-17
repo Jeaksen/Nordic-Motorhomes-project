@@ -4,12 +4,12 @@ import motorhomes.com.examproject.model.Accessory;
 
 import java.util.ArrayList;
 
-public class AccessoryArrayListRepository implements ICrudRepository<Accessory>{
+public class AccessoriesArrayListRepository implements ICrudRepository<Accessory>{
 
     private ArrayList<Accessory> accessories = new ArrayList<>();
 
 
-    public AccessoryArrayListRepository(){
+    public AccessoriesArrayListRepository(){
 
         //add more accessories here?
         accessories.add(new Accessory(1, "child seat", 100 ));

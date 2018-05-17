@@ -1,7 +1,7 @@
 package motorhomes.com.examproject.aplicationLogic;
 
 import motorhomes.com.examproject.model.User;
-import motorhomes.com.examproject.repositories.UserDBRepository;
+import motorhomes.com.examproject.repositories.UsersDBRepository;
 
 import java.sql.SQLException;
 
@@ -12,9 +12,9 @@ import java.sql.SQLException;
  * - register
  */
 public class HomepageManager {
-    private UserDBRepository usersRepository;
+    private UsersDBRepository usersRepository;
 
-    public HomepageManager(UserDBRepository usersRepository) {
+    public HomepageManager(UsersDBRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 
@@ -55,7 +55,7 @@ public class HomepageManager {
      * 1 if saving was successful,
      * 0 if an exception was thrown,
      * -1 if entered password is empty,
-     * -2 if username is empty
+     * -2 if username is empty or already taken
      *
      */
     public byte register(User user){
@@ -63,6 +63,9 @@ public class HomepageManager {
         if (user.getUsername().isEmpty()) return -2;
 
         try {
+            if (usersRepository.read(user.getUsername()) != null){
+                return -2;
+            }
             usersRepository.create(user);
             return 1;
         } catch (SQLException e) {

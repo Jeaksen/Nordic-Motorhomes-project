@@ -2,12 +2,13 @@ package motorhomes.com.examproject.controller;
 
 import motorhomes.com.examproject.aplicationLogic.HomepageManager;
 import motorhomes.com.examproject.model.User;
-import motorhomes.com.examproject.repositories.UserDBRepository;
+import motorhomes.com.examproject.repositories.UsersDBRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 /**
  * This class is responsible for responding to request send to the server
@@ -16,15 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class HomepageController {
 
-    private UserDBRepository userRepository;
+    private UsersDBRepository userRepository;
     private HomepageManager homepageManager;
 
-//    public HomepageController(UserDBRepository userRepository) {
+//    public HomepageController(UsersDBRepository userRepository) {
 //        this.userRepository = userRepository;
 //    }
 
-    public HomepageController() {
-        this.userRepository = new UserDBRepository();
+    public HomepageController() throws SQLException {
+        this.userRepository = new UsersDBRepository();
         this.homepageManager = new HomepageManager(this.userRepository);
     }
 
@@ -86,7 +87,7 @@ public class HomepageController {
                 model.addAttribute("error_message", "Please enter a password, please retry");
                 break;
             case -2:
-                model.addAttribute("error_message", "Please enter a username");
+                model.addAttribute("error_message", "Please enter a valid username");
                 break;
             default:
                 model.addAttribute("error_message", "An unknown error has occurred, please retry");

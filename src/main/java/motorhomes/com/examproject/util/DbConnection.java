@@ -13,7 +13,8 @@ public class DbConnection {
         public static Connection getConnection() {
 
             try {
-                if (connection == null){
+                System.out.println("I'm here");
+                if (connection == null || !connection.isValid(1)){
                     connection = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
                 }
                 return connection;
@@ -24,6 +25,4 @@ public class DbConnection {
 
             return null;
         }
-
-
 }

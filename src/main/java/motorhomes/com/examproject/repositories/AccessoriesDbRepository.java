@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class AccessoryDbRepository implements ICrudRepository<Accessory>{
+public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
     ArrayList<Accessory> accessories;
 
@@ -17,7 +17,7 @@ public class AccessoryDbRepository implements ICrudRepository<Accessory>{
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
-    public AccessoryDbRepository(){
+    public AccessoriesDbRepository(){
         this.connection = DbConnection.getConnection();
         this.accessories = new ArrayList<>();
     }
@@ -27,7 +27,7 @@ public class AccessoryDbRepository implements ICrudRepository<Accessory>{
         accessories = new ArrayList<>();
 
         try {
-            preparedStatement = connection.prepareStatement("SELECT  * FROM accessory");
+            preparedStatement = connection.prepareStatement("SELECT  * FROM accessories");
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException e){
             e.printStackTrace();
@@ -41,7 +41,7 @@ public class AccessoryDbRepository implements ICrudRepository<Accessory>{
 
         try {
             System.out.println(accessory);
-            preparedStatement = connection.prepareStatement("INSERT  INTO accessory(name, price) VALUES (?,?)");
+            preparedStatement = connection.prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
             preparedStatement.setString(1, accessory.getAccessoryName());
             preparedStatement.setInt(2, accessory.getAccessoryPrice());
 
@@ -56,7 +56,7 @@ public class AccessoryDbRepository implements ICrudRepository<Accessory>{
     @Override
     public Accessory read(int accessoryId) {
         try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM accessory WHERE accessory_id = accessoryId");
+            preparedStatement = connection.prepareStatement("SELECT * FROM accessories WHERE accessory_id = accessoryId");
             resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()){
@@ -71,7 +71,7 @@ public class AccessoryDbRepository implements ICrudRepository<Accessory>{
     @Override
     public void update(Accessory accessory) {
         try {
-            preparedStatement = connection.prepareStatement("UPDATE accessory SET name=?, price=? WHERE accessory_id=?");
+            preparedStatement = connection.prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
             preparedStatement.setString(1, accessory.getAccessoryName());
             preparedStatement.setInt(2, accessory.getAccessoryPrice());
             preparedStatement.setInt(3, accessory.getAccessoryId());
@@ -86,7 +86,7 @@ public class AccessoryDbRepository implements ICrudRepository<Accessory>{
     @Override
     public void delete(int accessoryId) {
         try {
-            preparedStatement = connection.prepareStatement("DELETE FROM accessory WHERE accessory_id=? ");
+            preparedStatement = connection.prepareStatement("DELETE FROM accessories WHERE accessory_id=? ");
             preparedStatement.setInt(1, accessoryId);
 
             preparedStatement.execute();
