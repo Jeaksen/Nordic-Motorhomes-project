@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * todo comments
+ */
 public class CustomersDbRepository implements ICrudRepository<Customer> {
 
     private Connection conn;

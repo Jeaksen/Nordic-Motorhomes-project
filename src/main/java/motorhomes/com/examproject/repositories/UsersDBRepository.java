@@ -8,6 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * @ Pawel Pohl
+ * todo comments
+ */
 public class UsersDBRepository {
 
     private Connection connection;
