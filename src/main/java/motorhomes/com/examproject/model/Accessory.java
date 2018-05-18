@@ -4,7 +4,6 @@ public class Accessory {
 
     private int accessoryId;
     private String accessoryName;
-
     private int accessoryPrice;
 
 

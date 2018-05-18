@@ -42,6 +42,7 @@ public class HomepageManager {
             return -2;
         }
         if(checkedUser.getPassword().equals(savedUser.getPassword())){
+            checkedUser.setUserId(savedUser.getUserId());
             return 1;
         }
         return -1;

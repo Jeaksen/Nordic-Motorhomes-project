@@ -21,19 +21,22 @@ public class UsersDBRepository {
     }
 
     public User read(String username) throws SQLException {
+        User savedUser = null;
         for (int i = 0; i < 2; i++) {
             try {
                 statement = connection.prepareStatement("SELECT user_id, password FROM users WHERE username=?;");
                 statement.setString(1, username);
                 result = statement.executeQuery();
                 result.first();
-                return new User(result.getInt("user_id"), username, result.getString("password"));
-
+                savedUser = new User(result.getInt("user_id"), username, result.getString("password"));
+                break;
             } catch (SQLException e) {
                 this.tryReconnect();
             }
         }
-        return null;
+        statement = null;
+        result = null;
+        return savedUser;
     }
 
     public void create(User user) throws SQLException{
@@ -48,6 +51,8 @@ public class UsersDBRepository {
                 this.tryReconnect();
             }
         }
+        statement = null;
+        result = null;
     }
 
     private void tryReconnect() throws SQLException {
