@@ -1,4 +1,4 @@
-package motorhomes.com.examproject.aplicationLogic;
+package motorhomes.com.examproject.applicationLogic;
 
 import motorhomes.com.examproject.model.User;
 import motorhomes.com.examproject.repositories.UsersDBRepository;

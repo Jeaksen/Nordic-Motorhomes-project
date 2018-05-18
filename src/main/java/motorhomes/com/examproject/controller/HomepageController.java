@@ -1,6 +1,6 @@
 package motorhomes.com.examproject.controller;
 
-import motorhomes.com.examproject.aplicationLogic.HomepageManager;
+import motorhomes.com.examproject.applicationLogic.HomepageManager;
 import motorhomes.com.examproject.model.User;
 import motorhomes.com.examproject.repositories.UsersDBRepository;
 import org.springframework.stereotype.Controller;

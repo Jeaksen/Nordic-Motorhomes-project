@@ -11,16 +11,12 @@ import java.util.ArrayList;
 
 public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
-    //Nie chcemy sie bawic w cachowanie danych, za duzo roboty
-    //private ArrayList<Accessory> accessories;
-
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
 
     public AccessoriesDbRepository() throws SQLException {
         this.connection = DbConnection.getConnection();
-        //this.accessories = new ArrayList<>();
     }
 
     @Override
@@ -29,8 +25,6 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
         preparedStatement = connection.prepareStatement("SELECT  * FROM accessories");
         resultSet = preparedStatement.executeQuery();
-        //Trzeba te wyniki jeszcze zapisac :)
-        //Ta pentla dziala tak dlugo jak sa kolejne wiersze
         while (resultSet.next()){
             accessories.add(new Accessory(resultSet.getInt("accessory_id"), resultSet.getString("name"), resultSet.getInt("price")));
         }
@@ -47,17 +41,14 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
         preparedStatement = connection.prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
         preparedStatement.setString(1, accessory.getAccessoryName());
         preparedStatement.setInt(2, accessory.getAccessoryPrice());
-        //troche optymalizacji :)
+        boolean creationSuccessful = preparedStatement.execute();
         preparedStatement = null;
-        resultSet = null;
-        return preparedStatement.execute();
+        return creationSuccessful;
     }
 
     @Override
     public Accessory read(int accessoryId) throws SQLException {
 
-        //preparedStatement = connection.prepareStatement("SELECT * FROM accessories WHERE accessory_id = accessoryId");
-        // Nie mozesz po prostu wstawic nazwy zmiennej do SQL
         preparedStatement = connection.prepareStatement("SELECT * FROM accessories WHERE accessory_id = ?");
         preparedStatement.setInt(1, accessoryId);
         resultSet = preparedStatement.executeQuery();

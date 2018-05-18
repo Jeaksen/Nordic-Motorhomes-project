@@ -4,7 +4,7 @@ public class Customer {
 
     private int customerId;
     private String customerName;
-    private String drivingLicenseNr;
+    private String drivingLicenceNr;
 
     public Customer() {
     }
@@ -12,7 +12,7 @@ public class Customer {
     public Customer(int customerId, String customerName, String drivingLicenseNr) {
         this.customerId = customerId;
         this.customerName = customerName;
-        this.drivingLicenseNr = drivingLicenseNr;
+        this.drivingLicenceNr = drivingLicenseNr;
     }
 
     public int getCustomerId() {
@@ -32,11 +32,11 @@ public class Customer {
     }
 
     public String getDrivingLicenseNr() {
-        return drivingLicenseNr;
+        return drivingLicenceNr;
     }
 
     public void setDrivingLicenseNr(String drivingLicenseNr) {
-        this.drivingLicenseNr = drivingLicenseNr;
+        this.drivingLicenceNr = drivingLicenseNr;
     }
 
     @Override
@@ -44,7 +44,7 @@ public class Customer {
         return "Customer{" +
                 "customerId=" + customerId +
                 ", customerName='" + customerName + '\'' +
-                ", drivingLicenseNr='" + drivingLicenseNr + '\'' +
+                ", drivingLicenseNr='" + drivingLicenceNr + '\'' +
                 '}';
     }
 }

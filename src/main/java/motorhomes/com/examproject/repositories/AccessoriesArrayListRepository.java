@@ -11,7 +11,7 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
 
     public AccessoriesArrayListRepository(){
 
-        //add more accessories here?
+        //add more accessories?
         accessories.add(new Accessory(1, "child seat", 100 ));
         accessories.add(new Accessory(2, "bike rack", 100));
         accessories.add(new Accessory(3, "bed linen", 50));
@@ -20,13 +20,13 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
     }
 
     @Override
-    public ArrayList<Accessory> readAll() {
+    public ArrayList<Accessory> readAll() throws Exception {
         //code reading from an ArrayList
         return accessories;
     }
 
     @Override
-    public boolean create(Accessory accessory) {
+    public boolean create(Accessory accessory) throws Exception {
         //code adding from an ArrayList
         accessories.add(accessory);
         accessory.setAccessoryId(accessories.size());
@@ -35,12 +35,12 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
     }
 
     @Override
-    public Accessory read(int id) {
+    public Accessory read(int id) throws Exception {
         return accessories.get(id - 1);
     }
 
     @Override
-    public void update(Accessory accessory) {
+    public void update(Accessory accessory) throws Exception{
         for (Accessory ac : accessories) {
 
             if (ac.getAccessoryId() == accessory.getAccessoryId()){
@@ -51,14 +51,13 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
     }
 
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws Exception{
 
         for (Accessory a: accessories) {
             if (a.getAccessoryId() == id){
                 accessories.remove(id - 1);
             }
         }
-
     }
 
 
