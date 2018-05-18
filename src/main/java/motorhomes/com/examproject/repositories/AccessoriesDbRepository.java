@@ -51,7 +51,6 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
         preparedStatement = null;
         resultSet = null;
         return preparedStatement.execute();
-
     }
 
     @Override
