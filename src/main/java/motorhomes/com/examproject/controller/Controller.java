@@ -21,10 +21,10 @@ public class Controller {
 //        return"login";
 //    }
 
-    @GetMapping("/fleet")
-    public String fleet(){
-        return"fleet";
-    }
+//    @GetMapping("/fleet")
+//    public String fleet(){
+//        return"fleet";
+//    }
 
     @GetMapping("/reservations")
     public String reservations(){
