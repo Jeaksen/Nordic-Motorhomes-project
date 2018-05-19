@@ -12,7 +12,10 @@
     </bean>
 
     <bean class="motorhomes.com.examproject.controller.HomepageController" id="homepageController">
-        <constructor-arg ref="homepage_manager"/>
+    </bean>
+
+    <bean class="motorhomes.com.examproject.repositories.CustomersDbRepository" id="customers_repository">
+
     </bean>
 
 

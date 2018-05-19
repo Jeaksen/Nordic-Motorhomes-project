@@ -2,52 +2,52 @@ package motorhomes.com.examproject.model;
 
 public class Accessory {
 
-    private int accessoryId;
-    private String accessoryName;
-    private int accessoryPrice;
+    private int id;
+    private String name;
+    private int price;
 
 
     public Accessory(){
 
     }
 
-    public Accessory(int accessoryId, String accessoryName, int accessoryPrice){
-        this.accessoryId = accessoryId;
-        this.accessoryName = accessoryName;
-        this.accessoryPrice = accessoryPrice;
+    public Accessory(int id, String name, int price){
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 
-    public int getAccessoryId() {
-        return accessoryId;
+    public int getId() {
+        return id;
     }
 
-    public void setAccessoryId(int accessoryId) {
-        this.accessoryId = accessoryId;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getAccessoryName() {
-        return accessoryName;
+    public String getName() {
+        return name;
     }
 
-    public void setAccessoryName(String accessoryName) {
-        this.accessoryName = accessoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public int getAccessoryPrice() {
-        return accessoryPrice;
+    public int getPrice() {
+        return price;
     }
 
-    public void setAccessoryPrice(int accessoryPrice) {
-        this.accessoryPrice = accessoryPrice;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
 
     @Override
     public String toString() {
         return "Accessory{" +
-                "accessoryId=" + accessoryId +
-                ", accessoryName='" + accessoryName + '\'' +
-                ", accessoryPrice=" + accessoryPrice +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
                 '}';
     }
 

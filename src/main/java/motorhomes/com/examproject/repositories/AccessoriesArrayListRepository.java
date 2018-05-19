@@ -32,7 +32,7 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
     public boolean create(Accessory accessory) throws Exception {
         //code adding from an ArrayList
         accessories.add(accessory);
-        accessory.setAccessoryId(accessories.size());
+        accessory.setId(accessories.size());
 
         return true;
     }
@@ -46,7 +46,7 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
     public void update(Accessory accessory) throws Exception{
         for (Accessory ac : accessories) {
 
-            if (ac.getAccessoryId() == accessory.getAccessoryId()){
+            if (ac.getId() == accessory.getId()){
                 accessories.remove(ac);
                 accessories.add(accessory);
             }
@@ -57,7 +57,7 @@ public class AccessoriesArrayListRepository implements ICrudRepository<Accessory
     public void delete(int id) throws Exception{
 
         for (Accessory a: accessories) {
-            if (a.getAccessoryId() == id){
+            if (a.getId() == id){
                 accessories.remove(id - 1);
             }
         }

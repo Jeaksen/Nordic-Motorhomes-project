@@ -43,8 +43,8 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
         System.out.println(accessory);
         preparedStatement = connection.prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
-        preparedStatement.setString(1, accessory.getAccessoryName());
-        preparedStatement.setInt(2, accessory.getAccessoryPrice());
+        preparedStatement.setString(1, accessory.getName());
+        preparedStatement.setInt(2, accessory.getPrice());
         boolean creationSuccessful = preparedStatement.execute();
         preparedStatement = null;
         return creationSuccessful;
@@ -70,9 +70,9 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
     public void update(Accessory accessory) throws SQLException {
 
         preparedStatement = connection.prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
-        preparedStatement.setString(1, accessory.getAccessoryName());
-        preparedStatement.setInt(2, accessory.getAccessoryPrice());
-        preparedStatement.setInt(3, accessory.getAccessoryId());
+        preparedStatement.setString(1, accessory.getName());
+        preparedStatement.setInt(2, accessory.getPrice());
+        preparedStatement.setInt(3, accessory.getId());
         preparedStatement.execute();
         preparedStatement = null;
     }

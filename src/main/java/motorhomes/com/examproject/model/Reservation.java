@@ -1,36 +1,34 @@
 package motorhomes.com.examproject.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class Reservation {
 
     private int reservationId;
     private String customersName;
-    private Date  startDate;
-    private Date endDate;
+    private LocalDate  startDate;
+    private LocalDate endDate;
     private boolean hasPickUp;
     private boolean hasDropOff;
     private boolean hasAccessories;
     private int price;
     private String reservationStatus;
-    private Map  <Accessory, Integer> accessories;
+    private int motorhomeId;
+
+    // Accessory ID and quantity
+    private Map  <Integer, Integer> accessories;
 
     public Reservation() {
     }
 
-    public Reservation(int reservationId, String customersName, Date startDate,
-                       Date endDate, boolean hasPickUp, boolean hasDropOff,
-                       boolean hasAccessories, int price, String reservationStatus) {
-        this.reservationId = reservationId;
-        this.customersName = customersName;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.hasPickUp = hasPickUp;
-        this.hasDropOff = hasDropOff;
-        this.hasAccessories = hasAccessories;
-        this.price = price;
-        this.reservationStatus = reservationStatus;
+
+    public int getMotorhomeId() {
+        return motorhomeId;
+    }
+
+    public void setMotorhomeId(int motorhomeId) {
+        this.motorhomeId = motorhomeId;
     }
 
     public int getReservationId() {
@@ -49,19 +47,19 @@ public class Reservation {
         this.customersName = customersName;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -116,9 +114,9 @@ public class Reservation {
                 ", hasDropOff=" + hasDropOff +
                 ", hasAccessories=" + hasAccessories +
                 ", price=" + price +
-                ", status='" + reservationStatus + '\'' +
+                ", reservationStatus='" + reservationStatus + '\'' +
+                ", motorhomeId=" + motorhomeId +
+                ", accessories=" + accessories +
                 '}';
     }
-
-
 }
