@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 /**
  * @ Alicja Drankowska
- * todo check if parameter (int) 'reservationId' is needed somewhere else than create method
+ * todo comments
  */
 public class DropOffDbRepository {
 
@@ -22,7 +22,7 @@ public class DropOffDbRepository {
         this.connection = DbConnection.getConnection();
     }
 
-    //Prawdopodobnie nie potrzebujemy tego, wiec w pickups nie musisz tego implementowac
+    //Probably won't be used
     public ArrayList<DropOff> readAll() throws SQLException {
         ArrayList<DropOff> dropOffs = new ArrayList<>();
 
@@ -37,7 +37,6 @@ public class DropOffDbRepository {
         return dropOffs;
     }
 
-    //todo check if this method is written correctly
     public boolean create(DropOff dropOff, int reservationId) throws SQLException {
 
         statement = connection.prepareStatement("INSERT INTO dropoffs(dropoff_location, dropoff_distance, reservation_id) VALUES (?, ?, ?)");
@@ -49,11 +48,10 @@ public class DropOffDbRepository {
         return creationSuccessful;
     }
 
-    //todo reservationID zamiast dropOffId, bo dropOff jest przypisany do rezerwacji, wiec bedziemy go szukac po jej ID
-    public DropOff read(int dropoffId) throws SQLException {
+    public DropOff read(int reservationId) throws SQLException {
 
         statement = connection.prepareStatement("SELECT * FROM dropoffs WHERE dropoff_id=?");
-        statement.setInt(1, dropoffId);
+        statement.setInt(1, reservationId);
         result = statement.executeQuery();
         DropOff dropOff = null;
 
