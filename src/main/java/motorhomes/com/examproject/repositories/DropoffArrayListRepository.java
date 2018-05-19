@@ -4,6 +4,9 @@ import motorhomes.com.examproject.model.DropOff;
 
 import java.util.ArrayList;
 
+/**
+ * @ Alicja Drankowska
+ */
 public class DropoffArrayListRepository implements ICrudRepository<DropOff> {
 
     private ArrayList<DropOff> dropOffs = new ArrayList<>();

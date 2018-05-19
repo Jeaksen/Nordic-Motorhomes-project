@@ -9,6 +9,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/**
+ * @ Alicja Drankowska
+ */
 public class MotorhomeDescriptionDbRepository implements ICrudRepository<MotorhomeDescription> {
 
     private Connection connect;

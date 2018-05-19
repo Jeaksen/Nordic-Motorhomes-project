@@ -8,8 +8,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-//todo check if parameter (int) 'reservationId' is needed somewhere else than create method.
+/**
+ * @ Alicja Drankowska
+ * todo check if parameter (int) 'reservationId' is needed somewhere else than create method
+ */
 public class DropOffDbRepository {
 
     private Connection connection;

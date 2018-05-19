@@ -2,6 +2,10 @@ package motorhomes.com.examproject.repositories;
 
 import java.util.ArrayList;
 
+/**
+ * @ Alicja Drankowska
+ * todo comments?
+ */
 public interface ICrudRepository<T> {
 
     ArrayList<T> readAll() throws Exception;

@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
+ * @ Alicja Drankowska
  * todo comments
  */
 public class AccessoriesDbRepository implements ICrudRepository<Accessory>{

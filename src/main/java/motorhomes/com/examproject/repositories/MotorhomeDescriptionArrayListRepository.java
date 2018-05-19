@@ -4,6 +4,9 @@ import motorhomes.com.examproject.model.MotorhomeDescription;
 
 import java.util.ArrayList;
 
+/**
+ * @ Alicja Drankowska
+ */
 public class MotorhomeDescriptionArrayListRepository implements ICrudRepository<MotorhomeDescription> {
 
     private ArrayList<MotorhomeDescription> motorhomeDescriptions = new ArrayList<>();

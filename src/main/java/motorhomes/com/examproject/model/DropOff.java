@@ -1,5 +1,8 @@
 package motorhomes.com.examproject.model;
 
+/**
+ * @ Alicja Drankowska
+ */
 public class DropOff {
 
     private int dropOffId;

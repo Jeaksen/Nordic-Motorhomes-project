@@ -1,7 +1,7 @@
 package motorhomes.com.examproject.model;
 
 /**
- * todo implement
+ * @ Alicja Drankowska
  */
 public class MotorhomeDescription {
 

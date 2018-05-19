@@ -4,6 +4,9 @@ import motorhomes.com.examproject.model.Accessory;
 
 import java.util.ArrayList;
 
+/**
+ * @ Alicja Drankowska
+ */
 public class AccessoriesArrayListRepository implements ICrudRepository<Accessory>{
 
     private ArrayList<Accessory> accessories = new ArrayList<>();

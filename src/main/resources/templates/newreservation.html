@@ -4,6 +4,30 @@
     <title>New Reservation</title>
 </head>
 <body>
+<form action="/create" method="post">
+
+    <p>Customer's name:</p>
+    <input type="text" name="customersName" />
+    <p>Start date:</p>
+    <input type="date" name="startDate" />
+    <p>End date:</p>
+    <input type="date" name="endDate" />
+    <p>Pick-up:</p>
+    <input type="text" name="pickUp" />
+    <p>Drop-off:</p>
+    <input type="text" name="dropOff" />
+    <p>Accessories:</p>
+    <input type="text" name="accessories" />
+    <p>Price:</p>
+    <input type="text" name="price" />
+    <p>Motorhome ID:</p>
+    <input type="text" name="motorhomeId" />
+    <p>Status:</p>
+    <input type="text" name="status" />
+    <p>
+        <input type="submit" value="Create" class="btn btn-create"/>
+    </p>
+</form>
 
 </body>
 </html>

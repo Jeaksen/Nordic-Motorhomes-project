@@ -36,5 +36,9 @@ public class Controller {
         return"repairs";
     }
 
+    @GetMapping("/customers")
+    public String customers(){
+        return "customers";
+    }
 
 }

@@ -4,6 +4,10 @@ import motorhomes.com.examproject.model.Customer;
 
 import java.util.ArrayList;
 
+/**
+ * @ Alicja Drankowska
+ * todo more comments?
+ */
 public class CustomersArrayListRepository implements ICrudRepository<Customer> {
 
     private ArrayList<Customer> customers = new ArrayList<>();
