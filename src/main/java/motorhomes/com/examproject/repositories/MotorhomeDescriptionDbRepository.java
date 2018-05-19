@@ -14,26 +14,29 @@ import java.util.ArrayList;
  */
 public class MotorhomeDescriptionDbRepository implements ICrudRepository<MotorhomeDescription> {
 
-    private Connection connect;
-    private PreparedStatement prepareSt;
-    private ResultSet resultS;
+    private Connection connection;
+    private PreparedStatement statement;
+    private ResultSet resultSet;
 
     public MotorhomeDescriptionDbRepository() throws SQLException{
-        this.connect = DbConnection.getConnection();
+        this.connection = DbConnection.getConnection();
     }
 
+    //Probably won't be used
     @Override
     public ArrayList<MotorhomeDescription> readAll() throws SQLException {
         ArrayList<MotorhomeDescription> motorhomeDescriptions = new ArrayList<>();
 
-        prepareSt = connect.prepareStatement("SELECT * FROM descriptions");
-        resultS = prepareSt.executeQuery();
-        while (resultS.next()){
-            motorhomeDescriptions.add(new MotorhomeDescription(resultS.getInt("description_id"), resultS.getString("brand"), resultS.getString("model"), resultS.getInt("base_price")));
+        statement = connection.prepareStatement("SELECT * FROM descriptions");
+        resultSet = statement.executeQuery();
+        while (resultSet.next()){
+            motorhomeDescriptions.add(new MotorhomeDescription(resultSet.getInt("description_id"),
+                    resultSet.getString("brand"), resultSet.getString("model"),
+                    resultSet.getInt("base_price")));
         }
 
-        prepareSt = null;
-        resultS = null;
+        statement = null;
+        resultSet = null;
         return motorhomeDescriptions;
     }
 
@@ -41,49 +44,51 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
     public boolean create(MotorhomeDescription motorhomeDescription) throws SQLException {
 
         System.out.println(motorhomeDescription);
-        prepareSt = connect.prepareStatement("INSERT INTO descriptions(brand, model, base_price) VALUES (?,?,?)");
-        prepareSt.setString(1, motorhomeDescription.getMotorhomeBrand());
-        prepareSt.setString(2, motorhomeDescription.getMotorhomeModel());
-        prepareSt.setInt(3, motorhomeDescription.getMotorhomeBasePrice());
-        boolean creationSuccessful = prepareSt.execute();
-        prepareSt = null;
+        statement = connection.prepareStatement("INSERT INTO descriptions(brand, model, base_price) VALUES (?,?,?)");
+        statement.setString(1, motorhomeDescription.getMotorhomeBrand());
+        statement.setString(2, motorhomeDescription.getMotorhomeModel());
+        statement.setInt(3, motorhomeDescription.getMotorhomeBasePrice());
+        boolean creationSuccessful = statement.execute();
+        statement = null;
         return creationSuccessful;
     }
 
     @Override
     public MotorhomeDescription read(int motorhomeDescriptionId) throws SQLException {
 
-        prepareSt = connect.prepareStatement("SELECT * FROM descriptions WHERE description_id = ?");
-        prepareSt.setInt(1, motorhomeDescriptionId);
-        resultS = prepareSt.executeQuery();
+        statement = connection.prepareStatement("SELECT * FROM descriptions WHERE description_id = ?");
+        statement.setInt(1, motorhomeDescriptionId);
+        resultSet = statement.executeQuery();
         MotorhomeDescription motorhomeDescription = null;
 
-        if (resultS.next()){
-            motorhomeDescription = new MotorhomeDescription(resultS.getInt("description_id"), resultS.getString("brand"), resultS.getString("model"), resultS.getInt("base_price"));
+        if (resultSet.next()){
+            motorhomeDescription = new MotorhomeDescription(resultSet.getInt("description_id"),
+                    resultSet.getString("brand"), resultSet.getString("model"),
+                    resultSet.getInt("base_price"));
         }
-        prepareSt = null;
-        resultS = null;
+        statement = null;
+        resultSet = null;
         return motorhomeDescription;
     }
 
     @Override
     public void update(MotorhomeDescription motorhomeDescription) throws SQLException {
 
-        prepareSt = connect.prepareStatement("UPDATE descriptions SET brand=?,model=?,base_price=? WHERE description_id = ?");
-        prepareSt.setString(1, motorhomeDescription.getMotorhomeBrand());
-        prepareSt.setString(2, motorhomeDescription.getMotorhomeModel());
-        prepareSt.setInt(3, motorhomeDescription.getMotorhomeBasePrice());
-        prepareSt.setInt(4, motorhomeDescription.getMotorhomeDescriptionId());
-        prepareSt.execute();
-        prepareSt = null;
+        statement = connection.prepareStatement("UPDATE descriptions SET brand=?,model=?,base_price=? WHERE description_id = ?");
+        statement.setString(1, motorhomeDescription.getMotorhomeBrand());
+        statement.setString(2, motorhomeDescription.getMotorhomeModel());
+        statement.setInt(3, motorhomeDescription.getMotorhomeBasePrice());
+        statement.setInt(4, motorhomeDescription.getMotorhomeDescriptionId());
+        statement.execute();
+        statement = null;
     }
 
     @Override
     public void delete(int motorhomeDescriptionId) throws SQLException {
 
-        prepareSt = connect.prepareStatement("DELETE FROM descriptions WHERE description_id=?");
-        prepareSt.setInt(1, motorhomeDescriptionId);
-        prepareSt.execute();
-        prepareSt = null;
+        statement = connection.prepareStatement("DELETE FROM descriptions WHERE description_id=?");
+        statement.setInt(1, motorhomeDescriptionId);
+        statement.execute();
+        statement = null;
     }
 }

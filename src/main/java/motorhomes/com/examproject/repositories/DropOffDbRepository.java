@@ -22,6 +22,7 @@ public class DropOffDbRepository {
         this.connection = DbConnection.getConnection();
     }
 
+    //Prawdopodobnie nie potrzebujemy tego, wiec w pickups nie musisz tego implementowac
     public ArrayList<DropOff> readAll() throws SQLException {
         ArrayList<DropOff> dropOffs = new ArrayList<>();
 
@@ -48,6 +49,7 @@ public class DropOffDbRepository {
         return creationSuccessful;
     }
 
+    //todo reservationID zamiast dropOffId, bo dropOff jest przypisany do rezerwacji, wiec bedziemy go szukac po jej ID
     public DropOff read(int dropoffId) throws SQLException {
 
         statement = connection.prepareStatement("SELECT * FROM dropoffs WHERE dropoff_id=?");
