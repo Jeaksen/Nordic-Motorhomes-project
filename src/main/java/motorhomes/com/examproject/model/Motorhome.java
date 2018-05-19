@@ -3,14 +3,13 @@ package motorhomes.com.examproject.model;
 public class Motorhome {
 
     private int motorhomeId;
-    private String licensePlate;
+    private String licencePlate;
     private String motorhomeStatus;
-
     private MotorhomeDescription motorhomeDescription;
 
-    public Motorhome(int motorhomeId, String licensePlate, String motorhomeStatus, MotorhomeDescription motorhomeDescription) {
+    public Motorhome(int motorhomeId, String licencePlate, String motorhomeStatus, MotorhomeDescription motorhomeDescription) {
         this.motorhomeId = motorhomeId;
-        this.licensePlate = licensePlate;
+        this.licencePlate = licencePlate;
         this.motorhomeStatus = motorhomeStatus;
         this.motorhomeDescription = motorhomeDescription;
     }
@@ -34,12 +33,12 @@ public class Motorhome {
         this.motorhomeId = motorhomeId;
     }
 
-    public String getLicensePlate() {
-        return licensePlate;
+    public String getLicencePlate() {
+        return licencePlate;
     }
 
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
+    public void setLicencePlate(String licencePlate) {
+        this.licencePlate = licencePlate;
     }
 
     public String getMotorhomeStatus() {
@@ -55,7 +54,7 @@ public class Motorhome {
     public String toString() {
         return "Motorhome{" +
                 "id=" + motorhomeId +
-                ", licensePlate='" + licensePlate + '\'' +
+                ", licencePlate='" + licencePlate + '\'' +
                 ", status='" + motorhomeStatus + '\'' +
                 '}';
     }
