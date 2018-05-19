@@ -2,11 +2,14 @@ package motorhomes.com.examproject.controller;
 
 import motorhomes.com.examproject.applicationLogic.HomepageManager;
 import motorhomes.com.examproject.model.User;
+import motorhomes.com.examproject.repositories.UsersDBRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 
 /**
@@ -19,12 +22,18 @@ public class HomepageController {
 
     private HomepageManager homepageManager;
 
-    /**
-     * @param homepageManager autowired by Spring, look beans.xml
-     */
-    public HomepageController(HomepageManager homepageManager) {
-        this.homepageManager = homepageManager;
+//    /**
+//     * @param homepageManager autowired by Spring, look beans.xml
+//     */
+//
+//    public HomepageController(HomepageManager homepageManager) {
+//        this.homepageManager = homepageManager;
+//    }
+
+    public HomepageController() throws SQLException {
+    this.homepageManager = new HomepageManager(new UsersDBRepository());
     }
+
 
     /**
      * This method responds to a login request from user

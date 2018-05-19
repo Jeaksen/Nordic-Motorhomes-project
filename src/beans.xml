@@ -8,7 +8,6 @@
     </bean>
 
     <bean class="motorhomes.com.examproject.applicationLogic.HomepageManager" id="homepage_manager">
-
         <constructor-arg ref="user_repo"/>
     </bean>
 
