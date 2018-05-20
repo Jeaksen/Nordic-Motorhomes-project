@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @ Alicja Drankowska
  * todo comments
  */
-public class CustomersDbRepository implements ICrudRepository<Customer> {
+public class CustomersDbRepository{
 
     private Connection connection;
     private PreparedStatement statement;
@@ -23,7 +23,7 @@ public class CustomersDbRepository implements ICrudRepository<Customer> {
         this.connection = DbConnection.getConnection();
     }
 
-    @Override
+
     public ArrayList<Customer> readAll() throws SQLException {
         ArrayList<Customer> customers = new ArrayList<>();
         statement = connection.prepareStatement("SELECT * FROM customers");
@@ -37,7 +37,7 @@ public class CustomersDbRepository implements ICrudRepository<Customer> {
         return customers;
     }
 
-    @Override
+
     public boolean create(Customer customer) throws SQLException {
         System.out.println(customer);
         statement = connection.prepareStatement("INSERT INTO customers(customers_name, driving_licence_nr) VALUES (?,?)");
@@ -48,7 +48,21 @@ public class CustomersDbRepository implements ICrudRepository<Customer> {
         return creationSuccessful;
     }
 
-    @Override
+
+    public Customer read(String drivingLicenseNO) throws SQLException {
+        statement = connection.prepareStatement("SELECT * FROM customers WHERE driving_licence_nr = ?");
+        statement.setString(1, drivingLicenseNO);
+        resultSet = statement.executeQuery();
+        Customer customer = null;
+
+        if (resultSet.next()){
+            customer = new Customer(resultSet.getInt("customer_id"), resultSet.getString("customers_name"), resultSet.getString("driving_licence_nr"));
+        }
+        statement = null;
+        resultSet = null;
+        return customer;
+    }
+
     public Customer read(int customerId) throws SQLException {
         statement = connection.prepareStatement("SELECT * FROM customers WHERE customer_id = ?");
         statement.setInt(1, customerId);
@@ -63,7 +77,7 @@ public class CustomersDbRepository implements ICrudRepository<Customer> {
         return customer;
     }
 
-    @Override
+
     public void update(Customer customer) throws SQLException {
 
         statement = connection.prepareStatement("UPDATE customers SET customers_name=?, driving_licence_nr=? WHERE customer_id=?");
@@ -74,7 +88,7 @@ public class CustomersDbRepository implements ICrudRepository<Customer> {
         statement = null;
     }
 
-    @Override
+
     public void delete(int customerId) throws SQLException {
         statement = connection.prepareStatement("DELETE FROM customers WHERE customer_id=?");
         statement.setInt(1, customerId);

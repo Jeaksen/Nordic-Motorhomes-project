@@ -32,7 +32,7 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
         while (resultSet.next()){
             motorhomeDescriptions.add(new MotorhomeDescription(resultSet.getInt("description_id"),
                     resultSet.getString("brand"), resultSet.getString("model"),
-                    resultSet.getInt("base_price")));
+                    resultSet.getInt("base_price"), resultSet.getInt("capacity")));
         }
 
         statement = null;
@@ -45,9 +45,9 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
 
         System.out.println(motorhomeDescription);
         statement = connection.prepareStatement("INSERT INTO descriptions(brand, model, base_price) VALUES (?,?,?)");
-        statement.setString(1, motorhomeDescription.getMotorhomeBrand());
-        statement.setString(2, motorhomeDescription.getMotorhomeModel());
-        statement.setInt(3, motorhomeDescription.getMotorhomeBasePrice());
+        statement.setString(1, motorhomeDescription.getBrand());
+        statement.setString(2, motorhomeDescription.getModel());
+        statement.setInt(3, motorhomeDescription.getBasePrice());
         boolean creationSuccessful = statement.execute();
         statement = null;
         return creationSuccessful;
@@ -64,7 +64,7 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
         if (resultSet.next()){
             motorhomeDescription = new MotorhomeDescription(resultSet.getInt("description_id"),
                     resultSet.getString("brand"), resultSet.getString("model"),
-                    resultSet.getInt("base_price"));
+                    resultSet.getInt("base_price"), resultSet.getInt("capacity"));
         }
         statement = null;
         resultSet = null;
@@ -75,9 +75,9 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
     public void update(MotorhomeDescription motorhomeDescription) throws SQLException {
 
         statement = connection.prepareStatement("UPDATE descriptions SET brand=?,model=?,base_price=? WHERE description_id = ?");
-        statement.setString(1, motorhomeDescription.getMotorhomeBrand());
-        statement.setString(2, motorhomeDescription.getMotorhomeModel());
-        statement.setInt(3, motorhomeDescription.getMotorhomeBasePrice());
+        statement.setString(1, motorhomeDescription.getBrand());
+        statement.setString(2, motorhomeDescription.getModel());
+        statement.setInt(3, motorhomeDescription.getBasePrice());
         statement.setInt(4, motorhomeDescription.getMotorhomeDescriptionId());
         statement.execute();
         statement = null;

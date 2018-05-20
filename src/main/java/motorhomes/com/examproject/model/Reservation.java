@@ -6,7 +6,7 @@ import java.util.Map;
 public class Reservation {
 
     private int reservationId;
-    private String customersName;
+    private int customersId;
     private LocalDate  startDate;
     private LocalDate endDate;
     private boolean hasPickUp;
@@ -15,13 +15,23 @@ public class Reservation {
     private int price;
     private String reservationStatus;
     private int motorhomeId;
-
     // Accessory ID and quantity
     private Map  <Integer, Integer> accessories;
 
     public Reservation() {
+        this.hasDropOff = false;
+        this.hasPickUp = false;
+        this.hasAccessories = false;
+        this.price = 0;
     }
 
+    public Map<Integer, Integer> getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Map<Integer, Integer> accessories) {
+        this.accessories = accessories;
+    }
 
     public int getMotorhomeId() {
         return motorhomeId;
@@ -39,12 +49,12 @@ public class Reservation {
         this.reservationId = reservationId;
     }
 
-    public String getCustomersName() {
-        return customersName;
+    public int getCustomersId() {
+        return customersId;
     }
 
-    public void setCustomersName(String customersName) {
-        this.customersName = customersName;
+    public void setCustomersId(int customersId) {
+        this.customersId = customersId;
     }
 
     public LocalDate getStartDate() {
@@ -107,7 +117,7 @@ public class Reservation {
     public String toString() {
         return "Reservation{" +
                 "reservationId=" + reservationId +
-                ", customersName='" + customersName + '\'' +
+                ", customersID='" + customersId + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", hasPickUp=" + hasPickUp +

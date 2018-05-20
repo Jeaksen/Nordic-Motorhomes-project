@@ -6,20 +6,30 @@ package motorhomes.com.examproject.model;
 public class MotorhomeDescription {
 
     private int motorhomeDescriptionId;
-
-    private String motorhomeBrand;
-    private String motorhomeModel;
-    private int motorhomeBasePrice;
+    private String brand;
+    private String model;
+    private int basePrice;
+    private int capacity;
 
     public MotorhomeDescription(){
 
     }
 
-    public MotorhomeDescription(int motorhomeDescriptionId, String motorhomeBrand, String motorhomeModel, int motorhomeBasePrice){
+    public MotorhomeDescription(int motorhomeDescriptionId, String brand, String model, int basePrice, int capacity){
         this.motorhomeDescriptionId = motorhomeDescriptionId;
-        this.motorhomeBrand = motorhomeBrand;
-        this.motorhomeModel = motorhomeModel;
-        this.motorhomeBasePrice = motorhomeBasePrice;
+        this.brand = brand;
+        this.model = model;
+        this.basePrice = basePrice;
+        this.capacity = capacity;
+    }
+
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public int getMotorhomeDescriptionId() {
@@ -30,37 +40,37 @@ public class MotorhomeDescription {
         this.motorhomeDescriptionId = motorhomeDescriptionId;
     }
 
-    public String getMotorhomeBrand() {
-        return motorhomeBrand;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setMotorhomeBrand(String motorhomeBrand) {
-        this.motorhomeBrand = motorhomeBrand;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
-    public String getMotorhomeModel() {
-        return motorhomeModel;
+    public String getModel() {
+        return model;
     }
 
-    public void setMotorhomeModel(String motorhomeModel) {
-        this.motorhomeModel = motorhomeModel;
+    public void setModel(String model) {
+        this.model = model;
     }
 
-    public int getMotorhomeBasePrice() {
-        return motorhomeBasePrice;
+    public int getBasePrice() {
+        return basePrice;
     }
 
-    public void setMotorhomeBasePrice(int motorhomeBasePrice) {
-        this.motorhomeBasePrice = motorhomeBasePrice;
+    public void setBasePrice(int basePrice) {
+        this.basePrice = basePrice;
     }
 
     @Override
     public String toString() {
         return "MotorhomeDescription{" +
                 "motorhomeDescriptionId=" + motorhomeDescriptionId +
-                ", motorhomeBrand='" + motorhomeBrand + '\'' +
-                ", motorhomeModel='" + motorhomeModel + '\'' +
-                ", motorhomeBasePrice=" + motorhomeBasePrice +
+                ", brand='" + brand + '\'' +
+                ", model='" + model + '\'' +
+                ", basePrice=" + basePrice +
                 '}';
     }
 }

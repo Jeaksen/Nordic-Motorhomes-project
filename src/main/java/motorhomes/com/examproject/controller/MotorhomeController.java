@@ -23,7 +23,8 @@ public class MotorhomeController {
     private MotorhomeManager motorhomeManager;
 
     public MotorhomeController() throws SQLException{
-        this.motorhomeManager = new MotorhomeManager(new MotorhomeDbRepository(), new MotorhomeDescriptionDbRepository());
+        MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository = new MotorhomeDescriptionDbRepository();
+        this.motorhomeManager = new MotorhomeManager(new MotorhomeDbRepository(motorhomeDescriptionDbRepository), motorhomeDescriptionDbRepository);
     }
 
     @GetMapping("/newmotorhome")

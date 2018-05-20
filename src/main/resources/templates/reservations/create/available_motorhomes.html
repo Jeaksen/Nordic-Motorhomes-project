@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Available Motorhomes</title>
 </head>
 <body>
-<form action="/add_motorhome" method="post">
 
-    <p>Motorhome id</p>
-    <input type="number" name="motorhome_id" />
-    <p>
-        <input type="submit" value="Continue" class="btn btn-create"/>
-    </p>
-</form>
+<table>
+    <thead>
+        <tr>
+            <th>Motorhome ID</th>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Capacity</th>
+            <th>Base Price</th>
+        </tr>
+        </thead>
+
+    <tbody>
+        <tr th:each = "motorhome: ${motorhomes}">
+            <td th:text="${motorhome.motorhomeId}"></td>
+            <td th:text="${motorhome.motorhomeDescription.brand}"></td>
+            <td th:text="${motorhome.motorhomeDescription.model}"></td>
+            <td th:text="${motorhome.motorhomeDescription.capacity}"></td>
+            <td th:text="${motorhome.motorhomeDescription.basePrice}"></td>
+            <td><a th:href="'/save_motorhome?motorhome_id=' + ${motorhome.motorhomeId}" class="button">Choose</a></td>
+        </tr>
+    </tbody>
+</table>
 
 </body>
 </html>

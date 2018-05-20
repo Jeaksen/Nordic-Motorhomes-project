@@ -7,6 +7,7 @@ import motorhomes.com.examproject.repositories.MotorhomeDescriptionDbRepository;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ Alicja Drankowska
@@ -22,7 +23,7 @@ public class MotorhomeManager {
         this.motorhomeDescriptionDbRepository = motorhomeDescriptionDbRepository;
     }
 
-    public ArrayList<Motorhome> getAllMotorhomes(){
+    public List<Motorhome> getAllMotorhomes(){
         try{
             return motorhomeDbRepository.readAll();
         }catch (SQLException e){

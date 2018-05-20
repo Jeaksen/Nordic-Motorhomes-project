@@ -75,11 +75,11 @@ public class ReservationsAccessoriesRepository {
         statement.execute();
     }
 
-    public void update (int reservationId, int accessotyId, int quantity) throws SQLException {
+    public void update (int reservationId, int accessoryId, int quantity) throws SQLException {
         statement = connection.prepareStatement("UPDATE `reservations-accessories` SET quantity=? WHERE reservation_id=? AND accessory_id=?;");
         statement.setInt(1, quantity);
         statement.setInt(2, reservationId);
-        statement.setInt(3, accessotyId);
+        statement.setInt(3, accessoryId);
         statement.execute();
     }
 }

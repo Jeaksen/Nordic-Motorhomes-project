@@ -1,5 +1,6 @@
 package motorhomes.com.examproject.repositories;
 
+import motorhomes.com.examproject.model.Reservation;
 import motorhomes.com.examproject.util.DbConnection;
 
 import java.sql.*;
@@ -16,11 +17,10 @@ public class ReservationsRepository {
     private Connection connection;
     private PreparedStatement statement;
     private ResultSet result;
-    private long connectionTime;
+
 
     public ReservationsRepository() throws SQLException {
         connection = DbConnection.getConnection();
-        connectionTime = System.currentTimeMillis();
     }
 
 
@@ -61,10 +61,44 @@ public class ReservationsRepository {
         }
     }
 
-    private void tryReconnect() throws SQLException {
-        if (System.currentTimeMillis() - this.connectionTime > 600000){
-            this.connection = DbConnection.getConnection();
+
+    /**
+     *
+     * @param reservation
+     * @return ID of created reservation or -1 if there was an error
+     */
+    public int create (Reservation reservation) throws SQLException {
+        statement = connection.prepareStatement("INSERT INTO reservations (start_date, end_date, motorhome_id, customer_id) VALUES (?,?,?,?)");
+        statement.setDate(1, Date.valueOf(reservation.getStartDate()));
+        statement.setDate(2, Date.valueOf(reservation.getEndDate()));
+        statement.setInt(3, reservation.getMotorhomeId());
+        statement.setInt(4, reservation.getCustomersId());
+        statement.execute();
+        statement = connection.prepareStatement("SELECT reservation_id FROM reservations WHERE start_date = ? AND motorhome_id = ?");
+        statement.setDate(1, Date.valueOf(reservation.getStartDate()));
+        statement.setInt(2, reservation.getMotorhomeId());
+        result = statement.executeQuery();
+        if (result.next()) {
+            return result.getInt("reservation_id");
         }
+        return -1;
+    }
+
+
+    /**
+     * This method updates: start_date, end_date, has_pickup, has_dropoff, has_accessories, reservation_status, and price
+     */
+    public void update (Reservation reservation) throws SQLException {
+        statement = connection.prepareStatement("UPDATE reservations SET start_date=?, end_date=?, has_pickup=?, " +
+                "has_dropoff=?, has_accessories=?, reservation_status=?, price=?;");
+        statement.setDate(1, Date.valueOf(reservation.getStartDate()));
+        statement.setDate(2, Date.valueOf(reservation.getEndDate()));
+        statement.setBoolean(3, reservation.isHasPickUp());
+        statement.setBoolean(4, reservation.isHasDropOff());
+        statement.setBoolean(5, reservation.isHasAccessories());
+        statement.setString(6, reservation.getReservationStatus());
+        statement.setInt(7, reservation.getPrice());
+        statement.execute();
     }
 
 }
