@@ -35,7 +35,7 @@ public class PickupDbRepository {
 
     public PickUp read(int reservationId) throws SQLException{
 
-        statement = connection.prepareStatement("SELECT * FROM pickups WHERE pickup_id = ?");
+        statement = connection.prepareStatement("SELECT * FROM pickups WHERE resrervation_id = ?");
         statement.setInt(1, reservationId);
         result = statement.executeQuery();
         PickUp pickUp = null;

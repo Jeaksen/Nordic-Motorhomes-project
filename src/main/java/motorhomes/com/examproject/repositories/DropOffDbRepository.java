@@ -50,7 +50,7 @@ public class DropOffDbRepository {
 
     public DropOff read(int reservationId) throws SQLException {
 
-        statement = connection.prepareStatement("SELECT * FROM dropoffs WHERE dropoff_id=?");
+        statement = connection.prepareStatement("SELECT * FROM dropoffs WHERE reservation_id=?");
         statement.setInt(1, reservationId);
         result = statement.executeQuery();
         DropOff dropOff = null;

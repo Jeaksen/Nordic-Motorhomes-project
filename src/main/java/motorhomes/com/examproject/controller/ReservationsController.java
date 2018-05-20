@@ -1,10 +1,7 @@
 package motorhomes.com.examproject.controller;
 
 import motorhomes.com.examproject.applicationLogic.ReservationsManager;
-import motorhomes.com.examproject.model.Accessory;
-import motorhomes.com.examproject.model.Customer;
-import motorhomes.com.examproject.model.Motorhome;
-import motorhomes.com.examproject.model.Reservation;
+import motorhomes.com.examproject.model.*;
 import motorhomes.com.examproject.repositories.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -135,10 +132,16 @@ public class ReservationsController {
         reservation.getAccessories().forEach((k,v) -> accessories.put(reservationsManager.getAccessory(k),v));
         model.addAttribute("accessories", accessories);
         if (reservation.isHasDropOff()) {
-            model.addAttribute("dropoff", reservationsManager.getDropOff(reservationId));
+            DropOff dropOff = reservationsManager.getDropOff(reservationId);
+            model.addAttribute("dropoff", dropOff);
+            System.out.println(dropOff.getDropOffDistance());
+            System.out.println(dropOff.getDropOffLocation());
         }
         if (reservation.isHasPickUp()) {
-            model.addAttribute("pickup", reservationsManager.getPickUp(reservationId));
+            PickUp pickUp = reservationsManager.getPickUp(reservationId);
+            model.addAttribute("pickup", pickUp);
+            System.out.println(pickUp.getPickUpDistance());
+            System.out.println(pickUp.getPickUpLocation());
         }
         return "reservations/details";
     }
