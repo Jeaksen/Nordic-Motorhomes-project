@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Reservations</title>
     <link rel="stylesheet" href="style.css"/>
@@ -35,17 +35,17 @@
         </thead>
 
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>1</td>
-            <td>12.06.2018</td>
-            <td>20.06.2018</td>
-            <td>Yes</td>
-            <td>No</td>
-            <td>No</td>
-            <td>1000</td>
-            <td>1</td>
-            <td>Paid</td>
+        <tr th:each="reservation: ${reservations}">
+            <td th:text="${reservation.reservationId}"></td>
+            <td th:text="${reservation.customerId}"></td>
+            <td th:text="${reservation.startDate}"></td>
+            <td th:text="${reservation.endDate}">2</td>
+            <td th:text="${reservation.hasPickUp}"></td>
+            <td th:text="${reservation.hasDropOff}"></td>
+            <td th:text="${reservation.hasAccessories}"></td>
+            <td th:text="${reservation.price}"></td>
+            <td th:text="${reservation.motorhomeId}"></td>
+            <td th:text="${reservation.status}"></td>
             <td> <a class="button button-details">Details</a><a class="button button-update">Update</a><a class="button button-delete">Delete</a></td>
         </tr>
         </tbody>

@@ -36,7 +36,13 @@ public class ReservationsManager {
         this.reservationsAccessoriesRepository = reservationsAccessoriesRepository;
     }
 
-    public List<Motorhome> getReservations() {
+    public List<Reservation> getReservations() {
+        try {
+            List<Reservation> reservations = reservationsRepository.readAll();
+            return reservations;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -44,7 +50,7 @@ public class ReservationsManager {
         Reservation reservation = new Reservation();
         reservation.setStartDate(startDate);
         reservation.setEndDate(endDate);
-        //todo set status
+        reservation.setStatus("Not Payed");
         return reservation;
     }
 
@@ -80,7 +86,7 @@ public class ReservationsManager {
                 customersRepository.create(customer);
                 savedCustomer = customersRepository.read(customer.getDrivingLicenseNr());
             }
-            reservation.setCustomersId(savedCustomer.getCustomerId());
+            reservation.setCustomerId(savedCustomer.getCustomerId());
             int reservationId = reservationsRepository.create(reservation);
             reservation.setReservationId(reservationId);
             return true;
@@ -129,5 +135,15 @@ public class ReservationsManager {
         }
         reservation.setAccessories(accessoryIdToQuantity);
         return true;
+    }
+
+    public boolean updateReservation(Reservation reservation) {
+        try {
+            reservationsRepository.update(reservation);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

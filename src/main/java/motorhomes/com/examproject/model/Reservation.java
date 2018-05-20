@@ -6,14 +6,14 @@ import java.util.Map;
 public class Reservation {
 
     private int reservationId;
-    private int customersId;
+    private int customerId;
     private LocalDate  startDate;
     private LocalDate endDate;
     private boolean hasPickUp;
     private boolean hasDropOff;
     private boolean hasAccessories;
     private int price;
-    private String reservationStatus;
+    private String status;
     private int motorhomeId;
     // Accessory ID and quantity
     private Map  <Integer, Integer> accessories;
@@ -49,12 +49,12 @@ public class Reservation {
         this.reservationId = reservationId;
     }
 
-    public int getCustomersId() {
-        return customersId;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomersId(int customersId) {
-        this.customersId = customersId;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
     public LocalDate getStartDate() {
@@ -105,26 +105,26 @@ public class Reservation {
         this.price = price;
     }
 
-    public String getReservationStatus() {
-        return reservationStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setReservationStatus(String reservationStatus) {
-        this.reservationStatus = reservationStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
                 "reservationId=" + reservationId +
-                ", customersID='" + customersId + '\'' +
+                ", customersID='" + customerId + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", hasPickUp=" + hasPickUp +
                 ", hasDropOff=" + hasDropOff +
                 ", hasAccessories=" + hasAccessories +
                 ", price=" + price +
-                ", reservationStatus='" + reservationStatus + '\'' +
+                ", status='" + status + '\'' +
                 ", motorhomeId=" + motorhomeId +
                 ", accessories=" + accessories +
                 '}';

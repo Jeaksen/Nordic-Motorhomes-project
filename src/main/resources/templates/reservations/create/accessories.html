@@ -2,10 +2,21 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Reservations</title>
+    <link rel="stylesheet" href="style.css"/>
 
 </head>
 <body>
-<form method="post" action="/save_accessories">
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="">Reservations</a></li>
+        <li><a href="customers">Customers</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <form method="post" action="/save_accessories">
     <table>
         <thead>
         <tr>
@@ -27,5 +38,6 @@
     </table>
     <input type="submit" name="Continue" />
 </form>
+</div>
 </body>
 </html>

@@ -35,8 +35,8 @@ public class ReservationsController {
 
     @GetMapping("/reservations")
     public String getReservations(Model model) {
-        List<Motorhome> motorhomes = reservationsManager.getReservations();
-        model.addAttribute("motorhomes", motorhomes);
+        List<Reservation> reservations = reservationsManager.getReservations();
+        model.addAttribute("reservations", reservations);
         return "reservations/reservations";
     }
 
@@ -72,11 +72,8 @@ public class ReservationsController {
     }
 
     @PostMapping("/save_transport")
-    public String saveTransport(Model model, HttpServletRequest request,
-                                @RequestParam(value="dropoff_distance", required=false) int dropDistance,
-                                @RequestParam(value="dropoff_location", required=false) String dropLocation,
-                                @RequestParam(value="pickup_distance", required=false) int pickDistance,
-                                @RequestParam(value="pickup_location", required=false) String pickLocation) {
+    public String saveTransport(Model model, HttpServletRequest request, @RequestParam(value="dropoff_distance", required=false) int dropDistance, @RequestParam(value="dropoff_location",
+            required=false) String dropLocation, @RequestParam(value="pickup_distance", required=false) int pickDistance, @RequestParam(value="pickup_location", required=false) String pickLocation) {
 
         request.getSession().setAttribute("dropoff_distance",dropDistance);
         request.getSession().setAttribute("dropoff_location",dropLocation);
@@ -109,6 +106,7 @@ public class ReservationsController {
         reservationsManager.saveCustomer(reservation, customer);
         reservationsManager.saveTransport(reservation, dropDistance, dropLocation, pickDistance, pickLocation);
         reservationsManager.saveAccessories(reservation, quantities, accessories);
+        reservationsManager.updateReservation(reservation);
         System.out.println("Reservation: " + request.getSession(true).getAttribute("reservation") + "-----------------\n\n");
 
         session.removeAttribute("customer");

@@ -16,7 +16,7 @@ public class ReservationsRepository {
 
     private Connection connection;
     private PreparedStatement statement;
-    private ResultSet result;
+    private ResultSet resultSet;
 
 
     public ReservationsRepository() throws SQLException {
@@ -54,11 +54,13 @@ public class ReservationsRepository {
         statement.setDate(8, Date.valueOf(endDate));
         statement.setDate(10, Date.valueOf(endDate));
         statement.setDate(12, Date.valueOf(endDate));
-        result = statement.executeQuery();
+        resultSet = statement.executeQuery();
 
-        while (result.next()){
-            allMotorhomeIds.remove((Integer)result.getInt("motorhome_id"));
+        while (resultSet.next()){
+            allMotorhomeIds.remove((Integer) resultSet.getInt("motorhome_id"));
         }
+        statement = null;
+        resultSet = null;
     }
 
 
@@ -72,16 +74,19 @@ public class ReservationsRepository {
         statement.setDate(1, Date.valueOf(reservation.getStartDate()));
         statement.setDate(2, Date.valueOf(reservation.getEndDate()));
         statement.setInt(3, reservation.getMotorhomeId());
-        statement.setInt(4, reservation.getCustomersId());
+        statement.setInt(4, reservation.getCustomerId());
         statement.execute();
         statement = connection.prepareStatement("SELECT reservation_id FROM reservations WHERE start_date = ? AND motorhome_id = ?");
         statement.setDate(1, Date.valueOf(reservation.getStartDate()));
         statement.setInt(2, reservation.getMotorhomeId());
-        result = statement.executeQuery();
-        if (result.next()) {
-            return result.getInt("reservation_id");
+        resultSet = statement.executeQuery();
+        int reservationId = -1;
+        if (resultSet.next()) {
+            reservationId = resultSet.getInt("reservation_id");
         }
-        return -1;
+        statement = null;
+        resultSet = null;
+        return reservationId;
     }
 
 
@@ -90,15 +95,48 @@ public class ReservationsRepository {
      */
     public void update (Reservation reservation) throws SQLException {
         statement = connection.prepareStatement("UPDATE reservations SET start_date=?, end_date=?, has_pickup=?, " +
-                "has_dropoff=?, has_accessories=?, reservation_status=?, price=?;");
+                "has_dropoff=?, has_accessories=?, reservation_status=?, price=? WHERE reservation_id=?;");
         statement.setDate(1, Date.valueOf(reservation.getStartDate()));
         statement.setDate(2, Date.valueOf(reservation.getEndDate()));
         statement.setBoolean(3, reservation.isHasPickUp());
         statement.setBoolean(4, reservation.isHasDropOff());
         statement.setBoolean(5, reservation.isHasAccessories());
-        statement.setString(6, reservation.getReservationStatus());
+        statement.setString(6, reservation.getStatus());
         statement.setInt(7, reservation.getPrice());
+        statement.setInt(8, reservation.getReservationId());
         statement.execute();
+        statement = null;
+    }
+
+    public List<Reservation> readAll() throws SQLException {
+        List<Reservation> reservations = new ArrayList<>();
+        Reservation reservation;
+        statement = connection.prepareStatement("SELECT * FROM reservations");
+        resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            reservation = new Reservation();
+            reservation.setReservationId(resultSet.getInt("reservation_id"));
+            reservation.setStartDate(resultSet.getDate("start_date").toLocalDate());
+            reservation.setEndDate(resultSet.getDate("end_date").toLocalDate());
+            reservation.setHasPickUp(resultSet.getBoolean("has_pickup"));
+            reservation.setHasDropOff(resultSet.getBoolean("has_dropoff"));
+            reservation.setHasAccessories(resultSet.getBoolean("has_accessories"));
+            reservation.setPrice(resultSet.getInt("price"));
+            reservation.setStatus(resultSet.getString("reservation_status"));
+            reservation.setMotorhomeId(resultSet.getInt("motorhome_id"));
+            reservation.setCustomerId(resultSet.getInt("customer_id"));
+            reservations.add(reservation);
+        }
+        statement = null;
+        resultSet = null;
+        return reservations;
+    }
+
+    public void delete (int reservationId) throws SQLException {
+        statement = connection.prepareStatement("DELETE FROM reservations WHERE reservation_id=?");
+        statement.setInt(1, reservationId);
+        statement.execute();
+        statement = null;
     }
 
 }

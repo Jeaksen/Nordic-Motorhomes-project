@@ -2,11 +2,23 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css"/>
     <title>Title</title>
 </head>
 <body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="">Reservations</a></li>
+        <li><a href="customers">Customers</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
 <p>Summary</p>
 <p th:text="${session.reservation.startDate}"></p>
 <a href="/confirm">Save</a>
+</div>
 </body>
 </html>

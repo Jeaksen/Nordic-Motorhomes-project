@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="style.css"/>
     <title>New Reservation</title>
 </head>
 <body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="">Reservations</a></li>
+        <li><a href="customers">Customers</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
 <form action="/add_reservation" method="post">
     <p>Start date:</p>
     <input type="date" name="start_date" />
@@ -13,6 +24,6 @@
         <input type="submit" value="Continue" class="btn btn-create"/>
     </p>
 </form>
-
+</div>
 </body>
 </html>
