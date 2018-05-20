@@ -15,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ Pawel Pohl
@@ -107,6 +111,7 @@ public class ReservationsController {
         reservationsManager.saveTransport(reservation, dropDistance, dropLocation, pickDistance, pickLocation);
         reservationsManager.saveAccessories(reservation, quantities, accessories);
         reservationsManager.updateReservation(reservation);
+        //todo calculate price
         System.out.println("Reservation: " + request.getSession(true).getAttribute("reservation") + "-----------------\n\n");
 
         session.removeAttribute("customer");
@@ -118,6 +123,24 @@ public class ReservationsController {
         session.removeAttribute("quantities");
         session.removeAttribute("reservation");
         return "redirect:/reservations";
+    }
+
+    @GetMapping("/details")
+    public String getDetails(Model model, @RequestParam("reservation_id") int reservationId) {
+        Reservation reservation = reservationsManager.getReservation(reservationId);
+        model.addAttribute("reservation", reservation);
+        model.addAttribute("customer", reservationsManager.getCustomer(reservation.getCustomerId()));
+        model.addAttribute("motorhome", reservationsManager.getMotorhome(reservation.getMotorhomeId()));
+        Map<Accessory, Integer> accessories = new HashMap<>();
+        reservation.getAccessories().forEach((k,v) -> accessories.put(reservationsManager.getAccessory(k),v));
+        model.addAttribute("accessories", accessories);
+        if (reservation.isHasDropOff()) {
+            model.addAttribute("dropoff", reservationsManager.getDropOff(reservationId));
+        }
+        if (reservation.isHasPickUp()) {
+            model.addAttribute("pickup", reservationsManager.getPickUp(reservationId));
+        }
+        return "reservations/details";
     }
 
 

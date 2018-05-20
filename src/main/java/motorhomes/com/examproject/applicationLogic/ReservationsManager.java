@@ -146,4 +146,61 @@ public class ReservationsManager {
             return false;
         }
     }
+
+    public Reservation getReservation(int reservationId) {
+        try {
+            Reservation reservation;
+            reservation = reservationsRepository.read(reservationId);
+            reservation.setAccessories(reservationsAccessoriesRepository.readAll(reservation.getReservationId()));
+            return reservation;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public DropOff getDropOff (int reservationId) {
+        try {
+            return dropOffDbRepository.read(reservationId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public PickUp getPickUp (int reservationId) {
+        try {
+            return pickupDbRepository.read(reservationId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Customer getCustomer (int customerId) {
+        try {
+            return customersRepository.read(customerId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Motorhome getMotorhome (int motorhomeId) {
+        try {
+            return motorhomesRepository.read(motorhomeId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public Accessory getAccessory(int accessoryId) {
+        try {
+            return accessoriesDbRepository.read(accessoryId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ Alicja Drankowska
@@ -35,6 +36,16 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
         preparedStatement = null;
         resultSet = null;
+        return accessories;
+    }
+
+    public ArrayList<Accessory> readAll(List<Integer> accessoryIds) throws SQLException {
+        ArrayList<Accessory> accessories = new ArrayList<>();
+
+        for (int accessoryId: accessoryIds) {
+            accessories.add(read(accessoryId));
+        }
+
         return accessories;
     }
 

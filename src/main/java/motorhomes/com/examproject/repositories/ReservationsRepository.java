@@ -65,8 +65,7 @@ public class ReservationsRepository {
 
 
     /**
-     *
-     * @param reservation
+     * This method creates new row in the database with: start_date, end_date, motorhome_id and customer_id
      * @return ID of created reservation or -1 if there was an error
      */
     public int create (Reservation reservation) throws SQLException {
@@ -131,6 +130,30 @@ public class ReservationsRepository {
         resultSet = null;
         return reservations;
     }
+
+    public Reservation read(int reservationId) throws SQLException {
+        statement = connection.prepareStatement("SELECT * FROM reservations WHERE reservation_id=?");
+        statement.setInt(1, reservationId);
+        resultSet = statement.executeQuery();
+        Reservation reservation = null;
+        if (resultSet.next()) {
+            reservation = new Reservation();
+            reservation.setReservationId(resultSet.getInt("reservation_id"));
+            reservation.setStartDate(resultSet.getDate("start_date").toLocalDate());
+            reservation.setEndDate(resultSet.getDate("end_date").toLocalDate());
+            reservation.setHasPickUp(resultSet.getBoolean("has_pickup"));
+            reservation.setHasDropOff(resultSet.getBoolean("has_dropoff"));
+            reservation.setHasAccessories(resultSet.getBoolean("has_accessories"));
+            reservation.setPrice(resultSet.getInt("price"));
+            reservation.setStatus(resultSet.getString("reservation_status"));
+            reservation.setMotorhomeId(resultSet.getInt("motorhome_id"));
+            reservation.setCustomerId(resultSet.getInt("customer_id"));
+        }
+        statement = null;
+        resultSet = null;
+        return reservation;
+    }
+
 
     public void delete (int reservationId) throws SQLException {
         statement = connection.prepareStatement("DELETE FROM reservations WHERE reservation_id=?");

@@ -4,9 +4,12 @@ body{
 }
 
 .container {
-    width: 1024px;
-    margin-left: 16%;
+    max-width: 60vw;
+    margin: 0 20vw;
 }
+
+
+
 ul {
     list-style-type: none;
     margin:0;
