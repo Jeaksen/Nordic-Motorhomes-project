@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--@PawelPohl-->
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Update reservation</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <h1>Update reservation</h1>
+    <form action="/update_reservation" method="post">
+
+        <h2>Status</h2>
+        <article th:switch="${session.reservation.status}">
+         <select name="status" th:case="'Payed'">
+             <option value="Payed">Payed</option>
+             <option value="Not Payed">Not Payed</option>
+             <option value="Canceled">Canceled</option>
+         </select>
+            <select name="status" th:case="'Not Payed'">
+                <option value="Not Payed">Not Payed</option>
+                <option value="Payed">Payed</option>
+                <option value="Canceled">Canceled</option>
+            </select>
+            <select name="status" th:case="'Canceled'">
+                <option value="Canceled">Canceled</option>
+                <option value="Payed">Payed</option>
+                <option value="Not Payed">Not Payed</option>
+            </select>
+        </article>
+
+        <h2>Price</h2>
+        <p style="font-size: 0.6em">Won't be applied if there are changes to next sections</p>
+        <input th:value="${session.reservation.price}" name="price" />
+
+        <h2>Pick-up</h2>
+        <p>Distance</p>
+        <input type="text" th:value="${session.pickup.pickUpDistance}" value="0" name="pickUpDistance" />
+        <p>Location</p>
+        <input type="text" th:value="${session.pickup.pickUpLocation}" name="pickUpLocation" />
+
+        <h2>Drop-off</h2>
+        <p>Distance</p>
+        <input type="text" value="0" th:value="${session.dropoff.dropOffDistance}" name="dropOffDistance" />
+        <p>Location</p>
+        <input type="text" th:value="${session.dropoff.dropOffLocation}" name="dropOffLocation" />
+
+        <h2>Accessories</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>quantity</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each = "entry: ${session.accessories}">
+
+                <td th:text="${entry.key.name}"></td>
+
+                <td th:text="${entry.key.price}"></td>
+                <td><input type="number" name="quantities[]" th:value="${entry.value}" /></td>
+            </tr>
+            </tbody>
+        </table>
+        <p>
+        <input type="submit" value="Update Reservation" class="button" />
+        </p>
+    </form>
+</div>
+</body>
+</html>
