@@ -8,10 +8,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * @ Alicja Drankowska
+ * todo comments
+ */
 public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
-
-    ArrayList<Accessory> accessories;
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -19,81 +22,78 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
     public AccessoriesDbRepository() throws SQLException {
         this.connection = DbConnection.getConnection();
-        this.accessories = new ArrayList<>();
     }
 
     @Override
-    public ArrayList<Accessory> readAll() {
-        accessories = new ArrayList<>();
+    public ArrayList<Accessory> readAll() throws SQLException {
+        ArrayList<Accessory> accessories = new ArrayList<>();
 
-        try {
-            preparedStatement = connection.prepareStatement("SELECT  * FROM accessories");
-            resultSet = preparedStatement.executeQuery();
-        } catch (SQLException e){
-            e.printStackTrace();
+        preparedStatement = connection.prepareStatement("SELECT  * FROM accessories");
+        resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()){
+            accessories.add(new Accessory(resultSet.getInt("accessory_id"), resultSet.getString("name"), resultSet.getInt("price")));
         }
+
+        preparedStatement = null;
+        resultSet = null;
+        return accessories;
+    }
+
+    public ArrayList<Accessory> readAll(List<Integer> accessoryIds) throws SQLException {
+        ArrayList<Accessory> accessories = new ArrayList<>();
+
+        for (int accessoryId: accessoryIds) {
+            accessories.add(read(accessoryId));
+        }
+
         return accessories;
     }
 
     @Override
-    public boolean create(Accessory accessory) {
-        boolean a = false;
+    public boolean create(Accessory accessory) throws SQLException {
 
-        try {
-            System.out.println(accessory);
-            preparedStatement = connection.prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
-            preparedStatement.setString(1, accessory.getAccessoryName());
-            preparedStatement.setInt(2, accessory.getAccessoryPrice());
-
-            a = preparedStatement.execute();
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
-        return a;
+        System.out.println(accessory);
+        preparedStatement = connection.prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
+        preparedStatement.setString(1, accessory.getName());
+        preparedStatement.setInt(2, accessory.getPrice());
+        boolean creationSuccessful = preparedStatement.execute();
+        preparedStatement = null;
+        return creationSuccessful;
     }
 
     @Override
-    public Accessory read(int accessoryId) {
-        try {
-            preparedStatement = connection.prepareStatement("SELECT * FROM accessories WHERE accessory_id = accessoryId");
-            resultSet = preparedStatement.executeQuery();
+    public Accessory read(int accessoryId) throws SQLException {
 
-            if (resultSet.next()){
-                return new Accessory(resultSet.getInt("accessory_id"), resultSet.getString("name"), resultSet.getInt("price"));
-            }
-        } catch (SQLException e){
-            e.printStackTrace();
+        preparedStatement = connection.prepareStatement("SELECT * FROM accessories WHERE accessory_id = ?");
+        preparedStatement.setInt(1, accessoryId);
+        resultSet = preparedStatement.executeQuery();
+        Accessory accessory = null;
+
+        if (resultSet.next()){
+            accessory = new Accessory(resultSet.getInt("accessory_id"), resultSet.getString("name"), resultSet.getInt("price"));
         }
-        return accessories.get(accessoryId);
+        preparedStatement = null;
+        resultSet = null;
+        return accessory;
     }
 
     @Override
-    public void update(Accessory accessory) {
-        try {
-            preparedStatement = connection.prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
-            preparedStatement.setString(1, accessory.getAccessoryName());
-            preparedStatement.setInt(2, accessory.getAccessoryPrice());
-            preparedStatement.setInt(3, accessory.getAccessoryId());
+    public void update(Accessory accessory) throws SQLException {
 
-            preparedStatement.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        preparedStatement = connection.prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
+        preparedStatement.setString(1, accessory.getName());
+        preparedStatement.setInt(2, accessory.getPrice());
+        preparedStatement.setInt(3, accessory.getId());
+        preparedStatement.execute();
+        preparedStatement = null;
     }
 
     @Override
-    public void delete(int accessoryId) {
-        try {
-            preparedStatement = connection.prepareStatement("DELETE FROM accessories WHERE accessory_id=? ");
-            preparedStatement.setInt(1, accessoryId);
+    public void delete(int accessoryId) throws SQLException {
 
-            preparedStatement.execute();
-
-        } catch (SQLException e){
-            e.printStackTrace();
-        }
-
+        preparedStatement = connection.prepareStatement("DELETE FROM accessories WHERE accessory_id=? ");
+        preparedStatement.setInt(1, accessoryId);
+        preparedStatement.execute();
+        preparedStatement = null;
     }
 }

@@ -1,7 +1,8 @@
-package motorhomes.com.examproject.aplicationLogic;
+package motorhomes.com.examproject.applicationLogic;
 
 import motorhomes.com.examproject.model.User;
 import motorhomes.com.examproject.repositories.UsersDBRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 
@@ -10,6 +11,7 @@ import java.sql.SQLException;
  * This class provides functionality for managing the homepage:
  * - login
  * - register
+ * @ Pawel Pohl
  */
 public class HomepageManager {
     private UsersDBRepository usersRepository;
@@ -42,6 +44,7 @@ public class HomepageManager {
             return -2;
         }
         if(checkedUser.getPassword().equals(savedUser.getPassword())){
+            checkedUser.setUserId(savedUser.getUserId());
             return 1;
         }
         return -1;

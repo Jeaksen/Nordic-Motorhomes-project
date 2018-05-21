@@ -21,20 +21,24 @@ public class Controller {
 //        return"login";
 //    }
 
-    @GetMapping("/fleet")
-    public String fleet(){
-        return"fleet";
-    }
+//    @GetMapping("/fleet")
+//    public String fleet(){
+//        return"fleet";
+//    }
 
-    @GetMapping("/reservations")
-    public String reservations(){
-        return"reservations";
-    }
+//    @GetMapping("/reservations")
+//    public String reservations(){
+//        return"reservations";
+//    }
 
     @GetMapping("/repairs")
     public String repairs(){
         return"repairs";
     }
 
+    @GetMapping("/customers")
+    public String customers(){
+        return "customers";
+    }
 
 }

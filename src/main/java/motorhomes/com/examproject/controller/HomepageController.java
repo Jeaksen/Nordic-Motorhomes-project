@@ -1,8 +1,9 @@
 package motorhomes.com.examproject.controller;
 
-import motorhomes.com.examproject.aplicationLogic.HomepageManager;
+import motorhomes.com.examproject.applicationLogic.HomepageManager;
 import motorhomes.com.examproject.model.User;
 import motorhomes.com.examproject.repositories.UsersDBRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,24 +11,29 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
+
 /**
  * This class is responsible for responding to request send to the server
  * It manages homepage and login/register pages
+ * @ Pawel Pohl
  */
 @Controller
 public class HomepageController {
 
-    private UsersDBRepository userRepository;
     private HomepageManager homepageManager;
 
-//    public HomepageController(UsersDBRepository userRepository) {
-//        this.userRepository = userRepository;
+//    /**
+//     * @param homepageManager autowired by Spring, look beans.xml
+//     */
+//
+//    public HomepageController(HomepageManager homepageManager) {
+//        this.homepageManager = homepageManager;
 //    }
 
     public HomepageController() throws SQLException {
-        this.userRepository = new UsersDBRepository();
-        this.homepageManager = new HomepageManager(this.userRepository);
+    this.homepageManager = new HomepageManager(new UsersDBRepository());
     }
+
 
     /**
      * This method responds to a login request from user

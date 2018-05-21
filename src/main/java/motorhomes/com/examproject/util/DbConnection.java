@@ -11,8 +11,8 @@ public class DbConnection {
         private static Connection connection;
 
         public static Connection getConnection() throws SQLException {
-            System.out.println("I'm here");
             if (connection == null || !connection.isValid(1)){
+                System.out.println("Connecting to the database...");
                 connection = DriverManager.getConnection(CONNSTRING, USERNAME, PASSWORD);
             }
             return connection;

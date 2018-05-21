@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css"/>
+    <title>Transport</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="">Reservations</a></li>
+        <li><a href="customers">Customers</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
+<form action="/save_transport" method="post">
+
+    <p>Drop-off</p>
+    <p>Distance</p>
+    <input type="text" value="0" name="dropoff_distance" />
+    <p>Location</p>
+    <input type="text" name="dropoff_location" />
+    <p>Pick-up</p>
+    <p>Distance</p>
+    <input type="text"  value="0" name="pickup_distance" />
+    <p>Location</p>
+    <input type="text" name="pickup_location" />
+    <p>
+        <input type="submit" value="Continue" class="btn btn-create"/>
+    </p>
+</form>
+</div>
+</body>
+</html>

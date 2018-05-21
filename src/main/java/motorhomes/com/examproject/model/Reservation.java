@@ -1,36 +1,44 @@
 package motorhomes.com.examproject.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class Reservation {
 
     private int reservationId;
-    private String customersName;
-    private Date  startDate;
-    private Date endDate;
+    private int customerId;
+    private LocalDate  startDate;
+    private LocalDate endDate;
     private boolean hasPickUp;
     private boolean hasDropOff;
     private boolean hasAccessories;
     private int price;
-    private String reservationStatus;
-    private Map  <Accessory, Integer> accessories;
+    private String status;
+    private int motorhomeId;
+    // Accessory ID and quantity
+    private Map  <Integer, Integer> accessories;
 
     public Reservation() {
+        this.hasDropOff = false;
+        this.hasPickUp = false;
+        this.hasAccessories = false;
+        this.price = 0;
     }
 
-    public Reservation(int reservationId, String customersName, Date startDate,
-                       Date endDate, boolean hasPickUp, boolean hasDropOff,
-                       boolean hasAccessories, int price, String reservationStatus) {
-        this.reservationId = reservationId;
-        this.customersName = customersName;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.hasPickUp = hasPickUp;
-        this.hasDropOff = hasDropOff;
-        this.hasAccessories = hasAccessories;
-        this.price = price;
-        this.reservationStatus = reservationStatus;
+    public Map<Integer, Integer> getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(Map<Integer, Integer> accessories) {
+        this.accessories = accessories;
+    }
+
+    public int getMotorhomeId() {
+        return motorhomeId;
+    }
+
+    public void setMotorhomeId(int motorhomeId) {
+        this.motorhomeId = motorhomeId;
     }
 
     public int getReservationId() {
@@ -41,27 +49,27 @@ public class Reservation {
         this.reservationId = reservationId;
     }
 
-    public String getCustomersName() {
-        return customersName;
+    public int getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomersName(String customersName) {
-        this.customersName = customersName;
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
@@ -97,28 +105,28 @@ public class Reservation {
         this.price = price;
     }
 
-    public String getReservationStatus() {
-        return reservationStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setReservationStatus(String reservationStatus) {
-        this.reservationStatus = reservationStatus;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
         return "Reservation{" +
                 "reservationId=" + reservationId +
-                ", customersName='" + customersName + '\'' +
+                ", customersID='" + customerId + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", hasPickUp=" + hasPickUp +
                 ", hasDropOff=" + hasDropOff +
                 ", hasAccessories=" + hasAccessories +
                 ", price=" + price +
-                ", status='" + reservationStatus + '\'' +
+                ", status='" + status + '\'' +
+                ", motorhomeId=" + motorhomeId +
+                ", accessories=" + accessories +
                 '}';
     }
-
-
 }

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Reservations</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="">Reservations</a></li>
+        <li><a href="customers">Customers</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container" id="reservations">
+    <h1> List of reservations</h1>
+    <a class="button" href="/add_reservation">Add new reservation</a>
+    <table>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Customer's ID</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Pick-up</th>
+            <th>Drop-off</th>
+            <th>Accessories</th>
+            <th>Price</th>
+            <th>Motorhome ID</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="reservation: ${reservations}">
+            <td th:text="${reservation.reservationId}"></td>
+            <td th:text="${reservation.customerId}"></td>
+            <td th:text="${reservation.startDate}"></td>
+            <td th:text="${reservation.endDate}"></td>
+            <td th:text="${reservation.hasPickUp}"></td>
+            <td th:text="${reservation.hasDropOff}"></td>
+            <td th:text="${reservation.hasAccessories}"></td>
+            <td th:text="${reservation.price}"></td>
+            <td th:text="${reservation.motorhomeId}"></td>
+            <td th:text="${reservation.status}"></td>
+            <td>
+                <a class="button button-details" th:href="'/details?reservation_id=' + ${reservation.reservationId}">Details</a>
+                <a class="button button-update" th:href="'/update?reservation_id=' + ${reservation.reservationId}">Update</a>
+                <a class="button button-delete" th:href="'/cancel?reservation_id=' + ${reservation.reservationId}">Cancel</a>
+                <a class="button" th:href="'/contract?reservation_id=' + ${reservation.reservationId}">Contract</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

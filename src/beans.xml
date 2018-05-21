@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean class="motorhomes.com.examproject.repositories.UsersDBRepository" id="user_repo">
+
+    </bean>
+
+    <bean class="motorhomes.com.examproject.applicationLogic.HomepageManager" id="homepage_manager">
+        <constructor-arg ref="user_repo"/>
+    </bean>
+
+    <bean class="motorhomes.com.examproject.controller.HomepageController" id="homepageController">
+    </bean>
+
+    <bean class="motorhomes.com.examproject.repositories.CustomersDbRepository" id="customers_repository">
+
+    </bean>
+
+
+</beans>
