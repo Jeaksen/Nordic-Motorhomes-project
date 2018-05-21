@@ -89,7 +89,7 @@ public class ReservationsController {
     @PostMapping("/save_accessories")
     public String saveAccessories(HttpServletRequest request, @RequestParam("quantities[]") int[] quantities) {
         request.getSession().setAttribute("quantities", quantities);
-        return "reservations/create/summary";
+        return "redirect:/confirm";
     }
 
     @GetMapping("/confirm")
@@ -134,14 +134,10 @@ public class ReservationsController {
         if (reservation.isHasDropOff()) {
             DropOff dropOff = reservationsManager.getDropOff(reservationId);
             model.addAttribute("dropoff", dropOff);
-            System.out.println(dropOff.getDropOffDistance());
-            System.out.println(dropOff.getDropOffLocation());
         }
         if (reservation.isHasPickUp()) {
             PickUp pickUp = reservationsManager.getPickUp(reservationId);
             model.addAttribute("pickup", pickUp);
-            System.out.println(pickUp.getPickUpDistance());
-            System.out.println(pickUp.getPickUpLocation());
         }
         return "reservations/details";
     }

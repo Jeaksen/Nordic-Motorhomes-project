@@ -9,10 +9,10 @@
 <nav>
     <ul>
         <li class="logo">Nordic Motorhomes</li>
-        <li><a href="fleet">Fleet</a></li>
-        <li><a href="">Reservations</a></li>
-        <li><a href="customers">Customers</a></li>
-        <li><a href="repairs">Repairs</a></li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/repairs">Repairs</a></li>
     </ul>
 </nav>
 <div class="container">
@@ -46,6 +46,7 @@
         <p th:text="'Distance: ' + ${dropoff.dropOffDistance}"></p>
     </article>
 
+    <article th:if="${!(accessories.isEmpty())}">
     <h2>Accessories</h2>
     <table>
         <thead>
@@ -57,13 +58,14 @@
         </thead>
 
         <tbody>
-        <tr th:each = "entry: ${accessories}">
+        <tr th:each = "entry: ${accessories}" th:if="${entry.value > 0}">
             <td th:text="${entry.key.name}"></td>
             <td th:text="${entry.key.price}"></td>
             <td th:text="${entry.value}"></td>
         </tr>
         </tbody>
     </table>
+    </article>
 </div>
 
 </body>

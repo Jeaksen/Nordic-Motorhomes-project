@@ -42,6 +42,7 @@ public class ReservationsManager {
             return reservations;
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -123,15 +124,18 @@ public class ReservationsManager {
     public boolean saveAccessories(Reservation reservation, int[] quantities, List<Accessory> accessories) {
         Map<Integer, Integer> accessoryIdToQuantity = new HashMap<>();
         for (int i = 0; i < quantities.length; i++) {
-            accessoryIdToQuantity.put(accessories.get(i).getId(), quantities[i]);
-            try {
-                reservationsAccessoriesRepository.create(reservation.getReservationId(), accessories.get(i).getId(), quantities[i]);
-            } catch (SQLException e) {
-                return false;
+            if (quantities[i] > 0) {
+                accessoryIdToQuantity.put(accessories.get(i).getId(), quantities[i]);
+                try {
+                    reservationsAccessoriesRepository.create(reservation.getReservationId(), accessories.get(i).getId(), quantities[i]);
+                } catch (SQLException e) {
+                    return false;
+                }
             }
-        }
-        if (quantities.length > 0){
-            reservation.setHasAccessories(true);
+            if (!reservation.isHasAccessories()) {
+                reservation.setHasAccessories(true);
+            }
+
         }
         reservation.setAccessories(accessoryIdToQuantity);
         return true;
