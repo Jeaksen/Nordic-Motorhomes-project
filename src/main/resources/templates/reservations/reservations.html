@@ -51,6 +51,7 @@
                 <a class="button button-update" th:href="'/update_reservation?reservation_id=' + ${reservation.reservationId}">Update</a>
                 <a class="button button-delete" th:href="'/cancel_reservation?reservation_id=' + ${reservation.reservationId}">Cancel</a>
                 <a class="button" th:href="'/generate_contract?reservation_id=' + ${reservation.reservationId}">Contract</a>
+                <a class="button" th:href="'/calculate_price?reservation_id=' + ${reservation.reservationId}">Calculate Price</a>
             </td>
         </tr>
         </tbody>

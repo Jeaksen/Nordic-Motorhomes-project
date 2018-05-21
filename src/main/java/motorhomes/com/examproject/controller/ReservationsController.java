@@ -165,10 +165,10 @@ public class ReservationsController {
     @PostMapping("/update_reservation")
     public String saveUpdate(HttpSession session, @RequestParam(value="dropOffDistance", required=false) int dropDistance, @RequestParam(value="dropOffLocation", required=false) String dropLocation,
                              @RequestParam(value="pickUpDistance", required=false) int pickDistance, @RequestParam(value="pickUpLocation", required=false) String pickLocation,
-                             @RequestParam("quantities[]") int[] quantities, @RequestParam("status") String reservationStatus, @RequestParam("price") int price) {
+                             @RequestParam("quantities[]") int[] quantities, @RequestParam("status") String reservationStatus) {
         PickUp pickUp = new PickUp(0, pickLocation.trim(), pickDistance);
         DropOff dropOff = new DropOff(0, dropLocation.trim(), dropDistance);
-        reservationsManager.updateReservation((Reservation)session.getAttribute("reservation"), reservationStatus, price,
+        reservationsManager.updateReservation((Reservation)session.getAttribute("reservation"), reservationStatus,
                 (PickUp)session.getAttribute("pickup"), pickUp, (DropOff)session.getAttribute("dropoff"), dropOff, quantities,(Map<Accessory, Integer>)session.getAttribute("accessories"));
         System.out.println(session.getAttribute("reservation"));
         return "redirect:/reservations";

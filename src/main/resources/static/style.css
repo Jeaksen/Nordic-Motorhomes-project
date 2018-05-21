@@ -4,11 +4,14 @@ body{
 }
 
 .container {
-    max-width: 60vw;
+    width: 60vw;
     margin: 0 20vw;
 }
 
-
+#reservations {
+    width: 80vw;
+    margin: 0 10vw;
+}
 
 ul {
     list-style-type: none;
