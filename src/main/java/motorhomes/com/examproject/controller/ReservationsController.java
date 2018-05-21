@@ -73,8 +73,9 @@ public class ReservationsController {
     }
 
     @PostMapping("/save_transport")
-    public String saveTransport(Model model, HttpServletRequest request, @RequestParam(value="dropoff_distance", required=false) int dropDistance, @RequestParam(value="dropoff_location",
-            required=false) String dropLocation, @RequestParam(value="pickup_distance", required=false) int pickDistance, @RequestParam(value="pickup_location", required=false) String pickLocation) {
+    public String saveTransport(Model model, HttpServletRequest request,
+                                @RequestParam(value="dropoff_distance", required=false) int dropDistance, @RequestParam(value="dropoff_location", required=false) String dropLocation,
+                                @RequestParam(value="pickup_distance", required=false) int pickDistance, @RequestParam(value="pickup_location", required=false) String pickLocation) {
 
         request.getSession().setAttribute("dropoff_distance",dropDistance);
         request.getSession().setAttribute("dropoff_location",dropLocation);
@@ -122,7 +123,7 @@ public class ReservationsController {
         return "redirect:/reservations";
     }
 
-    @GetMapping("/details")
+    @GetMapping("/details_reservation")
     public String getDetails(Model model, @RequestParam("reservation_id") int reservationId) {
         Reservation reservation = reservationsManager.getReservation(reservationId);
         model.addAttribute("reservation", reservation);
@@ -140,6 +141,37 @@ public class ReservationsController {
             model.addAttribute("pickup", pickUp);
         }
         return "reservations/details";
+    }
+
+
+    @GetMapping("/update_reservation")
+    public String updateReservation(HttpSession session, @RequestParam("reservation_id") int reservationId) {
+        Reservation reservation = reservationsManager.getReservation(reservationId);
+        DropOff dropOff = reservationsManager.getDropOff(reservationId)!=null?reservationsManager.getDropOff(reservationId):new DropOff(0,"",0);
+        PickUp pickUp = reservationsManager.getPickUp(reservationId)!=null?reservationsManager.getPickUp(reservationId):new PickUp(0,"", 0);
+        List<Accessory> accessories = reservationsManager.getAccessories();
+        Map<Integer, Integer> accessoryIdQuantityMap = reservation.getAccessories();
+        Map<Accessory, Integer> accessoryQuantityMap = new HashMap<>();
+        accessories.forEach((accessory) -> accessoryQuantityMap.put(accessory, accessoryIdQuantityMap.getOrDefault(accessory.getId(), 0)) );
+        session.setAttribute("dropoff", dropOff);
+        session.setAttribute("pickup", pickUp);
+        session.setAttribute("reservation", reservation);
+        session.setAttribute("accessories", accessoryQuantityMap);
+        session.setAttribute("reservation", reservation);
+
+        return "reservations/update";
+    }
+
+    @PostMapping("/update_reservation")
+    public String saveUpdate(HttpSession session, @RequestParam(value="dropOffDistance", required=false) int dropDistance, @RequestParam(value="dropOffLocation", required=false) String dropLocation,
+                             @RequestParam(value="pickUpDistance", required=false) int pickDistance, @RequestParam(value="pickUpLocation", required=false) String pickLocation,
+                             @RequestParam("quantities[]") int[] quantities, @RequestParam("status") String reservationStatus, @RequestParam("price") int price) {
+        PickUp pickUp = new PickUp(0, pickLocation.trim(), pickDistance);
+        DropOff dropOff = new DropOff(0, dropLocation.trim(), dropDistance);
+        reservationsManager.updateReservation((Reservation)session.getAttribute("reservation"), reservationStatus, price,
+                (PickUp)session.getAttribute("pickup"), pickUp, (DropOff)session.getAttribute("dropoff"), dropOff, quantities,(Map<Accessory, Integer>)session.getAttribute("accessories"));
+        System.out.println(session.getAttribute("reservation"));
+        return "redirect:/reservations";
     }
 
 

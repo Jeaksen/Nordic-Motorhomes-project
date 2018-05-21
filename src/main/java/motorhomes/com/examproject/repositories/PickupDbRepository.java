@@ -67,4 +67,11 @@ public class PickupDbRepository {
         statement = null;
     }
 
+    public void deletePickup (int reservationId) throws SQLException {
+        statement = connection.prepareStatement("DELETE FROM pickups WHERE resrervation_id=?");
+        statement.setInt(1, reservationId);
+        statement.execute();
+        statement = null;
+    }
+
 }

@@ -4,6 +4,7 @@ package motorhomes.com.examproject.applicationLogic;
 import motorhomes.com.examproject.model.*;
 import motorhomes.com.examproject.repositories.*;
 
+import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -103,14 +104,14 @@ public class ReservationsManager {
                 DropOff dropOff = new DropOff();
                 reservation.setHasDropOff(true);
                 dropOff.setDropOffDistance(dropDistance);
-                dropOff.setDropOffLocation(dropLocation);
+                dropOff.setDropOffLocation(dropLocation.trim());
                 dropOffDbRepository.create(dropOff, reservation.getReservationId());
             }
                 if (pickDistance > 0) {
                 PickUp pickUp = new PickUp();
                 reservation.setHasPickUp(true);
                 pickUp.setPickUpDistance(pickDistance);
-                pickUp.setPickUpLocation(pickLocation);
+                pickUp.setPickUpLocation(pickLocation.trim());
                 pickupDbRepository.create(pickUp, reservation.getReservationId());
             }
             return true;
@@ -131,9 +132,9 @@ public class ReservationsManager {
                 } catch (SQLException e) {
                     return false;
                 }
-            }
-            if (!reservation.isHasAccessories()) {
-                reservation.setHasAccessories(true);
+                if (!reservation.isHasAccessories()) {
+                    reservation.setHasAccessories(true);
+                }
             }
 
         }
@@ -206,5 +207,92 @@ public class ReservationsManager {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public boolean updateReservation(Reservation reservation, String newStatus, int newPrice, PickUp oldPickUp,
+                                     PickUp newPickUp, DropOff oldDropOff, DropOff newDropOff, int[] newQuantities, Map<Accessory, Integer> accessoryQuantityMap) {
+
+        boolean shouldChangePrice = true;
+        if (!reservation.getStatus().equals(newStatus)) {
+            reservation.setStatus(newStatus);
+        }
+        try {
+
+            if (newPickUp.getPickUpDistance() > 0) {
+                if (oldPickUp.getPickUpDistance() > 0) {
+                    if (oldPickUp.getPickUpDistance() != newPickUp.getPickUpDistance() || !oldPickUp.getPickUpLocation().equals(newPickUp.getPickUpLocation())) {
+                        newPickUp.setPickUpId(oldPickUp.getPickUpId());
+                        pickupDbRepository.update(newPickUp);
+                        shouldChangePrice = false;
+                    }
+                } else {
+                    pickupDbRepository.create(newPickUp, reservation.getReservationId());
+                    reservation.setHasPickUp(true);
+                    shouldChangePrice = false;
+                }
+            } else {
+                if (oldPickUp.getPickUpDistance() > 0) {
+                    pickupDbRepository.delete(oldPickUp.getPickUpId());
+                    reservation.setHasPickUp(false);
+                    shouldChangePrice = false;
+                }
+            }
+
+            if (newDropOff.getDropOffDistance() > 0) {
+                if (oldDropOff.getDropOffDistance() > 0) {
+                    if (oldDropOff.getDropOffDistance() != newDropOff.getDropOffDistance() || !oldDropOff.getDropOffLocation().equals(newDropOff.getDropOffLocation())) {
+                        newDropOff.setDropOffId(oldDropOff.getDropOffId());
+                        dropOffDbRepository.update(newDropOff);
+                        shouldChangePrice = false;
+                    }
+                } else {
+                    reservation.setHasDropOff(true);
+                    dropOffDbRepository.create(newDropOff, reservation.getReservationId());
+                    shouldChangePrice = false;
+                }
+            } else {
+                if (oldDropOff.getDropOffDistance() > 0) {
+                    reservation.setHasDropOff(false);
+                    dropOffDbRepository.delete(oldDropOff.getDropOffId());
+                    shouldChangePrice = false;
+                }
+            }
+
+            int i = 0;
+            boolean hasAccessories = false;
+            for (Map.Entry<Accessory, Integer> entry : accessoryQuantityMap.entrySet()) {
+                if (entry.getValue() == 0) {
+                    if (newQuantities[i] > 0) {
+                        reservationsAccessoriesRepository.create(reservation.getReservationId(), entry.getKey().getId(), newQuantities[i]);
+                    }
+                } else {
+                    if (newQuantities[i] == 0) {
+                        reservationsAccessoriesRepository.delete(reservation.getReservationId(), entry.getKey().getId());
+                    } else {
+                        reservationsAccessoriesRepository.update(reservation.getReservationId(), entry.getKey().getId(), newQuantities[i]);
+                    }
+                }
+                if (newQuantities[i] > 0) {
+                    hasAccessories = true;
+                }
+                i++;
+            }
+            reservation.setHasAccessories(hasAccessories);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        //todo update price
+
+        if (shouldChangePrice) {
+            reservation.setPrice(newPrice);
+        }
+        return this.updateReservation(reservation);
+    }
+
+
+    private void calculatePrice() {
+
     }
 }

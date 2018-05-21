@@ -47,10 +47,10 @@
             <td th:text="${reservation.motorhomeId}"></td>
             <td th:text="${reservation.status}"></td>
             <td>
-                <a class="button button-details" th:href="'/details?reservation_id=' + ${reservation.reservationId}">Details</a>
-                <a class="button button-update" th:href="'/update?reservation_id=' + ${reservation.reservationId}">Update</a>
-                <a class="button button-delete" th:href="'/cancel?reservation_id=' + ${reservation.reservationId}">Cancel</a>
-                <a class="button" th:href="'/contract?reservation_id=' + ${reservation.reservationId}">Contract</a>
+                <a class="button button-details" th:href="'/details_reservation?reservation_id=' + ${reservation.reservationId}">Details</a>
+                <a class="button button-update" th:href="'/update_reservation?reservation_id=' + ${reservation.reservationId}">Update</a>
+                <a class="button button-delete" th:href="'/cancel_reservation?reservation_id=' + ${reservation.reservationId}">Cancel</a>
+                <a class="button" th:href="'/generate_contract?reservation_id=' + ${reservation.reservationId}">Contract</a>
             </td>
         </tr>
         </tbody>
