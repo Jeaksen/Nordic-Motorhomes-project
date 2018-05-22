@@ -174,5 +174,18 @@ public class ReservationsController {
         return "redirect:/reservations";
     }
 
+    @GetMapping("calculate_price")
+    public String calculateFinalPrice(@RequestParam("reservation_id") int reservationId, Model model) {
+        model.addAttribute("reservation_id", reservationId);
+        return "reservations/calculate_price";
+    }
+
+    @PostMapping("calculate_price")
+    public String saveFinalPrice(@RequestParam("reservation_id") int reservationId, @RequestParam("total_km") int totalKmDriven, @RequestParam("fuel_fee") boolean addFuelFee) {
+        Reservation reservation = reservationsManager.getReservation(reservationId);
+        reservationsManager.setFinalPrice(reservation, totalKmDriven, addFuelFee);
+        return "redirect:/reservations";
+    }
+
 
 }

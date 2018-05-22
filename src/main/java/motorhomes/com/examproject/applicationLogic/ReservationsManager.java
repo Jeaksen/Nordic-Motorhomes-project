@@ -4,9 +4,11 @@ package motorhomes.com.examproject.applicationLogic;
 import motorhomes.com.examproject.model.*;
 import motorhomes.com.examproject.repositories.*;
 
+import javax.validation.constraints.NotNull;
 import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ public class ReservationsManager {
     private final static double TRANSPORT_FEE_PER_KM = 0.7;
     private final static int FUEL_FEE = 70;
     private final static int EXTRA_KM_FEE = 1;
+    private final static int KM_PER_DAY_LIMIT = 400;
 
     public ReservationsManager(CustomersDbRepository customersRepository, ReservationsRepository reservationsRepository,
                                MotorhomeDbRepository motorhomesRepository, PickupDbRepository pickupDbRepository,
@@ -320,5 +323,28 @@ public class ReservationsManager {
             return SeasonMultiplier.MEMDIUM.getMultiplier();
         }
         return SeasonMultiplier.LOW.getMultiplier();
+    }
+
+    public boolean setFinalPrice (Reservation reservation, int totalKm, boolean addFuelFee) {
+        try {
+
+        double price = reservation.getPrice();
+        int extraKm;
+        int reservationLength = Period.between(reservation.getStartDate(), reservation.getEndDate()).getDays();
+        extraKm = totalKm - reservationLength * ReservationsManager.KM_PER_DAY_LIMIT;
+        extraKm = extraKm < 0? 0 : extraKm;
+        price += (double)extraKm * ReservationsManager.EXTRA_KM_FEE;
+        if (addFuelFee) {
+            price += ReservationsManager.FUEL_FEE;
+        }
+        reservation.setPrice((int)Math.round(price));
+        reservation.setStatus("Payed");
+        reservationsRepository.update(reservation);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 }
