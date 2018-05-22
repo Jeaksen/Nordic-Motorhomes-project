@@ -64,6 +64,23 @@ public class MotorhomeManager {
                 savedMotorhomeDescription = motorhomeDescriptionDbRepository.read(motorhomeDescription.getMotorhomeDescriptionId());
             }
             motorhome.setMotorhomeDescription(savedMotorhomeDescription);
+            // W tym miejscu ja zwalilem sprawe, jesli pojdziesz do MotorhomeDBRepository to statement.execute() nie zwraca
+            // true w momencie w ktorym polecenie zostalo wykonane, tylko w momencie w ktorym zapytanie do bazy danych zwraca jakis wynik(ResultSet).
+            // Czyli kiedy towrzysz nowy wiersz to ta funckja bedzie zwraca false, bo zapytanie "INSERT INTO" nie zwraca zadnego wyniku.
+            // Niestyty nie wiedzialem tego wczesniej. Co proponuje to w zamiast zwracac to co zwraca ta funkcja zmienic kod tak:
+            /*
+                 motorhomeDbRepository.create(motorhome);
+            }catch (SQLException e){
+                 e.printStackTrace();
+                return false;
+            }
+            return true;
+    }
+             */
+            //W tym momencie jezeli funckja motorhomeDbRepository.create(motorhome) wyrzuci SQLException to zwracasz false,
+            // a jesli wszystko pojdzie zgodnie z planem i ta funckja dojdzie do konca to zwracasz true
+            // To samo tyczy sie innych funkcji z baz danych ktore zwracaja to co statement.execute()
+            // Zajme sie zmienianiem tego wszystkiego, a Ty po prostu tego nie uzywaj, udawaj ze nie istnieje :D
             return motorhomeDbRepository.create(motorhome);
         }catch (SQLException e){
             e.printStackTrace();
