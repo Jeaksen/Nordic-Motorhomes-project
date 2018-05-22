@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public enum SeasonMultiplier {
     LOW(1, LocalDate.of(2018,1,1), LocalDate.of(2018,12,31)),
-    MEMDIUM(1.3, LocalDate.of(2018,5,1), LocalDate.of(2018,10,31)),
+    MEDIUM(1.3, LocalDate.of(2018,5,1), LocalDate.of(2018,10,31)),
     PEAK(2.08, LocalDate.of(2018,7,1), LocalDate.of(2018,8,31));
 
     private final double multiplier;

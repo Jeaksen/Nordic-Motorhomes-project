@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Cancel Reservation</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container" id="reservations">
+    <h1 th:text="'Cancel reservation no ' + ${reservation_id}">: </h1>
+    <h2 th:text="'Cancellation fee: ' + ${fee}"></h2>
+    <form method="post" action="/cancel_reservation">
+        <input type="hidden" name="reservation_id" th:value="${reservation_id}" />
+        <input type="submit" value="Cancel" class="button button-delete" />
+        <input type="submit" value="Return" class="button" formaction="/reservations" formmethod="get"/>
+    </form>
+</div>
+
+</body>
+</html>

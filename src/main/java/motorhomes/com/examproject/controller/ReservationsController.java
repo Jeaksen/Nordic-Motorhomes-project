@@ -12,10 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -174,16 +172,30 @@ public class ReservationsController {
         return "redirect:/reservations";
     }
 
-    @GetMapping("calculate_price")
+    @GetMapping("/calculate_price")
     public String calculateFinalPrice(@RequestParam("reservation_id") int reservationId, Model model) {
         model.addAttribute("reservation_id", reservationId);
         return "reservations/calculate_price";
     }
 
-    @PostMapping("calculate_price")
+    @PostMapping("/calculate_price")
     public String saveFinalPrice(@RequestParam("reservation_id") int reservationId, @RequestParam("total_km") int totalKmDriven, @RequestParam("fuel_fee") boolean addFuelFee) {
         Reservation reservation = reservationsManager.getReservation(reservationId);
         reservationsManager.setFinalPrice(reservation, totalKmDriven, addFuelFee);
+        return "redirect:/reservations";
+    }
+
+    @GetMapping("/cancel_reservation")
+    public String cancelReservation(Model model, @RequestParam("reservation_id") int reservationId) {
+        int cancellationFee = reservationsManager.calculateCancellationFee(reservationId);
+        model.addAttribute("fee", cancellationFee);
+        model.addAttribute("reservation_id", reservationId);
+        return "reservations/cancel";
+    }
+
+    @PostMapping("/cancel_reservation")
+    public String confirmCancellation(@RequestParam("reservation_id") int reservationId) {
+        reservationsManager.cancelReservation(reservationId);
         return "redirect:/reservations";
     }
 

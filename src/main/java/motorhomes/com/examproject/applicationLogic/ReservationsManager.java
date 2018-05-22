@@ -4,8 +4,6 @@ package motorhomes.com.examproject.applicationLogic;
 import motorhomes.com.examproject.model.*;
 import motorhomes.com.examproject.repositories.*;
 
-import javax.validation.constraints.NotNull;
-import java.net.Inet4Address;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.Period;
@@ -316,11 +314,11 @@ public class ReservationsManager {
         if (startDate.getMonth().compareTo(SeasonMultiplier.PEAK.getStartDate().getMonth()) >= 0) {
             if (startDate.getMonth().compareTo(SeasonMultiplier.PEAK.getEndDate().getMonth()) <= 0){
                 return SeasonMultiplier.PEAK.getMultiplier();
-            } else if (startDate.getMonth().compareTo(SeasonMultiplier.MEMDIUM.getStartDate().getMonth()) >= 0) {
-                return SeasonMultiplier.MEMDIUM.getMultiplier();
+            } else if (startDate.getMonth().compareTo(SeasonMultiplier.MEDIUM.getStartDate().getMonth()) >= 0) {
+                return SeasonMultiplier.MEDIUM.getMultiplier();
             }
-        } else if (startDate.getMonth().compareTo(SeasonMultiplier.MEMDIUM.getStartDate().getMonth()) >= 0) {
-            return SeasonMultiplier.MEMDIUM.getMultiplier();
+        } else if (startDate.getMonth().compareTo(SeasonMultiplier.MEDIUM.getStartDate().getMonth()) >= 0) {
+            return SeasonMultiplier.MEDIUM.getMultiplier();
         }
         return SeasonMultiplier.LOW.getMultiplier();
     }
@@ -341,6 +339,37 @@ public class ReservationsManager {
         reservation.setStatus("Payed");
         reservationsRepository.update(reservation);
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public int calculateCancellationFee(int reservationId) {
+        Reservation reservation = this.getReservation(reservationId);
+        double cancellationFee;
+        int daysToReservation = Period.between(LocalDate.now(), reservation.getStartDate()).getDays();
+        if (daysToReservation >= 50) {
+            cancellationFee = (double)reservation.getPrice() * 0.2;
+            cancellationFee = cancellationFee<200? 200 : cancellationFee;
+        } else if (daysToReservation >= 15) {
+            cancellationFee = (double)reservation.getPrice() * 0.5;
+        } else if (daysToReservation > 1) {
+            cancellationFee = (double)reservation.getPrice() * 0.8;
+        } else {
+            cancellationFee = (double)reservation.getPrice() * 0.95;
+        }
+        return (int)Math.round(cancellationFee);
+    }
+
+    public boolean cancelReservation(int reservationId) {
+        try {
+            Reservation reservation = this.getReservation(reservationId);
+            if (reservation != null) {
+                reservation.setStatus("Canceled");
+                reservationsRepository.update(reservation);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
