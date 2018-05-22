@@ -54,6 +54,10 @@ public class MotorhomeManager {
 
     public boolean saveMotorhomeDescription(Motorhome motorhome, MotorhomeDescription motorhomeDescription){
         try{
+            /*Nie wiem jak to zaplanowalas ale czy motorhomeDescription.getMotorhomeDescriptionId() nie zwraca czasem bledu ze nie zostal zinicjalizowany jesli towrzysz nowe description?
+           Jesli tak to napisz i ci powiem jak temu zapobiec
+            */
+
             MotorhomeDescription savedMotorhomeDescription = motorhomeDescriptionDbRepository.read(motorhomeDescription.getMotorhomeDescriptionId());
             if (savedMotorhomeDescription == null) {
                 motorhomeDescriptionDbRepository.create(motorhomeDescription);

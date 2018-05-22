@@ -79,7 +79,7 @@ public class ReservationsController {
         request.getSession().setAttribute("dropoff_location",dropLocation);
         request.getSession().setAttribute("pickup_distance",pickDistance);
         request.getSession().setAttribute("pickup_location",pickLocation);
-        List<Accessory> accessories = reservationsManager.getAccessories();
+        List<Accessory> accessories = reservationsManager.getAllAccessories();
         model.addAttribute("accessories", accessories);
         request.getSession().setAttribute("accessories", accessories);
         return "reservations/create/accessories";
@@ -94,20 +94,19 @@ public class ReservationsController {
     @GetMapping("/confirm")
     public String confirmReservation(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        Reservation reservation = (Reservation)session.getAttribute("reservation");
-        Customer customer = (Customer)session.getAttribute("customer");
-        int dropDistance = (int)session.getAttribute("dropoff_distance");
-        String dropLocation = (String)session.getAttribute("dropoff_location");
-        int pickDistance = (int)session.getAttribute("pickup_distance");
-        String pickLocation = (String)session.getAttribute("pickup_location");
-        List<Accessory> accessories = (List<Accessory>)request.getSession().getAttribute("accessories");
-        int[] quantities = (int[])session.getAttribute("quantities");
+//        Reservation reservation = (Reservation)session.getAttribute("reservation");
+//        Customer customer = (Customer)session.getAttribute("customer");
+//        int dropDistance = (int)session.getAttribute("dropoff_distance");
+//        String dropLocation = (String)session.getAttribute("dropoff_location");
+//        int pickDistance = (int)session.getAttribute("pickup_distance");
+//        String pickLocation = (String)session.getAttribute("pickup_location");
+//        List<Accessory> accessories = (List<Accessory>)request.getSession().getAttribute("accessories");
+//        int[] quantities = (int[])session.getAttribute("quantities");
 
-        reservationsManager.saveCustomer(reservation, customer);
-        reservationsManager.saveTransport(reservation, dropDistance, dropLocation, pickDistance, pickLocation);
-        reservationsManager.saveAccessories(reservation, quantities, accessories);
-        reservationsManager.updateReservation(reservation);
-        //todo calculate price
+        reservationsManager.saveReservation((Reservation)session.getAttribute("reservation"), (Customer)session.getAttribute("customer"), (int)session.getAttribute("dropoff_distance"),
+                (String)session.getAttribute("dropoff_location"), (int)session.getAttribute("pickup_distance"), (String)session.getAttribute("pickup_location"),
+                (int[])session.getAttribute("quantities"), (List<Accessory>)request.getSession().getAttribute("accessories"));
+
         System.out.println("Reservation: " + request.getSession(true).getAttribute("reservation") + "-----------------\n\n");
 
         session.removeAttribute("customer");
@@ -147,7 +146,7 @@ public class ReservationsController {
         Reservation reservation = reservationsManager.getReservation(reservationId);
         DropOff dropOff = reservationsManager.getDropOff(reservationId)!=null?reservationsManager.getDropOff(reservationId):new DropOff(0,"",0);
         PickUp pickUp = reservationsManager.getPickUp(reservationId)!=null?reservationsManager.getPickUp(reservationId):new PickUp(0,"", 0);
-        List<Accessory> accessories = reservationsManager.getAccessories();
+        List<Accessory> accessories = reservationsManager.getAllAccessories();
         Map<Integer, Integer> accessoryIdQuantityMap = reservation.getAccessories();
         Map<Accessory, Integer> accessoryQuantityMap = new HashMap<>();
         accessories.forEach((accessory) -> accessoryQuantityMap.put(accessory, accessoryIdQuantityMap.getOrDefault(accessory.getId(), 0)) );
@@ -196,6 +195,17 @@ public class ReservationsController {
     @PostMapping("/cancel_reservation")
     public String confirmCancellation(@RequestParam("reservation_id") int reservationId) {
         reservationsManager.cancelReservation(reservationId);
+        return "redirect:/reservations";
+    }
+
+    @GetMapping("/generate_contract")
+    public String printContact(Model model, @RequestParam("reservation_id") int reservationId) {
+        model.addAttribute("reservation_id", reservationId);
+        return "reservations/print_contract";
+    }
+
+    @PostMapping("/print_contract")
+    public String prepareContract() {
         return "redirect:/reservations";
     }
 
