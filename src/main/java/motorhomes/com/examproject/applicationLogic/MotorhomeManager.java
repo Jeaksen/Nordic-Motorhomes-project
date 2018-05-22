@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo do logika tej klasy do sprawdzenia
+ * todo ?????!!!
  */
 public class MotorhomeManager {
 
@@ -25,35 +25,58 @@ public class MotorhomeManager {
 
     public List<Motorhome> getAllMotorhomes(){
         try{
-            return motorhomeDbRepository.readAll();
+            List<Motorhome> motorhomes = motorhomeDbRepository.readAll();
+            return motorhomes;
         }catch (SQLException e){
             e.printStackTrace();
             System.out.println("Error occurred while reading motorhomes' list");
-            ArrayList<Motorhome> motorhomes = null;
-            return motorhomes;
         }
+        return null;
     }
 
     public Motorhome getChosenMotorhome(int motorhomeId){
         try {
-            return motorhomeDbRepository.read(motorhomeId);
+            Motorhome motorhome = motorhomeDbRepository.read(motorhomeId);
+            return motorhome;
         }catch (SQLException e){
             e.printStackTrace();
             System.out.println("Motorhome not found!");
-            Motorhome motorhome = null;
-            return motorhome;
         }
+        return null;
     }
 
-    public void createMotorhome(Motorhome motorhome, int description_id){
-        try {
-            motorhomeDbRepository.create(motorhome, description_id);
+    public Motorhome addNewMotorhome(String licencePlate){
+       Motorhome motorhome = new Motorhome();
+       motorhome.setLicencePlate(licencePlate);
+       motorhome.setMotorhomeStatus("Available");
+       return motorhome;
+    }
+
+    public boolean saveMotorhomeDescription(Motorhome motorhome, MotorhomeDescription motorhomeDescription){
+        try{
+            MotorhomeDescription savedMotorhomeDescription = motorhomeDescriptionDbRepository.read(motorhomeDescription.getMotorhomeDescriptionId());
+            if (savedMotorhomeDescription == null) {
+                motorhomeDescriptionDbRepository.create(motorhomeDescription);
+                savedMotorhomeDescription = motorhomeDescriptionDbRepository.read(motorhomeDescription.getMotorhomeDescriptionId());
+            }
+            motorhome.setMotorhomeDescription(savedMotorhomeDescription);
+            return motorhomeDbRepository.create(motorhome);
         }catch (SQLException e){
-            System.out.println("Motorhome not created!");
             e.printStackTrace();
         }
+        return false;
     }
 
+    //not sure if it will be needed
+    public List<Integer> getExistingMotorhomeDescriptionIds(){
+        try{
+            return motorhomeDescriptionDbRepository.readAllIds();
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+/**
     public void addNewModel(MotorhomeDescription motorhomeDescription){
         try {
             motorhomeDescriptionDbRepository.create(motorhomeDescription);
@@ -62,6 +85,7 @@ public class MotorhomeManager {
             e.printStackTrace();
         }
     }
+ */
 
     public void deleteMotorhome(int motorhomeId){
         try {

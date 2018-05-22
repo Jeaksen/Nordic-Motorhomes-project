@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo add comments!
  */
 public class MotorhomeDbRepository {
 
@@ -34,7 +33,11 @@ public class MotorhomeDbRepository {
         statement = connection.prepareStatement("SELECT * FROM motorhomes");
         result = statement.executeQuery();
         while (result.next()){
-            motorhomes.add(new Motorhome(result.getInt("motorhome_id"), result.getString("licence_plate"), result.getString("motorhome_status"), motorhomeDescriptionDbRepository.read(result.getInt("decription_id"))));
+            motorhomes.add(new Motorhome(
+                    result.getInt("motorhome_id"),
+                    result.getString("licence_plate"),
+                    result.getString("motorhome_status"),
+                    motorhomeDescriptionDbRepository.read(result.getInt("decription_id"))));
         }
         statement = null;
         result = null;
@@ -50,7 +53,6 @@ public class MotorhomeDbRepository {
         for (int motorhomesId: motorhomeIDs) {
             motorhomes.add(this.read(motorhomesId));
         }
-
         return motorhomes;
     }
 
@@ -64,14 +66,16 @@ public class MotorhomeDbRepository {
         return motorhomeIDs;
     }
 
-
-
-    public boolean create(Motorhome motorhome, int motorhomeDescriptionId) throws SQLException {
+    /**
+     * This method creates new row in the motorhomes table with: licence_plate, motorhome_status and description_id
+     * @return true when row was successfully created or false in case of error.
+     */
+    public boolean create(Motorhome motorhome) throws SQLException {
 
         statement = connection.prepareStatement("INSERT INTO motorhomes(licence_plate, motorhome_status, description_id) VALUES (?, ?, ?)");
         statement.setString(1, motorhome.getLicencePlate());
         statement.setString(2, motorhome.getMotorhomeStatus());
-        statement.setInt(3, motorhomeDescriptionId);
+        statement.setInt(3, motorhome.getMotorhomeDescription().getMotorhomeDescriptionId());
         boolean creationSuccessful = statement.execute();
         statement = null;
         return creationSuccessful;
@@ -92,12 +96,16 @@ public class MotorhomeDbRepository {
         return motorhome;
     }
 
+    /**
+     * This method updates: licence_plate, motorhome_status and description_id
+     */
     public void update(Motorhome motorhome) throws SQLException {
 
-        statement = connection.prepareStatement("UPDATE motorhomes SET licence_plate=?, motorhome_status=? WHERE motorhome_id=?");
+        statement = connection.prepareStatement("UPDATE motorhomes SET licence_plate=?, motorhome_status=?, description_id=? WHERE motorhome_id=?");
         statement.setString(1, motorhome.getLicencePlate());
         statement.setString(2, motorhome.getMotorhomeStatus());
-        statement.setInt(3, motorhome.getMotorhomeId());
+        statement.setInt(3, motorhome.getMotorhomeDescription().getMotorhomeDescriptionId());
+        statement.setInt(4, motorhome.getMotorhomeId());
         statement.execute();
         statement = null;
     }

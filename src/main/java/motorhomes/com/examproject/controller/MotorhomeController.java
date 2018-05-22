@@ -5,7 +5,6 @@ import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.MotorhomeDescriptionDbRepository;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +14,7 @@ import java.sql.SQLException;
 
 /**
  * @ Alicja Drankowska
- * todo do metoda post do sprawdzenia
+ * todo ????
  */
 @Controller
 public class MotorhomeController {
@@ -27,7 +26,7 @@ public class MotorhomeController {
         this.motorhomeManager = new MotorhomeManager(new MotorhomeDbRepository(motorhomeDescriptionDbRepository), motorhomeDescriptionDbRepository);
     }
 
-    @GetMapping("/newmotorhome")
+    /**@GetMapping("/newmotorhome")
     public String newmotorhome(){
         return "newmotorhome";
     }
@@ -37,6 +36,8 @@ public class MotorhomeController {
         motorhomeManager.createMotorhome(motorhome,descriptionId );
         return "redirect:/fleet";
     }
+     */
+
     @GetMapping("/fleet")
     public String fleet(){
         return"fleet";

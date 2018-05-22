@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ Alicja Drankowska
@@ -38,6 +39,16 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
         statement = null;
         resultSet = null;
         return motorhomeDescriptions;
+    }
+//not sure if it will be needed
+    public List<Integer> readAllIds() throws SQLException{
+        List<Integer> motorhomeDescriptionIds = new ArrayList<>();
+        statement = connection.prepareStatement("SELECT description_id FROM descriptions");
+        resultSet = statement.executeQuery();
+        while (resultSet.next()){
+            motorhomeDescriptionIds.add(resultSet.getInt("description_id"));
+        }
+        return motorhomeDescriptionIds;
     }
 
     @Override
