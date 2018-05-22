@@ -86,10 +86,10 @@ public class ReservationsManager {
 
     private boolean saveCustomer(Reservation reservation, Customer customer) {
         try {
-            Customer savedCustomer = customersRepository.read(customer.getDrivingLicenseNr());
+            Customer savedCustomer = customersRepository.read(customer.getDrivingLicenceNr());
             if (savedCustomer == null) {
                 customersRepository.create(customer);
-                savedCustomer = customersRepository.read(customer.getDrivingLicenseNr());
+                savedCustomer = customersRepository.read(customer.getDrivingLicenceNr());
             }
             reservation.setCustomerId(savedCustomer.getCustomerId());
             int reservationId = reservationsRepository.create(reservation);

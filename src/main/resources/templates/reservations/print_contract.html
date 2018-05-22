@@ -9,7 +9,8 @@
 <div id="contract">
     <h1>Nordic Motorhomes Rental Agreement</h1>
 
-    <p>1.This rental agreement (“Agreement”) is made effective as of ________________, by and between Nordic Motorhomes (“Company”) and ________________________________________________(“Renter”).</p>
+    <p th:text="'1.This rental agreement (“Agreement”) is made effective as of ' + ${current_date} + ', by and between Nordic Motorhomes (“Company”) and ' + ${customer.customerName} + ' (“Renter”).'">
+        1.This rental agreement (“Agreement”) is made effective as of ________________, by and between Nordic Motorhomes (“Company”) and ________________________________________________(“Renter”).</p>
     <p>The parties agree as follows:</p>
 
     <h2>2.VEHICLE:</h2>
@@ -17,9 +18,9 @@
     <p>Company, in consideration of the rental payments provided in this agreement shall provide the
         recreational vehicle (“Vehicle”) for use by the Renter.</p>
 
-    <p>Brand: Ford E-350</p>
-    <p>Model: Sportsmobile EB 50</p>
-    <p>License plate Colorado 903NTQ</p>
+    <p th:text="'Brand: ' + ${motorhome.motorhomeDescription.brand}">Brand: ________</p>
+    <p th:text="'Model: ' + ${motorhome.motorhomeDescription.model}">Model: ________</p>
+    <p th:text="'Licence plate: ' + ${motorhome.licencePlate}">Licence plate _________</p>
 
     <h2>3.RENT:</h2>
     <br>
@@ -28,12 +29,14 @@
 
     <h2>4.DURATION:</h2>
     <br>
-    <p>The rental period shall be from______ to _____________ . </p>
+    <p th:text="'The rental period shall be from ' + ${reservation.startDate} + ' - to ' + ${reservation.endDate} + '.'">
+        The rental period shall be from _________- to _____________ . </p>
     <p>Renter must return the Vehicle to our rental office or other location if it was agreed, and in the same condition that you received it, except for ordinary wear. </p>
     <p>If the Vehicle is returned after closing hours, Renter remains responsible for the safety of, and
         any damage to, the Vehicle until we inspect it upon Company’s next opening for business. </p>
 
-   <p>Estimated Total Vehicle Rental Rate for Renter $_____________________</p>
+   <p th:text="'Estimated Total Vehicle Rental Rate for Renter €' + ${reservation.price}">
+       Estimated Total Vehicle Rental Rate for Renter $_____________________</p>
     <br>
     <br>
     <br>
@@ -55,30 +58,53 @@
         </thead>
 
         <tbody>
-        <tr>
+        <tr th:each="entry: ${accessories}">
 
-            <td>Bike</td>
-            <td>5</td>
+            <td th:text="${entry.key.name}">Bike</td>
+            <td th:text="${entry.value}">5</td>
         </tr>
         </tbody>
     </table>
 
+    <article  th:if="${pick_up == null}">
     <h2>6.Pick-up information</h2>
     <br>
-    <p>Location: Reda</p>
-    <p>Distance from rentals office: 12</p>
+    <p>Location: Rentals Office</p>
+    <p>Distance from rentals office: 0</p>
+    </article>
 
+    <article  th:unless="${pick_up == null}">
+        <h2>6.Pick-up information</h2>
+        <br>
+        <p th:text="'Location: '+ ${pick_up.pickUpLocation}">Location: Rentals Office</p>
+        <p th:text="'Distance from rentals office: '+ ${pick_up.pickUpDistance}">Distance from rentals office: 0</p>
+    </article>
+
+    <article  th:if="${drop_off==null}">
     <h2>7.Drop-off information</h2>
     <br>
-    <p>Location: Reda</p>
-    <p>Distance from rentals office: 12</p>
+    <p>Location: Rentals Office</p>
+    <p>Distance from rentals office: 0</p>
+    </article>
+
+    <article  th:unless="${drop_off==null}">
+        <h2>7.Drop-off information</h2>
+        <br>
+        <p th:text="'Location: ' + ${drop_off.dropOffLocation}">Location: Rentals Office</p>
+        <p th:text="'Location: ' + ${drop_off.dropOffDistance}">Distance from rentals office: 0</p>
+    </article>
 
     <h2>Signatures</h2>
     <br>
     <p>Nordic Motorhomes__________________________________________</p>
     <br>
     <p>Customer________________________________</p>
-
+    <br>
+    <p th:text="'Customer driving licence no: ' + ${customer.drivingLicenceNr}">Customer's driving licence no: _______________________</p>
+    <br>
+    <br>
+    <br>
+    <h3>Additional Information</h3>
 </div>
 </body>
 <script>window.print()</script>

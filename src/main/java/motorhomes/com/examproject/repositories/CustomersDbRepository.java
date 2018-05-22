@@ -42,7 +42,7 @@ public class CustomersDbRepository{
         System.out.println(customer);
         statement = connection.prepareStatement("INSERT INTO customers(customers_name, driving_licence_nr) VALUES (?,?)");
         statement.setString(1, customer.getCustomerName());
-        statement.setString(2, customer.getDrivingLicenseNr());
+        statement.setString(2, customer.getDrivingLicenceNr());
         boolean creationSuccessful = statement.execute();
         statement = null;
         return creationSuccessful;
@@ -82,7 +82,7 @@ public class CustomersDbRepository{
 
         statement = connection.prepareStatement("UPDATE customers SET customers_name=?, driving_licence_nr=? WHERE customer_id=?");
         statement.setString(1, customer.getCustomerName());
-        statement.setString(2, customer.getDrivingLicenseNr());
+        statement.setString(2, customer.getDrivingLicenceNr());
         statement.setInt(3, customer.getCustomerId());
         statement.execute();
         statement = null;

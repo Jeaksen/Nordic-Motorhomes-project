@@ -31,7 +31,7 @@ public class Customer {
         this.customerName = customerName;
     }
 
-    public String getDrivingLicenseNr() {
+    public String getDrivingLicenceNr() {
         return drivingLicenceNr;
     }
 

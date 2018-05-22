@@ -200,7 +200,16 @@ public class ReservationsController {
 
     @GetMapping("/generate_contract")
     public String printContact(Model model, @RequestParam("reservation_id") int reservationId) {
-        model.addAttribute("reservation_id", reservationId);
+        Reservation reservation = reservationsManager.getReservation(reservationId);
+        model.addAttribute("current_date", LocalDate.now());
+        model.addAttribute("customer", reservationsManager.getCustomer(reservation.getCustomerId()));
+        model.addAttribute("motorhome", reservationsManager.getMotorhome(reservation.getMotorhomeId()));
+        Map<Accessory, Integer> accessories = new HashMap<>();
+        reservation.getAccessories().forEach((k,v) -> accessories.put(reservationsManager.getAccessory(k),v));
+        model.addAttribute("accessories", accessories);
+        model.addAttribute("drop_off", reservationsManager.getDropOff(reservationId));
+        model.addAttribute("pick_up", reservationsManager.getPickUp(reservationId));
+        model.addAttribute("reservation", reservation);
         return "reservations/print_contract";
     }
 
