@@ -50,8 +50,17 @@ public class ReservationsManager {
         return null;
     }
 
+    /**
+     * This method creates a Reservation instance and sets its startDate, endDate and status
+     * @param startDate start date of reservation
+     * @param endDate end date of reservation
+     * @return reservation object or null if dates are invalid
+     */
     public Reservation startReservation(LocalDate startDate, LocalDate endDate) {
         Reservation reservation = new Reservation();
+        if (Period.between(startDate,endDate).getDays() <= 0 || Period.between(LocalDate.now(), startDate).getDays() <= 0) {
+            return null;
+        }
         reservation.setStartDate(startDate);
         reservation.setEndDate(endDate);
         reservation.setStatus("Not Payed");

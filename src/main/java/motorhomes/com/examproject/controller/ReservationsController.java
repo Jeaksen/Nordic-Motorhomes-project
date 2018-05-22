@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -46,54 +45,59 @@ public class ReservationsController {
 
     @PostMapping("/add_reservation")
     public String startReservation(@RequestParam("start_date") String startDate,
-                                   @RequestParam("end_date") String endDate, HttpServletRequest request, Model model) {
+                                   @RequestParam("end_date") String endDate, HttpSession session, Model model) {
 
         Reservation reservation = reservationsManager.startReservation(LocalDate.parse(startDate), LocalDate.parse(endDate));
-        request.getSession(true).setAttribute("reservation", reservation);
+        if (reservation == null) {
+            return "redirect:/add_reservation";
+        }
+        session.setAttribute("reservation", reservation);
         List<Motorhome> motorhomes;
         motorhomes = reservationsManager.getAvailableMotorhomes(reservation);
+        if (motorhomes == null || motorhomes.size() == 0) {
+            return "redirect:/add_reservation";
+        }
         model.addAttribute("motorhomes", motorhomes);
 
         return "reservations/create/available_motorhomes";
     }
 
     @GetMapping("/save_motorhome")
-    public String saveMotorhome(@RequestParam("motorhome_id") int motorhomesId, HttpServletRequest request) {
-        Reservation reservation = (Reservation)request.getSession(true).getAttribute("reservation");
+    public String saveMotorhome(@RequestParam("motorhome_id") int motorhomesId, HttpSession session) {
+        Reservation reservation = (Reservation)session.getAttribute("reservation");
         reservationsManager.saveMotorhome(reservation, motorhomesId);
         return "reservations/create/customer_data";
     }
 
     @PostMapping("/save_customer_data")
-    public String saveCustomer(@ModelAttribute Customer customer, HttpServletRequest request) {
-        request.getSession().setAttribute("customer", customer);
+    public String saveCustomer(@ModelAttribute Customer customer, HttpSession session) {
+        session.setAttribute("customer", customer);
         return "reservations/create/transport";
     }
 
     @PostMapping("/save_transport")
-    public String saveTransport(Model model, HttpServletRequest request,
+    public String saveTransport(Model model, HttpSession session,
                                 @RequestParam(value="dropoff_distance", required=false) int dropDistance, @RequestParam(value="dropoff_location", required=false) String dropLocation,
                                 @RequestParam(value="pickup_distance", required=false) int pickDistance, @RequestParam(value="pickup_location", required=false) String pickLocation) {
 
-        request.getSession().setAttribute("dropoff_distance",dropDistance);
-        request.getSession().setAttribute("dropoff_location",dropLocation);
-        request.getSession().setAttribute("pickup_distance",pickDistance);
-        request.getSession().setAttribute("pickup_location",pickLocation);
+        session.setAttribute("dropoff_distance",dropDistance);
+        session.setAttribute("dropoff_location",dropLocation);
+        session.setAttribute("pickup_distance",pickDistance);
+        session.setAttribute("pickup_location",pickLocation);
         List<Accessory> accessories = reservationsManager.getAllAccessories();
         model.addAttribute("accessories", accessories);
-        request.getSession().setAttribute("accessories", accessories);
+        session.setAttribute("accessories", accessories);
         return "reservations/create/accessories";
     }
 
     @PostMapping("/save_accessories")
-    public String saveAccessories(HttpServletRequest request, @RequestParam("quantities[]") int[] quantities) {
-        request.getSession().setAttribute("quantities", quantities);
+    public String saveAccessories(HttpSession session, @RequestParam("quantities[]") int[] quantities) {
+        session.setAttribute("quantities", quantities);
         return "redirect:/confirm";
     }
 
     @GetMapping("/confirm")
-    public String confirmReservation(HttpServletRequest request) {
-        HttpSession session = request.getSession();
+    public String confirmReservation(HttpSession session) {
 //        Reservation reservation = (Reservation)session.getAttribute("reservation");
 //        Customer customer = (Customer)session.getAttribute("customer");
 //        int dropDistance = (int)session.getAttribute("dropoff_distance");
@@ -105,9 +109,9 @@ public class ReservationsController {
 
         reservationsManager.saveReservation((Reservation)session.getAttribute("reservation"), (Customer)session.getAttribute("customer"), (int)session.getAttribute("dropoff_distance"),
                 (String)session.getAttribute("dropoff_location"), (int)session.getAttribute("pickup_distance"), (String)session.getAttribute("pickup_location"),
-                (int[])session.getAttribute("quantities"), (List<Accessory>)request.getSession().getAttribute("accessories"));
+                (int[])session.getAttribute("quantities"), (List<Accessory>)session.getAttribute("accessories"));
 
-        System.out.println("Reservation: " + request.getSession(true).getAttribute("reservation") + "-----------------\n\n");
+        System.out.println("Reservation: " +session.getAttribute("reservation") + "-----------------\n\n");
 
         session.removeAttribute("customer");
         session.removeAttribute("dropoff_distance");
