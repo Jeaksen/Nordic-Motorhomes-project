@@ -4,6 +4,8 @@ import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.model.MotorhomeDescription;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.MotorhomeDescriptionDbRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -13,11 +15,13 @@ import java.util.List;
  * @ Alicja Drankowska
  * todo ?????!!!
  */
+@Component
 public class MotorhomeManager {
 
     private MotorhomeDbRepository motorhomeDbRepository;
     private MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository;
 
+    @Autowired
     public MotorhomeManager (MotorhomeDbRepository motorhomeDbRepository, MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository){
         this.motorhomeDbRepository = motorhomeDbRepository;
         this.motorhomeDescriptionDbRepository = motorhomeDescriptionDbRepository;
@@ -103,7 +107,7 @@ public class MotorhomeManager {
     //not sure if it will be needed
     public List<MotorhomeDescription> getExistingMotorhomeDescriptions (Motorhome motorhome){
         try{
-            motorhomeDescriptionDbRepository.readAll();
+            return motorhomeDescriptionDbRepository.readAll();
         }catch (SQLException e){
             e.printStackTrace();
         }

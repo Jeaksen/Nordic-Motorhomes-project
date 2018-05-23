@@ -26,13 +26,14 @@ public class HomepageController {
 //     * @param homepageManager autowired by Spring, look beans.xml
 //     */
 //
-//    public HomepageController(HomepageManager homepageManager) {
-//        this.homepageManager = homepageManager;
-//    }
-
-    public HomepageController() throws SQLException {
-    this.homepageManager = new HomepageManager(new UsersDBRepository());
+    @Autowired
+    public HomepageController(HomepageManager homepageManager) {
+        this.homepageManager = homepageManager;
     }
+
+//    public HomepageController(){
+//    this.homepageManager = new HomepageManager(new UsersDBRepository());
+//    }
 
 
     /**

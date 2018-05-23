@@ -1,7 +1,10 @@
 package motorhomes.com.examproject.repositories;
 
 import motorhomes.com.examproject.model.Customer;
+import motorhomes.com.examproject.util.DBConnector;
 import motorhomes.com.examproject.util.DbConnection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,34 +16,40 @@ import java.util.ArrayList;
  * @ Alicja Drankowska
  * todo comments
  */
+@Repository
 public class CustomersDbRepository{
 
-    private Connection connection;
     private PreparedStatement statement;
-    private ResultSet resultSet;
+    private ResultSet result;
+    private DBConnector connector;
 
-    public CustomersDbRepository() throws SQLException{
-        this.connection = DbConnection.getConnection();
+    @Autowired
+    public void setConnector(DBConnector connector) {
+        System.out.println("REPAIRS: OK");
+        this.connector = connector;
+    }
+
+    public CustomersDbRepository(){
     }
 
 
     public ArrayList<Customer> readAll() throws SQLException {
         ArrayList<Customer> customers = new ArrayList<>();
-        statement = connection.prepareStatement("SELECT * FROM customers");
-        resultSet = statement.executeQuery();
+        statement = connector.getConnection().prepareStatement("SELECT * FROM customers");
+        result = statement.executeQuery();
 
-        while (resultSet.next()){
-            customers.add(new Customer(resultSet.getInt("customer_id"), resultSet.getString("customers_name"), resultSet.getString("driving_licence_nr")));
+        while (result.next()){
+            customers.add(new Customer(result.getInt("customer_id"), result.getString("customers_name"), result.getString("driving_licence_nr")));
         }
         statement = null;
-        resultSet = null;
+        result = null;
         return customers;
     }
 
 
     public boolean create(Customer customer) throws SQLException {
         System.out.println(customer);
-        statement = connection.prepareStatement("INSERT INTO customers(customers_name, driving_licence_nr) VALUES (?,?)");
+        statement = connector.getConnection().prepareStatement("INSERT INTO customers(customers_name, driving_licence_nr) VALUES (?,?)");
         statement.setString(1, customer.getCustomerName());
         statement.setString(2, customer.getDrivingLicenceNr());
         boolean creationSuccessful = statement.execute();
@@ -50,37 +59,37 @@ public class CustomersDbRepository{
 
 
     public Customer read(String drivingLicenseNO) throws SQLException {
-        statement = connection.prepareStatement("SELECT * FROM customers WHERE driving_licence_nr = ?");
+        statement = connector.getConnection().prepareStatement("SELECT * FROM customers WHERE driving_licence_nr = ?");
         statement.setString(1, drivingLicenseNO);
-        resultSet = statement.executeQuery();
+        result = statement.executeQuery();
         Customer customer = null;
 
-        if (resultSet.next()){
-            customer = new Customer(resultSet.getInt("customer_id"), resultSet.getString("customers_name"), resultSet.getString("driving_licence_nr"));
+        if (result.next()){
+            customer = new Customer(result.getInt("customer_id"), result.getString("customers_name"), result.getString("driving_licence_nr"));
         }
         statement = null;
-        resultSet = null;
+        result = null;
         return customer;
     }
 
     public Customer read(int customerId) throws SQLException {
-        statement = connection.prepareStatement("SELECT * FROM customers WHERE customer_id = ?");
+        statement = connector.getConnection().prepareStatement("SELECT * FROM customers WHERE customer_id = ?");
         statement.setInt(1, customerId);
-        resultSet = statement.executeQuery();
+        result = statement.executeQuery();
         Customer customer = null;
 
-        if (resultSet.next()){
-            customer = new Customer(resultSet.getInt("customer_id"), resultSet.getString("customers_name"), resultSet.getString("driving_licence_nr"));
+        if (result.next()){
+            customer = new Customer(result.getInt("customer_id"), result.getString("customers_name"), result.getString("driving_licence_nr"));
         }
         statement = null;
-        resultSet = null;
+        result = null;
         return customer;
     }
 
 
     public void update(Customer customer) throws SQLException {
 
-        statement = connection.prepareStatement("UPDATE customers SET customers_name=?, driving_licence_nr=? WHERE customer_id=?");
+        statement = connector.getConnection().prepareStatement("UPDATE customers SET customers_name=?, driving_licence_nr=? WHERE customer_id=?");
         statement.setString(1, customer.getCustomerName());
         statement.setString(2, customer.getDrivingLicenceNr());
         statement.setInt(3, customer.getCustomerId());
@@ -90,7 +99,7 @@ public class CustomersDbRepository{
 
 
     public void delete(int customerId) throws SQLException {
-        statement = connection.prepareStatement("DELETE FROM customers WHERE customer_id=?");
+        statement = connector.getConnection().prepareStatement("DELETE FROM customers WHERE customer_id=?");
         statement.setInt(1, customerId);
         statement.execute();
         statement = null;

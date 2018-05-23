@@ -1,9 +1,10 @@
 package motorhomes.com.examproject.repositories;
 
 import motorhomes.com.examproject.model.Accessory;
-import motorhomes.com.examproject.util.DbConnection;
+import motorhomes.com.examproject.util.DBConnector;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,28 +15,34 @@ import java.util.List;
  * @ Alicja Drankowska
  * todo comments
  */
+@Repository
 public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
 
-    private Connection connection;
-    private PreparedStatement preparedStatement;
-    private ResultSet resultSet;
+    private PreparedStatement statement;
+    private ResultSet result;
+    private DBConnector connector;
 
-    public AccessoriesDbRepository() throws SQLException {
-        this.connection = DbConnection.getConnection();
+    @Autowired
+    public void setConnector(DBConnector connector) {
+        System.out.println("REPAIRS: OK");
+        this.connector = connector;
+    }
+
+    public AccessoriesDbRepository() {
     }
 
     @Override
     public ArrayList<Accessory> readAll() throws SQLException {
         ArrayList<Accessory> accessories = new ArrayList<>();
 
-        preparedStatement = connection.prepareStatement("SELECT  * FROM accessories");
-        resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
-            accessories.add(new Accessory(resultSet.getInt("accessory_id"), resultSet.getString("name"), resultSet.getInt("price")));
+        statement = connector.getConnection().prepareStatement("SELECT  * FROM accessories");
+        result = statement.executeQuery();
+        while (result.next()){
+            accessories.add(new Accessory(result.getInt("accessory_id"), result.getString("name"), result.getInt("price")));
         }
 
-        preparedStatement = null;
-        resultSet = null;
+        statement = null;
+        result = null;
         return accessories;
     }
 
@@ -53,47 +60,47 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
     public boolean create(Accessory accessory) throws SQLException {
 
         System.out.println(accessory);
-        preparedStatement = connection.prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
-        preparedStatement.setString(1, accessory.getName());
-        preparedStatement.setInt(2, accessory.getPrice());
-        boolean creationSuccessful = preparedStatement.execute();
-        preparedStatement = null;
+        statement = connector.getConnection().prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
+        statement.setString(1, accessory.getName());
+        statement.setInt(2, accessory.getPrice());
+        boolean creationSuccessful = statement.execute();
+        statement = null;
         return creationSuccessful;
     }
 
     @Override
     public Accessory read(int accessoryId) throws SQLException {
 
-        preparedStatement = connection.prepareStatement("SELECT * FROM accessories WHERE accessory_id = ?");
-        preparedStatement.setInt(1, accessoryId);
-        resultSet = preparedStatement.executeQuery();
+        statement = connector.getConnection().prepareStatement("SELECT * FROM accessories WHERE accessory_id = ?");
+        statement.setInt(1, accessoryId);
+        result = statement.executeQuery();
         Accessory accessory = null;
 
-        if (resultSet.next()){
-            accessory = new Accessory(resultSet.getInt("accessory_id"), resultSet.getString("name"), resultSet.getInt("price"));
+        if (result.next()){
+            accessory = new Accessory(result.getInt("accessory_id"), result.getString("name"), result.getInt("price"));
         }
-        preparedStatement = null;
-        resultSet = null;
+        statement = null;
+        result = null;
         return accessory;
     }
 
     @Override
     public void update(Accessory accessory) throws SQLException {
 
-        preparedStatement = connection.prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
-        preparedStatement.setString(1, accessory.getName());
-        preparedStatement.setInt(2, accessory.getPrice());
-        preparedStatement.setInt(3, accessory.getId());
-        preparedStatement.execute();
-        preparedStatement = null;
+        statement = connector.getConnection().prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
+        statement.setString(1, accessory.getName());
+        statement.setInt(2, accessory.getPrice());
+        statement.setInt(3, accessory.getId());
+        statement.execute();
+        statement = null;
     }
 
     @Override
     public void delete(int accessoryId) throws SQLException {
 
-        preparedStatement = connection.prepareStatement("DELETE FROM accessories WHERE accessory_id=? ");
-        preparedStatement.setInt(1, accessoryId);
-        preparedStatement.execute();
-        preparedStatement = null;
+        statement = connector.getConnection().prepareStatement("DELETE FROM accessories WHERE accessory_id=? ");
+        statement.setInt(1, accessoryId);
+        statement.execute();
+        statement = null;
     }
 }

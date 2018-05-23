@@ -3,6 +3,9 @@ package motorhomes.com.examproject.applicationLogic;
 
 import motorhomes.com.examproject.model.*;
 import motorhomes.com.examproject.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -14,6 +17,8 @@ import java.util.Map;
 /**
  * @ Pawel Pohl
  */
+
+@Component
 public class ReservationsManager {
 
     private CustomersDbRepository customersRepository;
@@ -28,8 +33,10 @@ public class ReservationsManager {
     private final static int EXTRA_KM_FEE = 1;
     private final static int KM_PER_DAY_LIMIT = 400;
 
-    public ReservationsManager(CustomersDbRepository customersRepository, ReservationsRepository reservationsRepository, MotorhomeDbRepository motorhomesRepository, PickupDbRepository pickupDbRepository,
+    @Autowired
+    public ReservationsManager(@Qualifier("getCustomersDbRepository") CustomersDbRepository customersRepository, ReservationsRepository reservationsRepository, @Qualifier("getMotorhomeDbRepository") MotorhomeDbRepository motorhomesRepository, PickupDbRepository pickupDbRepository,
                                DropOffDbRepository dropOffDbRepository, AccessoriesDbRepository accessoriesDbRepository, ReservationsAccessoriesRepository reservationsAccessoriesRepository) {
+
         this.customersRepository = customersRepository;
         this.reservationsRepository = reservationsRepository;
         this.motorhomesRepository = motorhomesRepository;

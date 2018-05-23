@@ -13,7 +13,7 @@ body{
     margin: 0 10vw;
 }
 
-#contract h1, h2 {
+#contract h1, #contract h2 {
     text-align: center;
 }
 

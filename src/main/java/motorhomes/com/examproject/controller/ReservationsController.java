@@ -3,6 +3,7 @@ package motorhomes.com.examproject.controller;
 import motorhomes.com.examproject.applicationLogic.ReservationsManager;
 import motorhomes.com.examproject.model.*;
 import motorhomes.com.examproject.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,10 +26,9 @@ public class ReservationsController {
 
     private ReservationsManager reservationsManager;
 
-    public ReservationsController() throws SQLException {
-        this.reservationsManager = new ReservationsManager(new CustomersDbRepository(), new ReservationsRepository(),
-                new MotorhomeDbRepository(new MotorhomeDescriptionDbRepository()), new PickupDbRepository(),
-                new DropOffDbRepository(), new AccessoriesDbRepository(), new ReservationsAccessoriesRepository());
+    @Autowired
+    public ReservationsController(ReservationsManager reservationsManager){
+        this.reservationsManager = reservationsManager;
     }
 
     @GetMapping("/reservations")

@@ -5,6 +5,7 @@ import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.model.MotorhomeDescription;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.MotorhomeDescriptionDbRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,9 +26,9 @@ public class MotorhomeController {
 
     private MotorhomeManager motorhomeManager;
 
-    public MotorhomeController() throws SQLException{
-        MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository = new MotorhomeDescriptionDbRepository();
-        this.motorhomeManager = new MotorhomeManager(new MotorhomeDbRepository(motorhomeDescriptionDbRepository), motorhomeDescriptionDbRepository);
+    @Autowired
+    public MotorhomeController(MotorhomeManager motorhomeManager) throws SQLException{
+        this.motorhomeManager = motorhomeManager;
     }
 
     @GetMapping("/fleet")

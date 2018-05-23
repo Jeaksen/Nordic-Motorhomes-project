@@ -1,13 +1,14 @@
-package motorhomes.com.examproject.repositories;
+package motorhomes.com.examproject.repositories.array;
 
 import motorhomes.com.examproject.model.Accessory;
+import motorhomes.com.examproject.repositories.ICrudRepository;
 
 import java.util.ArrayList;
 
 /**
  * @ Alicja Drankowska
  */
-public class AccessoriesArrayListRepository implements ICrudRepository<Accessory>{
+public class AccessoriesArrayListRepository implements ICrudRepository<Accessory> {
 
     private ArrayList<Accessory> accessories = new ArrayList<>();
 
