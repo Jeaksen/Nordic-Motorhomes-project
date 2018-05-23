@@ -35,7 +35,6 @@ public class MotorhomeDbRepository {
         this.connector = connector;
     }
 
-
     public List<Motorhome> readAll() throws SQLException {
 
         ArrayList<Motorhome> motorhomes = new ArrayList<>();
@@ -77,17 +76,14 @@ public class MotorhomeDbRepository {
 
     /**
      * This method creates new row in the motorhomes table with: licence_plate, motorhome_status and description_id
-     * @return true when row was successfully created or false in case of error.
      */
-    public boolean create(Motorhome motorhome) throws SQLException {
-
+    public void create(Motorhome motorhome) throws SQLException {
         statement = connector.getConnection().prepareStatement("INSERT INTO motorhomes(licence_plate, motorhome_status, description_id) VALUES (?, ?, ?)");
         statement.setString(1, motorhome.getLicencePlate());
         statement.setString(2, motorhome.getMotorhomeStatus());
         statement.setInt(3, motorhome.getMotorhomeDescription().getMotorhomeDescriptionId());
-        boolean creationSuccessful = statement.execute();
+        statement.execute();
         statement = null;
-        return creationSuccessful;
     }
 
     public Motorhome read(int motorhomeId) throws SQLException {

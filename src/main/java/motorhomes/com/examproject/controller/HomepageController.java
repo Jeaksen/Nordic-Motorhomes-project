@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
 
@@ -122,5 +123,11 @@ public class HomepageController {
     @GetMapping("/login")
     public String login(){
         return"login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.removeAttribute("user");
+        return "redirect:/";
     }
 }

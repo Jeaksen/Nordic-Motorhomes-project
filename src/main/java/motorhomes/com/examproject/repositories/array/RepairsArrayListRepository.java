@@ -1,7 +1,6 @@
 package motorhomes.com.examproject.repositories.array;
 
 import motorhomes.com.examproject.model.Repair;
-import motorhomes.com.examproject.repositories.ICrudRepository;
 
 import java.util.ArrayList;
 

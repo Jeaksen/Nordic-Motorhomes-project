@@ -12,6 +12,7 @@
         <li><a href="/reservations">Reservations</a></li>
         <li><a href="/customers">Customers</a></li>
         <li><a href="/repairs">Repairs</a></li>
+        <li id="logout"><a href="/logout" th:text="'Logout: ' + ${session.user.username}" th:unless="${session.user == null}">Logout</a></li>
     </ul>
 </nav>
 <div class="container" id="reservations">

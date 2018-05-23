@@ -23,21 +23,19 @@ public class CustomersDbRepository{
     private ResultSet result;
     private DBConnector connector;
 
+    public CustomersDbRepository(){
+    }
+
     @Autowired
     public void setConnector(DBConnector connector) {
         System.out.println("REPAIRS: OK");
         this.connector = connector;
     }
 
-    public CustomersDbRepository(){
-    }
-
-
     public ArrayList<Customer> readAll() throws SQLException {
         ArrayList<Customer> customers = new ArrayList<>();
         statement = connector.getConnection().prepareStatement("SELECT * FROM customers");
         result = statement.executeQuery();
-
         while (result.next()){
             customers.add(new Customer(result.getInt("customer_id"), result.getString("customers_name"), result.getString("driving_licence_nr")));
         }
@@ -46,24 +44,20 @@ public class CustomersDbRepository{
         return customers;
     }
 
-
-    public boolean create(Customer customer) throws SQLException {
+    public void create(Customer customer) throws SQLException {
         System.out.println(customer);
         statement = connector.getConnection().prepareStatement("INSERT INTO customers(customers_name, driving_licence_nr) VALUES (?,?)");
         statement.setString(1, customer.getCustomerName());
         statement.setString(2, customer.getDrivingLicenceNr());
-        boolean creationSuccessful = statement.execute();
+        statement.execute();
         statement = null;
-        return creationSuccessful;
     }
-
 
     public Customer read(String drivingLicenseNO) throws SQLException {
         statement = connector.getConnection().prepareStatement("SELECT * FROM customers WHERE driving_licence_nr = ?");
         statement.setString(1, drivingLicenseNO);
         result = statement.executeQuery();
         Customer customer = null;
-
         if (result.next()){
             customer = new Customer(result.getInt("customer_id"), result.getString("customers_name"), result.getString("driving_licence_nr"));
         }
@@ -77,7 +71,6 @@ public class CustomersDbRepository{
         statement.setInt(1, customerId);
         result = statement.executeQuery();
         Customer customer = null;
-
         if (result.next()){
             customer = new Customer(result.getInt("customer_id"), result.getString("customers_name"), result.getString("driving_licence_nr"));
         }
@@ -86,9 +79,7 @@ public class CustomersDbRepository{
         return customer;
     }
 
-
     public void update(Customer customer) throws SQLException {
-
         statement = connector.getConnection().prepareStatement("UPDATE customers SET customers_name=?, driving_licence_nr=? WHERE customer_id=?");
         statement.setString(1, customer.getCustomerName());
         statement.setString(2, customer.getDrivingLicenceNr());
@@ -96,7 +87,6 @@ public class CustomersDbRepository{
         statement.execute();
         statement = null;
     }
-
 
     public void delete(int customerId) throws SQLException {
         statement = connector.getConnection().prepareStatement("DELETE FROM customers WHERE customer_id=?");

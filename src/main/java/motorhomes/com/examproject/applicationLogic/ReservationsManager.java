@@ -260,7 +260,9 @@ public class ReservationsManager {
         Map<Integer,Integer> accessoryIdQuantityMap = reservationsAccessoriesRepository.readAll(reservation.getReservationId());
         DropOff dropOff = dropOffDbRepository.read(reservation.getReservationId());
         PickUp pickUp = pickupDbRepository.read(reservation.getReservationId());
+
         price += motorhomesRepository.read(reservation.getMotorhomeId()).getMotorhomeDescription().getBasePrice();
+        price *= this.getPriceMultiplier(reservation);
         if (dropOff != null) {
             price += (double)dropOff.getDropOffDistance() * ReservationsManager.TRANSPORT_FEE_PER_KM;
         }
@@ -270,7 +272,6 @@ public class ReservationsManager {
         for (Map.Entry<Integer, Integer> entry : accessoryIdQuantityMap.entrySet()) {
             price += accessoriesDbRepository.read(entry.getKey()).getPrice() * entry.getValue();
         }
-        price *= this.getPriceMultiplier(reservation);
         reservation.setPrice((int)Math.round(price));
         } catch (SQLException e) {
             e.printStackTrace();
@@ -399,5 +400,19 @@ public class ReservationsManager {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void changeMotorhomeStatus(int motorhomeId, String status) {
+        Motorhome motorhome = getMotorhome(motorhomeId);
+        switch (status.toLowerCase().trim()) {
+            case "rented": motorhome.setMotorhomeStatus("Rented"); break;
+            case "returned": motorhome.setMotorhomeStatus("Before Cleaning");
+        }
+        try {
+            motorhomesRepository.update(motorhome);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
 }

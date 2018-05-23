@@ -185,6 +185,7 @@ public class ReservationsController {
     public String saveFinalPrice(@RequestParam("reservation_id") int reservationId, @RequestParam("total_km") int totalKmDriven, @RequestParam("fuel_fee") boolean addFuelFee) {
         Reservation reservation = reservationsManager.getReservation(reservationId);
         reservationsManager.setFinalPrice(reservation, totalKmDriven, addFuelFee);
+        reservationsManager.changeMotorhomeStatus(reservation.getMotorhomeId(), "Returned");
         return "redirect:/reservations";
     }
 
@@ -214,6 +215,7 @@ public class ReservationsController {
         model.addAttribute("drop_off", reservationsManager.getDropOff(reservationId));
         model.addAttribute("pick_up", reservationsManager.getPickUp(reservationId));
         model.addAttribute("reservation", reservation);
+        reservationsManager.changeMotorhomeStatus(reservation.getMotorhomeId(), "Rented");
         return "reservations/print_contract";
     }
 

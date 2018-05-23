@@ -30,7 +30,6 @@ public class MotorhomeDescriptionDbRepository {
     public MotorhomeDescriptionDbRepository(){
     }
 
-    //Probably won't be used
     public ArrayList<MotorhomeDescription> readAll() throws SQLException {
         ArrayList<MotorhomeDescription> motorhomeDescriptions = new ArrayList<>();
 
@@ -46,18 +45,11 @@ public class MotorhomeDescriptionDbRepository {
         result = null;
         return motorhomeDescriptions;
     }
-//not sure if it will be needed
-    public List<Integer> readAllIds() throws SQLException{
-        List<Integer> motorhomeDescriptionIds = new ArrayList<>();
-        statement = connector.getConnection().prepareStatement("SELECT description_id FROM descriptions");
-        result = statement.executeQuery();
-        while (result.next()){
-            motorhomeDescriptionIds.add(result.getInt("description_id"));
-        }
-        return motorhomeDescriptionIds;
-    }
 
-
+    /**
+     * @param motorhomeDescription MotorhomeDescription object with all data
+     * @return ID of the created row (description)
+     */
     public int create(MotorhomeDescription motorhomeDescription) throws SQLException {
 
         System.out.println(motorhomeDescription);
@@ -82,7 +74,6 @@ public class MotorhomeDescriptionDbRepository {
         return id;
     }
 
-
     public MotorhomeDescription read(int motorhomeDescriptionId) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("SELECT * FROM descriptions WHERE description_id = ?");
@@ -100,7 +91,6 @@ public class MotorhomeDescriptionDbRepository {
         return motorhomeDescription;
     }
 
-
     public void update(MotorhomeDescription motorhomeDescription) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("UPDATE descriptions SET brand=?,model=?,base_price=? WHERE description_id = ?");
@@ -111,7 +101,6 @@ public class MotorhomeDescriptionDbRepository {
         statement.execute();
         statement = null;
     }
-
 
     public void delete(int motorhomeDescriptionId) throws SQLException {
 

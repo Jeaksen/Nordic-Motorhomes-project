@@ -50,21 +50,17 @@ public class DropOffDbRepository {
     }
 
     /**
-     *
-     * @param dropOff DropOff instance with
-     * @param reservationId
-     * @return
-     * @throws SQLException
+     * @param dropOff DropOff instance with distance and location
+     * @param reservationId ID of reservation for this drop-off
      */
-    public boolean create(DropOff dropOff, int reservationId) throws SQLException {
-
+    public void create(DropOff dropOff, int reservationId) throws SQLException {
         statement = connector.getConnection().prepareStatement("INSERT INTO dropoffs(dropoff_location, dropoff_distance, reservation_id) VALUES (?, ?, ?)");
         statement.setString(1, dropOff.getDropOffLocation());
         statement.setInt(2, dropOff.getDropOffDistance());
         statement.setInt(3, reservationId);
-        boolean creationSuccessful = statement.execute();
+        statement.execute();
         statement = null;
-        return creationSuccessful;
+
     }
 
     public DropOff read(int reservationId) throws SQLException {

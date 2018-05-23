@@ -1,4 +1,4 @@
-package motorhomes.com.examproject.repositories;
+package motorhomes.com.examproject.repositories.array;
 
 import java.util.ArrayList;
 

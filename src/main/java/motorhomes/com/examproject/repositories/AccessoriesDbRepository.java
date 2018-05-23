@@ -16,7 +16,7 @@ import java.util.List;
  * todo comments
  */
 @Repository
-public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
+public class AccessoriesDbRepository{
 
     private PreparedStatement statement;
     private ResultSet result;
@@ -31,7 +31,7 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
     public AccessoriesDbRepository() {
     }
 
-    @Override
+
     public ArrayList<Accessory> readAll() throws SQLException {
         ArrayList<Accessory> accessories = new ArrayList<>();
 
@@ -56,19 +56,14 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
         return accessories;
     }
 
-    @Override
-    public boolean create(Accessory accessory) throws SQLException {
-
-        System.out.println(accessory);
+    public void create(Accessory accessory) throws SQLException {
         statement = connector.getConnection().prepareStatement("INSERT  INTO accessories(name, price) VALUES (?,?)");
         statement.setString(1, accessory.getName());
         statement.setInt(2, accessory.getPrice());
-        boolean creationSuccessful = statement.execute();
+        statement.execute();
         statement = null;
-        return creationSuccessful;
     }
 
-    @Override
     public Accessory read(int accessoryId) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("SELECT * FROM accessories WHERE accessory_id = ?");
@@ -84,7 +79,6 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
         return accessory;
     }
 
-    @Override
     public void update(Accessory accessory) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("UPDATE accessories SET name=?, price=? WHERE accessory_id=?");
@@ -95,7 +89,6 @@ public class AccessoriesDbRepository implements ICrudRepository<Accessory>{
         statement = null;
     }
 
-    @Override
     public void delete(int accessoryId) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("DELETE FROM accessories WHERE accessory_id=? ");
