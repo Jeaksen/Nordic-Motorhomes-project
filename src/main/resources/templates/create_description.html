@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Add new motorhome</title>
+</head>
+<body>
+<form action="/create_description" method="post">
+    <h1>Add new model</h1>
+
+    <p>Brand:</p>
+    <input type="text" name="brand" />
+    <p>Model:</p>
+    <input type="text" name="model" />
+    <p>Capacity:</p>
+    <input type="text" name="capacity" />
+    <p>Base Price:</p>
+    <input type="text" name="basePrice" />
+    <p>
+        <input type="submit" value="Create" class="btn btn-create"/>
+    </p>
+</form>
+<div class="container">
+    <h1>Choose existing description</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Brand</th>
+            <th>Model</th>
+            <th>Capacity</th>
+            <th>Base Price</th>
+            <th></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each = "motorhomeDescription: ${motorhomeDescriptions}">
+            <td th:text="${motorhomeDescription.brand}"></td>
+            <td th:text="${motorhomeDescription.model}"></td>
+            <td th:text="${motorhomeDescription.capacity}"></td>
+            <td th:text="${motorhomeDescription.basePrice}"></td>
+            <td> <a href="'/save_motorhomeDescription?description_id=' +${motorhomeDescription.motorhomeDescriptionId}" class="button button-details">Choose</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>
