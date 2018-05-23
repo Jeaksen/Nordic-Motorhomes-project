@@ -3,12 +3,19 @@ body{
     font-family: Montserrat, sans-serif;
 }
 
-.container {
-    max-width: 60vw;
+.container{
+    width: 60vw;
     margin: 0 20vw;
 }
 
+#reservations, #contract{
+    width: 80vw;
+    margin: 0 10vw;
+}
 
+#contract h1, #contract h2 {
+    text-align: center;
+}
 
 ul {
     list-style-type: none;
@@ -70,6 +77,7 @@ tr:nth-child(even){
     cursor: pointer;
     border-radius: 5px;
     text-align: center;
+    text-decoration: none;
 }
 
 .button:hover {

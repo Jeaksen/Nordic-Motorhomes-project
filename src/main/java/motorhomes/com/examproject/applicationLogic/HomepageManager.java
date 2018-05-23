@@ -3,6 +3,8 @@ package motorhomes.com.examproject.applicationLogic;
 import motorhomes.com.examproject.model.User;
 import motorhomes.com.examproject.repositories.UsersDBRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 
@@ -13,10 +15,12 @@ import java.sql.SQLException;
  * - register
  * @ Pawel Pohl
  */
+@Component
 public class HomepageManager {
     private UsersDBRepository usersRepository;
 
-    public HomepageManager(UsersDBRepository usersRepository) {
+    @Autowired
+    public HomepageManager(@Qualifier("getUserDBRepository") UsersDBRepository usersRepository) {
         this.usersRepository = usersRepository;
     }
 

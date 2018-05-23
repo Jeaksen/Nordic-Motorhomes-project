@@ -1,7 +1,10 @@
 package motorhomes.com.examproject.repositories;
 
 import motorhomes.com.examproject.model.Reservation;
+import motorhomes.com.examproject.util.DBConnector;
 import motorhomes.com.examproject.util.DbConnection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -11,16 +14,23 @@ import java.util.List;
 
 /**
  * @ Pawel Pohl
+ * This class is used to manipulate data in the database storing reservations
  */
+@Repository
 public class ReservationsRepository {
 
-    private Connection connection;
     private PreparedStatement statement;
     private ResultSet resultSet;
+    private DBConnector connector;
 
 
     public ReservationsRepository() throws SQLException {
-        connection = DbConnection.getConnection();
+    }
+
+    @Autowired
+    public void setConnector(DBConnector connector) {
+        System.out.println("RESERVATIONS: OK");
+        this.connector = connector;
     }
 
 
@@ -33,7 +43,7 @@ public class ReservationsRepository {
      */
     public void getAvailableMotorhomesIds(LocalDate startDate, LocalDate endDate, List<Integer> allMotorhomeIds) throws SQLException {
 
-        statement = connection.prepareStatement("SELECT motorhome_id from reservations " +
+        statement = connector.getConnection().prepareStatement("SELECT motorhome_id from reservations " +
                 "where end_date >= ? AND start_date <= ? " +
                 "AND (start_date = ? " +
                 "OR start_date=? " +
@@ -61,6 +71,7 @@ public class ReservationsRepository {
         }
         statement = null;
         resultSet = null;
+        
     }
 
 
@@ -69,13 +80,13 @@ public class ReservationsRepository {
      * @return ID of created reservation or -1 if there was an error
      */
     public int create (Reservation reservation) throws SQLException {
-        statement = connection.prepareStatement("INSERT INTO reservations (start_date, end_date, motorhome_id, customer_id) VALUES (?,?,?,?)");
+        statement = connector.getConnection().prepareStatement("INSERT INTO reservations (start_date, end_date, motorhome_id, customer_id) VALUES (?,?,?,?)");
         statement.setDate(1, Date.valueOf(reservation.getStartDate()));
         statement.setDate(2, Date.valueOf(reservation.getEndDate()));
         statement.setInt(3, reservation.getMotorhomeId());
         statement.setInt(4, reservation.getCustomerId());
         statement.execute();
-        statement = connection.prepareStatement("SELECT reservation_id FROM reservations WHERE start_date = ? AND motorhome_id = ?");
+        statement = connector.getConnection().prepareStatement("SELECT reservation_id FROM reservations WHERE start_date = ? AND motorhome_id = ?");
         statement.setDate(1, Date.valueOf(reservation.getStartDate()));
         statement.setInt(2, reservation.getMotorhomeId());
         resultSet = statement.executeQuery();
@@ -90,10 +101,10 @@ public class ReservationsRepository {
 
 
     /**
-     * This method updates: start_date, end_date, has_pickup, has_dropoff, has_accessories, reservation_status, and price
+     * This method updates: start_date, end_date, has_pickup, has_dropoff, has_accessories, reservation_status, and price of reservation
      */
     public void update (Reservation reservation) throws SQLException {
-        statement = connection.prepareStatement("UPDATE reservations SET start_date=?, end_date=?, has_pickup=?, " +
+        statement = connector.getConnection().prepareStatement("UPDATE reservations SET start_date=?, end_date=?, has_pickup=?, " +
                 "has_dropoff=?, has_accessories=?, reservation_status=?, price=? WHERE reservation_id=?;");
         statement.setDate(1, Date.valueOf(reservation.getStartDate()));
         statement.setDate(2, Date.valueOf(reservation.getEndDate()));
@@ -107,10 +118,13 @@ public class ReservationsRepository {
         statement = null;
     }
 
+    /**
+     * @return List object with all reservations stored in the database
+     */
     public List<Reservation> readAll() throws SQLException {
         List<Reservation> reservations = new ArrayList<>();
         Reservation reservation;
-        statement = connection.prepareStatement("SELECT * FROM reservations");
+        statement = connector.getConnection().prepareStatement("SELECT * FROM reservations");
         resultSet = statement.executeQuery();
         while (resultSet.next()) {
             reservation = new Reservation();
@@ -126,13 +140,15 @@ public class ReservationsRepository {
             reservation.setCustomerId(resultSet.getInt("customer_id"));
             reservations.add(reservation);
         }
-        statement = null;
-        resultSet = null;
         return reservations;
     }
 
+    /**
+     * @param reservationId ID of reservation in database
+     * @return Reservation object or null if no reservation was found
+     */
     public Reservation read(int reservationId) throws SQLException {
-        statement = connection.prepareStatement("SELECT * FROM reservations WHERE reservation_id=?");
+        statement = connector.getConnection().prepareStatement("SELECT * FROM reservations WHERE reservation_id=?");
         statement.setInt(1, reservationId);
         resultSet = statement.executeQuery();
         Reservation reservation = null;
@@ -149,14 +165,14 @@ public class ReservationsRepository {
             reservation.setMotorhomeId(resultSet.getInt("motorhome_id"));
             reservation.setCustomerId(resultSet.getInt("customer_id"));
         }
-        statement = null;
-        resultSet = null;
         return reservation;
     }
 
-
+    /**
+     * This method deletes a reservation with given ID
+     */
     public void delete (int reservationId) throws SQLException {
-        statement = connection.prepareStatement("DELETE FROM reservations WHERE reservation_id=?");
+        statement = connector.getConnection().prepareStatement("DELETE FROM reservations WHERE reservation_id=?");
         statement.setInt(1, reservationId);
         statement.execute();
         statement = null;

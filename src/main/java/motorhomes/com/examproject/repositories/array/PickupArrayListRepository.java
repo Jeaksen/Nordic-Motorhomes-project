@@ -1,6 +1,7 @@
-package motorhomes.com.examproject.repositories;
+package motorhomes.com.examproject.repositories.array;
 
 import motorhomes.com.examproject.model.PickUp;
+import motorhomes.com.examproject.repositories.ICrudRepository;
 
 import java.util.ArrayList;
 

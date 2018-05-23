@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculate Price</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <h1 th:text="'Enter service information for reservation no. ' + ${reservation_id}"></h1>
+    <form method="post" action="/calculate_price">
+        <input type="hidden" name="reservation_id" th:value="${reservation_id}" />
+        <h2>Total kilometers driven</h2>
+        <input type="number" name="total_km" />
+        <h2>Add fuel fee?</h2>
+        <input type="checkbox" name="fuel_fee" />
+        <p>
+        <input type="submit" value="Calculate final price" />
+        </p>
+    </form>
+</div>
+</body>
+</html>

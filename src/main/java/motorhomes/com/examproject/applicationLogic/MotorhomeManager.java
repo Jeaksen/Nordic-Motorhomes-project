@@ -4,6 +4,8 @@ import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.model.MotorhomeDescription;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.MotorhomeDescriptionDbRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -11,13 +13,15 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo do logika tej klasy do sprawdzenia
+ * todo ?????!!!
  */
+@Component
 public class MotorhomeManager {
 
     private MotorhomeDbRepository motorhomeDbRepository;
     private MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository;
 
+    @Autowired
     public MotorhomeManager (MotorhomeDbRepository motorhomeDbRepository, MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository){
         this.motorhomeDbRepository = motorhomeDbRepository;
         this.motorhomeDescriptionDbRepository = motorhomeDescriptionDbRepository;
@@ -25,35 +29,87 @@ public class MotorhomeManager {
 
     public List<Motorhome> getAllMotorhomes(){
         try{
-            return motorhomeDbRepository.readAll();
+            List<Motorhome> motorhomes = motorhomeDbRepository.readAll();
+            return motorhomes;
         }catch (SQLException e){
             e.printStackTrace();
             System.out.println("Error occurred while reading motorhomes' list");
-            ArrayList<Motorhome> motorhomes = null;
-            return motorhomes;
         }
+        return null;
     }
 
     public Motorhome getChosenMotorhome(int motorhomeId){
         try {
-            return motorhomeDbRepository.read(motorhomeId);
+            Motorhome motorhome = motorhomeDbRepository.read(motorhomeId);
+            return motorhome;
         }catch (SQLException e){
             e.printStackTrace();
             System.out.println("Motorhome not found!");
-            Motorhome motorhome = null;
-            return motorhome;
+        }
+        return null;
+    }
+
+    public MotorhomeDescription getMotorhomeDescription(int descriptionId) {
+        try {
+            return motorhomeDescriptionDbRepository.read(descriptionId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
-    public void createMotorhome(Motorhome motorhome, int description_id){
-        try {
-            motorhomeDbRepository.create(motorhome, description_id);
+    public Motorhome addNewMotorhome(String licencePlate){
+       Motorhome motorhome = new Motorhome();
+       motorhome.setLicencePlate(licencePlate);
+       motorhome.setMotorhomeStatus("Available");
+       return motorhome;
+    }
+
+    public boolean saveMotorhomeDescription(Motorhome motorhome, MotorhomeDescription motorhomeDescription){
+        if (motorhomeDescription.getMotorhomeDescriptionId() > 0){
+            motorhome.setMotorhomeDescription(motorhomeDescription);
+        }else {
+            try {
+                motorhomeDescription.setMotorhomeDescriptionId(motorhomeDescriptionDbRepository.create(motorhomeDescription));
+                motorhome.setMotorhomeDescription(motorhomeDescription);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public List<MotorhomeDescription> getExistingMotorhomeDescriptions (){
+        try{
+            return motorhomeDescriptionDbRepository.readAll();
         }catch (SQLException e){
-            System.out.println("Motorhome not created!");
             e.printStackTrace();
         }
+        return null;
     }
 
+    public MotorhomeDescription addNewModel (String brand, String model, int capacity, int base_price){
+        MotorhomeDescription motorhomeDescription = new MotorhomeDescription();
+        motorhomeDescription.setBrand(brand);
+        motorhomeDescription.setModel(model);
+        motorhomeDescription.setCapacity(capacity);
+        motorhomeDescription.setBasePrice(base_price);
+        return motorhomeDescription;
+    }
+
+    public boolean saveNewMotorhome(Motorhome motorhome, MotorhomeDescription motorhomeDescription){
+        if (!this.saveMotorhomeDescription(motorhome, motorhomeDescription)) return false;
+        try {
+            motorhomeDbRepository.create(motorhome);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+/**
     public void addNewModel(MotorhomeDescription motorhomeDescription){
         try {
             motorhomeDescriptionDbRepository.create(motorhomeDescription);
@@ -62,6 +118,7 @@ public class MotorhomeManager {
             e.printStackTrace();
         }
     }
+ */
 
     public void deleteMotorhome(int motorhomeId){
         try {

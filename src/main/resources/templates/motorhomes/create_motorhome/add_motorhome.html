@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css"/>
-    <title>Customer Data</title>
+    <title>New Motorhome</title>
 </head>
 <body>
 <nav>
@@ -16,16 +15,14 @@
     </ul>
 </nav>
 <div class="container">
-<form action="/save_customer_data" method="post">
-
-    <p>Customer Name</p>
-    <input type="text" name="customerName" />
-    <p>Customer's driving license number</p>
-    <input type="text" name="drivingLicenseNr" />
-    <p>
-        <input type="submit" value="Continue" class="btn btn-create"/>
-    </p>
-</form>
+    <form action="/add_motorhome" method="post">
+        <h1>Enter motorhome data:</h1>
+        <p>Licence plate number:</p>
+        <input type="text" name="licence_plate" />
+            <input type="submit" value="Continue" class="btn btn-create"/>
+        </p>
+    </form>
 </div>
+
 </body>
 </html>
