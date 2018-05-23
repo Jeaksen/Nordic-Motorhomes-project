@@ -61,15 +61,6 @@ public class RepairsManager {
         }
     }
 
-    public void details(int repairId){
-        try {
-            repairsDbRepository.read(repairId);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
 
 }

@@ -14,6 +14,7 @@ import java.util.ArrayList;
  * @ Alicja Drankowska
  * This class is used to manipulate data in the database storing repairs
  */
+
 @Repository
 public class RepairsDbRepository{
 

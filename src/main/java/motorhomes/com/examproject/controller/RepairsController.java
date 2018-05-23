@@ -58,6 +58,27 @@ public class RepairsController {
 
     }
 
+    @GetMapping ("/repair_details")
+    public String repairDetails(@RequestParam("repairId") int repairId, Model model){
+        Repair repair=repairsManager.getRepair(repairId);
+        model.addAttribute("repair", repair);
+        return"repairs/repairdetails";
+
+    }
+
+    @GetMapping("/delete_repair")
+    public String deleteRepair(@RequestParam("repairId") int repairId, Model model){
+        Repair repair= repairsManager.getRepair(repairId);
+        model.addAttribute("repair", repair);
+        return"repairs/deleterepair";
+    }
+
+    @PostMapping("/delete_repair")
+    public String deleteRepair(@ModelAttribute Repair repair){
+        repairsManager.deleteRepair(repair.getRepairId());
+        return"redirect:/repairs";
+    }
+
 
 
 

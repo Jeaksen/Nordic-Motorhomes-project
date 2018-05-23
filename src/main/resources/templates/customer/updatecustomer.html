@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Update</title>
+    <title>Title</title>
 </head>
 <body>
 <nav>
@@ -13,14 +13,14 @@
         <li><a href="repairs">Repairs</a></li>
     </ul>
 </nav>
-<form action="/update_repair" method="post">
+<form action="/update_customer" method="post">
 
-    <input type="hidden" th:value="${repair.repairId}" name="repairId"/>
-    <p>Motorhome Id: <input type="text" th:value="${repair.motorhomeId}" name="motorhomeId"/></p>
-    <p>Problem: <input type="text" th:value="${repair.problem}" name="problem"/></p>
-    <p>Status: <input type="text" th:value="${repair.repairStatus}" name="repairStatus"/></p>
+    <input type="hidden" th:value="${customer.customerId}" name="customerId"/>
+    <p>Customer Name: <input type="text" th:value="${customer.customerName}" name="customerName"/></p>
+    <p>Driving Licence Number: <input type="text" th:value="${customer.drivingLicenceNr}" name="drivingLicenceNr"/></p>
     <input type="submit" value="Update" class="btn btn-create"/>
 
 </form>
 </body>
+
 </html>

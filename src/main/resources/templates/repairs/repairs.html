@@ -36,9 +36,9 @@
             <td th:text="${repairs.motorhomeId}"></td>
             <td th:text="${repairs.problem}"></td>
             <td th:text="${repairs.repairStatus}"></td>
-            <td> <a class="button button-details">Details</a>
-                <a class="button button-update" th:href="'/update_repair?repairId=' + ${repairs.repairId}">Update</a>
-                <a class="button button-delete">Delete</a></td>
+            <td> <a class="button button-details" th:href="'repair_details?repairId=' + ${repairs.repairId}">Details</a>
+                <a class="button button-update" th:href="'update_repair?repairId=' + ${repairs.repairId}">Update</a>
+                <a class="button button-delete" th:href="'delete_repair?repairId=' + ${repairs.repairId}">Delete</a></td>
         </tr>
         </tbody>
     </table>
