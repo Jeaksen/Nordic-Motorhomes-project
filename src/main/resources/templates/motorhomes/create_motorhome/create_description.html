@@ -2,24 +2,36 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Add new motorhome</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-<form action="/create_description" method="post">
-    <h1>Add new model</h1>
-
-    <p>Brand:</p>
-    <input type="text" name="brand" />
-    <p>Model:</p>
-    <input type="text" name="model" />
-    <p>Capacity:</p>
-    <input type="text" name="capacity" />
-    <p>Base Price:</p>
-    <input type="text" name="basePrice" />
-    <p>
-        <input type="submit" value="Create" class="btn btn-create" />
-    </p>
-</form>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/repairs">Repairs</a></li>
+    </ul>
+</nav>
 <div class="container">
+    <div>
+        <form action="/create_description" method="post">
+            <h1>Add new model</h1>
+            <p>Brand:</p>
+            <input type="text" name="brand" />
+            <p>Model:</p>
+            <input type="text" name="model" />
+            <p>Capacity:</p>
+            <input type="text" name="capacity" />
+            <p>Base Price:</p>
+            <input type="text" name="basePrice" />
+            <p>
+                <input type="submit" value="Create" class="btn btn-create" />
+            </p>
+        </form>
+    </div>
+<div>
     <h1>Choose existing description</h1>
     <table>
         <thead>
@@ -43,6 +55,7 @@
         </tbody>
     </table>
 
+</div>
 </div>
 </body>
 </html>

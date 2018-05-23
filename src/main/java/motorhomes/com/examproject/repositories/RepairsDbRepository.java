@@ -115,4 +115,16 @@ public class RepairsDbRepository{
         statement.execute();
         statement = null;
     }
+
+    /**
+     * This method sets all references to the given motorhome ID to null
+     * @param motorhomeId ID of motorhome that should be nullified
+     */
+    public void deleteForMotorhome(int motorhomeId) throws SQLException {
+        statement = connector.getConnection().prepareStatement("DELETE FROM repairs where motorhome_id=?");
+        statement.setInt(1, motorhomeId);
+        statement.execute();
+        statement = null;
+
+    }
 }

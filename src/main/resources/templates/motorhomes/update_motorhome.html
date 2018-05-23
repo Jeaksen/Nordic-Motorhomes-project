@@ -19,18 +19,12 @@
 <h1>Update motorhome</h1>
 <form action="/update_motorhome" method="post">
     <input type="hidden" th:value="${motorhome.motorhomeId}" name="motorhome_id">
-    <h2>Brand:</h2>
-    <input type="text" name="brand" th:value="${motorhome.motorhomeDescription.brand}" />
-    <h2>Model:</h2>
-    <input type="text" name="model" th:value="${motorhome.motorhomeDescription.model}"/>
     <h2>Licence Plate:</h2>
     <input type="text" name="licencePlate" th:value="${motorhome.licencePlate}"/>
     <h2>Status:</h2>
     <select name="motorhome_status">
         <option th:each="status: ${statusList}" th:value="${status}" th:text="${status}"></option>
     </select>
-    <h2>Base Price:</h2>
-    <input type="text" name="basePrice" th:value="${motorhome.motorhomeDescription.basePrice}"/>
     <p><input type="submit" value="Update"></p>
 </form>
 </div>

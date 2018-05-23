@@ -83,7 +83,7 @@ public class MotorhomeController {
     public String updateMotorhome(Model model, @RequestParam("motorhome_id") int motorhomeId){
         Motorhome motorhome = motorhomeManager.getChosenMotorhome(motorhomeId);
         model.addAttribute("motorhome", motorhome);
-        model.addAttribute("statusList", motorhomeManager.getMotorhomeStatuses());
+        model.addAttribute("statusList", motorhomeManager.getMotorhomeStatuses(motorhome));
 
         return "motorhomes/update_motorhome";
     }
@@ -95,6 +95,18 @@ public class MotorhomeController {
        motorhomeManager.updateMotorhome(motorhome);
 
        return "redirect:/fleet";
+    }
+
+    @GetMapping("/delete_motorhome")
+    public String deleteMotorhome(@RequestParam("motorhome_id") int motorhomeId, Model model) {
+        model.addAttribute("motorhome", motorhomeManager.getChosenMotorhome(motorhomeId));
+        return "motorhomes/delete_motorhome";
+    }
+
+    @PostMapping("/delete_motorhome")
+    public String confirmDelete(@RequestParam("motorhome_id") int motorhomeId) {
+        motorhomeManager.deleteMotorhome(motorhomeId);
+        return "redirect:/fleet";
     }
 
 }

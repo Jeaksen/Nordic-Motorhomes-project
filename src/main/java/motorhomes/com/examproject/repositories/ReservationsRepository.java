@@ -178,4 +178,28 @@ public class ReservationsRepository {
         statement = null;
     }
 
+    /**
+     * This method sets all references to the given motorhome ID to null
+     * @param motorhomeId ID of motorhome that should be nullified
+     */
+    public void nullifyMotorhome(int motorhomeId) throws SQLException {
+        statement = connector.getConnection().prepareStatement("UPDATE reservations SET motorhome_id=null where motorhome_id=?");
+        statement.setInt(1, motorhomeId);
+        statement.execute();
+        statement = null;
+
+    }
+
+    /**
+     * This method sets all references to the given customer ID to null
+     * @param customerId ID of customer that should be nullified
+     */
+    public void nullifyCustomer(int customerId) throws SQLException {
+        statement = connector.getConnection().prepareStatement("UPDATE reservations SET customer_id=null where customer_id=?");
+        statement.setInt(1, customerId);
+        statement.execute();
+        statement = null;
+
+    }
+
 }

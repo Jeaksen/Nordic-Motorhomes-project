@@ -4,6 +4,8 @@ import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.model.MotorhomeDescription;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.MotorhomeDescriptionDbRepository;
+import motorhomes.com.examproject.repositories.RepairsDbRepository;
+import motorhomes.com.examproject.repositories.ReservationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +23,10 @@ public class MotorhomeManager {
     private MotorhomeDbRepository motorhomeDbRepository;
     private MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository;
     private static final List<String> motorhomeStatuses = new ArrayList<>();
+    private ReservationsRepository reservationsRepository;
+    private RepairsDbRepository repairsDbRepository;
 
+    //static initializer block
     static {
         motorhomeStatuses.add("Available");
         motorhomeStatuses.add("Rented");
@@ -30,9 +35,11 @@ public class MotorhomeManager {
     }
 
     @Autowired
-    public MotorhomeManager (MotorhomeDbRepository motorhomeDbRepository, MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository){
+    public MotorhomeManager (MotorhomeDbRepository motorhomeDbRepository, MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository, ReservationsRepository reservationsRepository, RepairsDbRepository repairsDbRepository){
         this.motorhomeDbRepository = motorhomeDbRepository;
         this.motorhomeDescriptionDbRepository = motorhomeDescriptionDbRepository;
+        this.reservationsRepository = reservationsRepository;
+        this.repairsDbRepository = repairsDbRepository;
     }
 
     public List<Motorhome> getAllMotorhomes(){
@@ -46,8 +53,22 @@ public class MotorhomeManager {
         return null;
     }
 
-    public List<String> getMotorhomeStatuses(){
-        return motorhomeStatuses;
+    public List<String> getMotorhomeStatuses(Motorhome motorhome){
+        String currentStatus = motorhome.getMotorhomeStatus();
+        List<String> statusList = new ArrayList<>();
+        boolean foundCurrent = false;
+        int j = 0;
+        for (int i = 0; i < motorhomeStatuses.size(); j++) {
+            if (j == motorhomeStatuses.size()) {
+                j = 0;
+            }
+            if (foundCurrent || motorhomeStatuses.get(j).equals(currentStatus)) {
+                statusList.add(motorhomeStatuses.get(j));
+                i++;
+                foundCurrent = true;
+            }
+        }
+        return statusList;
     }
 
     public Motorhome getChosenMotorhome(int motorhomeId){
@@ -142,7 +163,10 @@ public class MotorhomeManager {
 
     public void deleteMotorhome(int motorhomeId){
         try {
+            reservationsRepository.nullifyMotorhome(motorhomeId);
+            repairsDbRepository.deleteForMotorhome(motorhomeId);
             motorhomeDbRepository.delete(motorhomeId);
+
         }catch (SQLException e){
             System.out.println("Error occurred! Motorhome not deleted");
             e.printStackTrace();
