@@ -4,14 +4,14 @@
     <title>New Repair</title>
 </head>
 <body>
-<form action="/create" method="post">
+<form action="/new_repair" method="post">
 
     <p>Motorhome ID:</p>
     <input type="text" name="motorhomeId" />
     <p>Problem:</p>
     <input type="text" name="problem" />
     <p>Status:</p>
-    <input type="text" name="status" />
+    <input type="text" value="Started" name="repairStatus" readonly/>
     <p>
         <input type="submit" value="Create" class="btn btn-create"/>
     </p>

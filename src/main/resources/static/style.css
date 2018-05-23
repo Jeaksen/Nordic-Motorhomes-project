@@ -3,9 +3,9 @@ body{
     font-family: Montserrat, sans-serif;
 }
 
-.container{
-    width: 60vw;
-    margin: 0 20vw;
+.container {
+    max-width: 70vw;
+    margin: 0 15vw;
 }
 
 #reservations, #contract{
@@ -101,4 +101,7 @@ tr:nth-child(even){
     font-size: 14px;
     background-color: lightcoral;
     margin: 0 5px 0 0;
+}
+a{
+    text-decoration: none;
 }

@@ -39,11 +39,12 @@ public class RepairsDbRepository{
         ArrayList<Repair> repairs = new ArrayList<>();
         statement = connector.getConnection().prepareStatement("SELECT * FROM repairs");
         result = statement.executeQuery();
-        Repair repair;
 
         while (result.next()){
-            repair = new Repair(result.getInt("repair_id"), result.getString("problem"), result.getInt("motorhome_id"), result.getString("repair_status"));
-            repairs.add(repair);
+            repairs.add(new Repair(result.getInt("repair_id"),
+                                result.getString("problem"),
+                                result.getInt("motorhome_id"),
+                                result.getString("repair_status")));
         }
         statement = null;
         result = null;
@@ -78,7 +79,7 @@ public class RepairsDbRepository{
         Repair repair = null;
 
         if (result.next()){
-            repair = new Repair(result.getInt("repair_id"), result.getString("problem"), result.getInt("motorhomeId"), result.getString("repair_status"));
+            repair = new Repair(result.getInt("repair_id"), result.getString("problem"), result.getInt("motorhome_id"), result.getString("repair_status"));
         }
         statement = null;
         result = null;
