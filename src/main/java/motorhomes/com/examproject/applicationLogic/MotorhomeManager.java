@@ -20,6 +20,14 @@ public class MotorhomeManager {
 
     private MotorhomeDbRepository motorhomeDbRepository;
     private MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository;
+    private static final List<String> motorhomeStatuses = new ArrayList<>();
+
+    static {
+        motorhomeStatuses.add("Available");
+        motorhomeStatuses.add("Rented");
+        motorhomeStatuses.add("Before Cleaning");
+        motorhomeStatuses.add("Before Service");
+    }
 
     @Autowired
     public MotorhomeManager (MotorhomeDbRepository motorhomeDbRepository, MotorhomeDescriptionDbRepository motorhomeDescriptionDbRepository){
@@ -36,6 +44,10 @@ public class MotorhomeManager {
             System.out.println("Error occurred while reading motorhomes' list");
         }
         return null;
+    }
+
+    public List<String> getMotorhomeStatuses(){
+        return motorhomeStatuses;
     }
 
     public Motorhome getChosenMotorhome(int motorhomeId){
@@ -107,6 +119,14 @@ public class MotorhomeManager {
             return false;
         }
         return true;
+    }
+
+    public void updateMotorhome(Motorhome motorhome){
+        try {
+            motorhomeDbRepository.update(motorhome);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 /**

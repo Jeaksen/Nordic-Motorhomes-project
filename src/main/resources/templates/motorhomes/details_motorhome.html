@@ -1,10 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Mototorhome details</title>
+    <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
-
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="/fleet">Fleet</a></li>
+        <li><a href="/reservations">Reservations</a></li>
+        <li><a href="/customers">Customers</a></li>
+        <li><a href="/repairs">Repairs</a></li>
+    </ul>
+</nav>
+<div class="container">
+<h1>Motorhome Details:</h1>
+<p th:text="'ID: ' + ${motorhome.motorhomeId}">ID</p>
+<p th:text="'License Plate: ' + ${motorhome.licencePlate}">License Plate</p>
+<p th:text="'Brand: ' + ${motorhome.motorhomeDescription.brand}">Brand</p>
+<p th:text="'Model: ' + ${motorhome.motorhomeDescription.model}">Model</p>
+<p th:text="'Base Price: ' + ${motorhome.motorhomeDescription.basePrice}">Base Price</p>
+</div>
 </body>
 </html>

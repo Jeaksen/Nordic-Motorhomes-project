@@ -52,7 +52,7 @@ public class HomepageController {
         switch (respond){
             case 1:
                 request.getSession().setAttribute("user", user);
-                return "fleet";
+                return "redirect:/fleet";
             case 0:
                 model.addAttribute("error_message", "An error occurred while getting the data, please retry");
                 break;
@@ -86,7 +86,7 @@ public class HomepageController {
         switch (respond){
             case 1:
                 request.getSession().setAttribute("user", user);
-                return "fleet";
+                return "redirect:/fleet";
             case 0:
                 model.addAttribute("error_message", "An error occurred while getting the data, please retry");
                 break;

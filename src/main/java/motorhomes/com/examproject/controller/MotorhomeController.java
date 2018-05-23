@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo confirmPOST method and comment!
+ * todo details methods, post update method and comments!
  */
 @Controller
 public class MotorhomeController {
@@ -72,7 +72,6 @@ public class MotorhomeController {
     @GetMapping("/confirm_newmotorhome")
     public String confirm(HttpSession session) {
         Motorhome motorhome = (Motorhome)session.getAttribute("motorhome");
-        //motorhomeManager.saveMotorhomeDescription(motorhome, motorhomeDescriptionId);
         motorhomeManager.saveNewMotorhome(motorhome, (MotorhomeDescription) session.getAttribute("description"));
         session.removeAttribute("motorhome");
         session.removeAttribute("description");
@@ -80,6 +79,22 @@ public class MotorhomeController {
         return "redirect:/fleet";
     }
 
+    @GetMapping
+    public String updateMotorhome(Model model, @RequestParam("motorhome_id") int motorhomeId){
+        Motorhome motorhome = motorhomeManager.getChosenMotorhome(motorhomeId);
+        model.addAttribute("motorhome", motorhome);
+        model.addAttribute("statusList", motorhomeManager.getMotorhomeStatuses());
 
+        return "motorhomes/update_motorhome";
+    }
+
+    @PostMapping
+    public String saveUpdateMotorhome(@RequestParam("motorhome_id") int motorhomeId, @RequestParam("motorhome_status") String motorhomeStatus){
+       Motorhome motorhome = motorhomeManager.getChosenMotorhome(motorhomeId);
+       motorhome.setMotorhomeStatus(motorhomeStatus);
+       motorhomeManager.updateMotorhome(motorhome);
+
+       return "redirect:/fleet";
+    }
 
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Nordic Fleet</title>
     <link rel="stylesheet" href="style.css"/>
@@ -23,8 +23,10 @@
             <th>ID</th>
             <th>Brand</th>
             <th>Model</th>
+            <th>Capacity</th>
             <th>License Plate</th>
             <th>Status</th>
+            <th>Base Price</th>
             <th></th>
 
         </tr>
@@ -32,12 +34,18 @@
 
         <tbody>
         <tr>
-            <td>1</td>
-            <td>Mercedes</td>
-            <td>1234</td>
-            <td>DK 23456</td>
-            <td>Reserved</td>
-            <td> <a class="button button-details">Details</a><a class="button button-update">Update</a><a class="button button-delete">Delete</a></td>
+        <tr th:each = "motorhome: ${motorhomes}">
+            <td th:text="${motorhome.motorhomeId}"></td>
+            <td th:text="${motorhome.motorhomeDescription.brand}"></td>
+            <td th:text="${motorhome.motorhomeDescription.model}"></td>
+            <td th:text="${motorhome.motorhomeDescription.capacity}"></td>
+            <td th:text="${motorhome.licencePlate}"></td>
+            <td th:text="${motorhome.motorhomeStatus}"></td>
+            <td th:text="${motorhome.motorhomeDescription.basePrice}"></td>
+            <td>
+                <a th:href="'/update_motorhome?motorhome_id=' + ${motorhome.motorhomeId}" class="button button-update">Update</a>
+                <a class="button button-delete" th:href="'/delete_motorhome?motorhome_id=' + ${motorhome.motorhomeId}">Delete</a>
+            </td>
         </tr>
         </tbody>
     </table>
