@@ -79,7 +79,7 @@ public class MotorhomeController {
         return "redirect:/fleet";
     }
 
-    @GetMapping
+    @GetMapping("/update_motorhome")
     public String updateMotorhome(Model model, @RequestParam("motorhome_id") int motorhomeId){
         Motorhome motorhome = motorhomeManager.getChosenMotorhome(motorhomeId);
         model.addAttribute("motorhome", motorhome);
@@ -88,7 +88,7 @@ public class MotorhomeController {
         return "motorhomes/update_motorhome";
     }
 
-    @PostMapping
+    @PostMapping("update_motorhome")
     public String saveUpdateMotorhome(@RequestParam("motorhome_id") int motorhomeId, @RequestParam("motorhome_status") String motorhomeStatus){
        Motorhome motorhome = motorhomeManager.getChosenMotorhome(motorhomeId);
        motorhome.setMotorhomeStatus(motorhomeStatus);

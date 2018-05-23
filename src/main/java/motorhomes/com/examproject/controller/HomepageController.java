@@ -22,10 +22,7 @@ public class HomepageController {
 
     private HomepageManager homepageManager;
 
-//    /**
-//     * @param homepageManager autowired by Spring, look beans.xml
-//     */
-//
+
     @Autowired
     public HomepageController(HomepageManager homepageManager) {
         this.homepageManager = homepageManager;
