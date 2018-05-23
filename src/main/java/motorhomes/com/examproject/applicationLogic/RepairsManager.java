@@ -4,6 +4,7 @@ import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.model.Repair;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.RepairsDbRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 public class RepairsManager {
     private RepairsDbRepository repairsDbRepository;
 
+    @Autowired
     public RepairsManager(RepairsDbRepository repairsDbRepository) {
         this.repairsDbRepository = repairsDbRepository;
     }

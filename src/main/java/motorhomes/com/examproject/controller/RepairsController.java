@@ -5,6 +5,7 @@ import motorhomes.com.examproject.applicationLogic.ReservationsManager;
 import motorhomes.com.examproject.model.Repair;
 import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.RepairsDbRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,8 +21,9 @@ public class RepairsController {
 
     private RepairsManager repairsManager;
 
-    public RepairsController () throws SQLException{
-        this.repairsManager=new RepairsManager(new RepairsDbRepository());
+    @Autowired
+    public RepairsController (RepairsManager repairsManager){
+        this.repairsManager = repairsManager;
     }
 
     @GetMapping("/repairs")

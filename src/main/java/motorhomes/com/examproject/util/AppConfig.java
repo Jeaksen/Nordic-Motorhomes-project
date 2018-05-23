@@ -1,6 +1,7 @@
 package motorhomes.com.examproject.util;
 
 import motorhomes.com.examproject.applicationLogic.HomepageManager;
+import motorhomes.com.examproject.applicationLogic.RepairsManager;
 import motorhomes.com.examproject.repositories.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,5 +69,10 @@ public class AppConfig {
     @Bean
     public HomepageManager getHomepageManager() {
         return new HomepageManager(this.getUserDBRepository());
+    }
+
+    @Bean
+    public RepairsManager getRepairsManager() {
+        return new RepairsManager(this.getRepairsDbRepository());
     }
 }
