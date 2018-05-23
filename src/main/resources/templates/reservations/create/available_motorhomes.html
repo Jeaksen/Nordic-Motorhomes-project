@@ -22,6 +22,7 @@
             <th>Brand</th>
             <th>Model</th>
             <th>Capacity</th>
+            <th>Licence Plate</th>
             <th>Base Price</th>
         </tr>
         </thead>
@@ -32,6 +33,7 @@
             <td th:text="${motorhome.motorhomeDescription.brand}"></td>
             <td th:text="${motorhome.motorhomeDescription.model}"></td>
             <td th:text="${motorhome.motorhomeDescription.capacity}"></td>
+            <td th:text="${motorhome.licencePlate}"></td>
             <td th:text="${motorhome.motorhomeDescription.basePrice}"></td>
             <td><a th:href="'/save_motorhome?motorhome_id=' + ${motorhome.motorhomeId}" class="button">Choose</a></td>
         </tr>
