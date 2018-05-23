@@ -35,7 +35,7 @@ public class Customer {
         return drivingLicenceNr;
     }
 
-    public void setDrivingLicenseNr(String drivingLicenseNr) {
+    public void setDrivingLicenceNr(String drivingLicenseNr) {
         this.drivingLicenceNr = drivingLicenseNr;
     }
 

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Title</title>
+</head>
+<body>
+<nav>
+    <ul>
+        <li class="logo">Nordic Motorhomes</li>
+        <li><a href="fleet">Fleet</a></li>
+        <li><a href="reservations">Reservations</a></li>
+        <li><a href="customers">Customers</a></li>
+        <li><a href="repairs">Repairs</a></li>
+    </ul>
+</nav>
+<form action="/update_customer" method="post">
+
+    <input type="hidden" th:value="${customer.customerId}" name="customerId"/>
+    <p>Customer Name: <input type="text" th:value="${customer.customerName}" name="customerName"/></p>
+    <p>Driving Licence Number: <input type="text" th:value="${customer.drivingLicenceNr}" name="drivingLicenceNr"/></p>
+    <input type="submit" value="Update" class="btn btn-create"/>
+
+</form>
+</body>
+
+</html>
