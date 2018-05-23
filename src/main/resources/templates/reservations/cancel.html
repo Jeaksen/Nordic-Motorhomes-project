@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Cancel Reservation</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
 </head>
 <body>
 <nav>
@@ -20,8 +21,8 @@
     <h2 th:text="'Cancellation fee: ' + ${fee}"></h2>
     <form method="post" action="/cancel_reservation">
         <input type="hidden" name="reservation_id" th:value="${reservation_id}" />
-        <input type="submit" value="Cancel" class="button button-delete" />
-        <input type="submit" value="Return" class="button" formaction="/reservations" formmethod="get"/>
+        <input type="submit" value="Cancel" class="delete" />
+        <input type="submit" value="Return"  formaction="/reservations" formmethod="get"/>
     </form>
 </div>
 

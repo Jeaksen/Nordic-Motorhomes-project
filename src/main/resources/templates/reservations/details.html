@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Details</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
+    <link rel="stylesheet" href="tablestyle.css"/>
 </head>
 <body>
 <nav>
@@ -31,7 +33,7 @@
     <h2>Customer</h2>
     <p th:text="'ID: ' + ${customer.customerId}"></p>
     <p th:text="'Name:  ' + ${customer.customerName}"></p>
-    <p th:text="'Driving license no: ' + ${customer.drivingLicenseNr}"></p>
+    <p th:text="'Driving license no: ' + ${customer.drivingLicenceNr}"></p>
     </article>
 
     <article th:if="${reservation.hasPickUp}">
