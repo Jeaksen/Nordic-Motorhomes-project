@@ -2,6 +2,7 @@ package motorhomes.com.examproject.applicationLogic;
 
 import motorhomes.com.examproject.model.Customer;
 import motorhomes.com.examproject.repositories.CustomersDbRepository;
+import motorhomes.com.examproject.repositories.ReservationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,10 +13,12 @@ import java.util.List;
 public class CustomerManager {
 
     private CustomersDbRepository customersDbRepository;
+    private  ReservationsRepository reservationsRepository;
 
         @Autowired
-        public CustomerManager (CustomersDbRepository customersDbRepository) {
+        public CustomerManager (CustomersDbRepository customersDbRepository, ReservationsRepository reservationsRepository) {
             this.customersDbRepository=customersDbRepository;
+            this.reservationsRepository = reservationsRepository;
         }
 
         public List<Customer> getCustomers(){
@@ -56,6 +59,7 @@ public class CustomerManager {
 
         public void deleteCustomer(int customerId){
             try {
+                reservationsRepository.nullifyCustomer(customerId);
                 customersDbRepository.delete(customerId);
             } catch (SQLException e) {
                 e.printStackTrace();
