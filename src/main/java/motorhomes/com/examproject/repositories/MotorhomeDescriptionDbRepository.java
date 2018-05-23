@@ -15,7 +15,7 @@ import java.util.List;
  * @ Alicja Drankowska
  */
 @Repository
-public class MotorhomeDescriptionDbRepository implements ICrudRepository<MotorhomeDescription> {
+public class MotorhomeDescriptionDbRepository {
 
     private PreparedStatement statement;
     private ResultSet result;
@@ -31,7 +31,6 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
     }
 
     //Probably won't be used
-    @Override
     public ArrayList<MotorhomeDescription> readAll() throws SQLException {
         ArrayList<MotorhomeDescription> motorhomeDescriptions = new ArrayList<>();
 
@@ -58,20 +57,32 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
         return motorhomeDescriptionIds;
     }
 
-    @Override
-    public boolean create(MotorhomeDescription motorhomeDescription) throws SQLException {
+
+    public int create(MotorhomeDescription motorhomeDescription) throws SQLException {
 
         System.out.println(motorhomeDescription);
-        statement = connector.getConnection().prepareStatement("INSERT INTO descriptions(brand, model, base_price) VALUES (?,?,?)");
+        statement = connector.getConnection().prepareStatement("INSERT INTO descriptions(brand, model, base_price, capacity) VALUES (?,?,?,?)");
         statement.setString(1, motorhomeDescription.getBrand());
         statement.setString(2, motorhomeDescription.getModel());
         statement.setInt(3, motorhomeDescription.getBasePrice());
-        boolean creationSuccessful = statement.execute();
+        statement.setInt(4, motorhomeDescription.getCapacity());
+        statement.execute();
+        statement = connector.getConnection().prepareStatement("SELECT description_id FROM descriptions WHERE brand=? AND model=? AND base_price=? AND capacity=?;");
+        statement.setString(1, motorhomeDescription.getBrand());
+        statement.setString(2, motorhomeDescription.getModel());
+        statement.setInt(3, motorhomeDescription.getBasePrice());
+        statement.setInt(4, motorhomeDescription.getCapacity());
+        result = statement.executeQuery();
+        int id = -1;
+        if (result.next()) {
+            id = result.getInt("description_id");
+        }
         statement = null;
-        return creationSuccessful;
+        result = null;
+        return id;
     }
 
-    @Override
+
     public MotorhomeDescription read(int motorhomeDescriptionId) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("SELECT * FROM descriptions WHERE description_id = ?");
@@ -89,7 +100,7 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
         return motorhomeDescription;
     }
 
-    @Override
+
     public void update(MotorhomeDescription motorhomeDescription) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("UPDATE descriptions SET brand=?,model=?,base_price=? WHERE description_id = ?");
@@ -101,7 +112,7 @@ public class MotorhomeDescriptionDbRepository implements ICrudRepository<Motorho
         statement = null;
     }
 
-    @Override
+
     public void delete(int motorhomeDescriptionId) throws SQLException {
 
         statement = connector.getConnection().prepareStatement("DELETE FROM descriptions WHERE description_id=?");

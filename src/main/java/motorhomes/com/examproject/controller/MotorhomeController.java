@@ -9,11 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,12 +35,12 @@ public class MotorhomeController {
     public String getAllMotorhomes(Model model){
         List<Motorhome> motorhomes = motorhomeManager.getAllMotorhomes();
         model.addAttribute("motorhomes", motorhomes);
-        return"fleet";
+        return"motorhomes/fleet";
     }
 
     @GetMapping("/add_motorhome")
     public String addNewMotorhome(){
-        return "add_motorhome";
+        return "motorhomes/create_motorhome/add_motorhome";
     }
 
     @PostMapping("/add_motorhome")
@@ -48,29 +48,38 @@ public class MotorhomeController {
         Motorhome motorhome = motorhomeManager.addNewMotorhome(licencePlate);
         request.getSession(true).setAttribute("motorhome", motorhome);
         List<MotorhomeDescription> motorhomeDescriptions;
-        motorhomeDescriptions = motorhomeManager.getExistingMotorhomeDescriptions(motorhome);
+        motorhomeDescriptions = motorhomeManager.getExistingMotorhomeDescriptions();
         model.addAttribute("motorhomeDescriptions", motorhomeDescriptions);
-        return "/create_description";
+        return "motorhomes/create_motorhome/create_description";
     }
 
     @PostMapping("/create_description")
-    public String addNewModel (HttpServletRequest request,
-        @RequestParam(value = "brand", required = false) String brand, @RequestParam(value = "model", required = false) String model,
-        @RequestParam(value = "capacity", required = false) int capacity, @RequestParam(value = "base_price", required = false) int base_price){
+    public String addNewModel (HttpSession session,
+        @RequestParam(value = "brand") String brand, @RequestParam(value = "model") String model,
+        @RequestParam(value = "capacity") int capacity, @RequestParam(value = "basePrice") int base_price){
 
-        request.getSession().setAttribute("brand", brand);
-        request.getSession().setAttribute("model", model);
-        request.getSession().setAttribute("capacity", capacity);
-        request.getSession().setAttribute("base_price", base_price);
+        session.setAttribute("description", motorhomeManager.addNewModel(brand, model, capacity, base_price));
         return "redirect:/confirm_newmotorhome";
     }
 
 
     @GetMapping("/save_motorhomeDescription")
-    public String saveMotorhomeDescription(@RequestParam("motorhomeDescription_id") int motorhomeDescriptionId, HttpServletRequest request){
-        Motorhome motorhome = (Motorhome)request.getSession(true).getAttribute("motorhome");
-        motorhomeManager.saveMotorhomeDescription(motorhome, motorhomeDescriptionId);
+    public String saveMotorhomeDescription(@RequestParam("description_id") int motorhomeDescriptionId, HttpSession session){
+        session.setAttribute("description", motorhomeManager.getMotorhomeDescription(motorhomeDescriptionId));
         return "redirect:/confirm_newmotorhome";
     }
+
+    @GetMapping("/confirm_newmotorhome")
+    public String confirm(HttpSession session) {
+        Motorhome motorhome = (Motorhome)session.getAttribute("motorhome");
+        //motorhomeManager.saveMotorhomeDescription(motorhome, motorhomeDescriptionId);
+        motorhomeManager.saveNewMotorhome(motorhome, (MotorhomeDescription) session.getAttribute("description"));
+        session.removeAttribute("motorhome");
+        session.removeAttribute("description");
+
+        return "redirect:/fleet";
+    }
+
+
 
 }

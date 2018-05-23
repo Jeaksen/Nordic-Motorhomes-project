@@ -12,6 +12,7 @@ public class MotorhomeDescription {
     private int capacity;
 
     public MotorhomeDescription(){
+        this.motorhomeDescriptionId = 0;
 
     }
 
