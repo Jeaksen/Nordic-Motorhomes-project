@@ -1,7 +1,10 @@
 <!DOCTYPE html>
+<!-- @AlexandraCaragata -->
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Update</title>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
 </head>
 <body>
 <nav>
@@ -17,8 +20,10 @@
 
     <input type="hidden" th:value="${repair.repairId}" name="repairId"/>
     <p>Motorhome Id: <input type="text" th:value="${repair.motorhomeId}" name="motorhomeId"/></p>
-    <p>Problem: <input type="text" th:value="${repair.problem}" name="problem"/></p>
-    <p>Status: <input type="text" th:value="${repair.repairStatus}" name="repairStatus"/></p>
+    <p>Problem:</p>
+    <p> <input type="text" th:value="${repair.problem}" name="problem"/></p>
+    <p>Status:</p>
+    <p> <input type="text" th:value="${repair.repairStatus}" name="repairStatus"/></p>
     <input type="submit" value="Update" class="btn btn-create"/>
 
 </form>

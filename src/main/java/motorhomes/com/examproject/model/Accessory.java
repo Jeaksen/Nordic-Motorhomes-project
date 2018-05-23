@@ -1,15 +1,13 @@
 package motorhomes.com.examproject.model;
 
+/**
+ * @ AlexandraCaragata
+ */
 public class Accessory {
 
     private int id;
     private String name;
     private int price;
-
-
-    public Accessory(){
-
-    }
 
     public Accessory(int id, String name, int price){
         this.id = id;
@@ -50,6 +48,4 @@ public class Accessory {
                 ", price=" + price +
                 '}';
     }
-
-
 }

@@ -1,5 +1,8 @@
 package motorhomes.com.examproject.model;
 
+/**
+ * @ Alexandra Caragata
+ */
 public class Customer {
 
     private int customerId;

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
+<!-- @AlexandraCaragata -->
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
     <title>Title</title>
 </head>
 <body>
@@ -18,8 +21,8 @@
 
 <form action="/delete_repair" method="post">
     <input type="hidden" th:field="${repair.repairId}" />
-    <input type="submit" value="YES" class="btn btn-del w"/>
-    <a href="/repairs" class="btn btn-create w">NO</a>
+    <input type="submit" value="YES" class="delete"/>
+    <input type="submit" value="NO" formmethod="get" formaction="/repairs">
 </form>
 
 </body>

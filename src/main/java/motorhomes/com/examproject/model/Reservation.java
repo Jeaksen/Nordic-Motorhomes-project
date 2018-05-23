@@ -3,6 +3,10 @@ package motorhomes.com.examproject.model;
 import java.time.LocalDate;
 import java.util.Map;
 
+/**
+ * @ Alexandra Caragata
+ */
+
 public class Reservation {
 
     private int reservationId;

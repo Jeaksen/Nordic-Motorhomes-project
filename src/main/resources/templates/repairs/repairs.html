@@ -3,14 +3,15 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Repairs</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="tablestyle.css"/>
+    <link rel="stylesheet" href="navbarstyle.css"/>
 </head>
 <body>
 <nav>
     <ul>
         <li class="logo">Nordic Motorhomes</li>
         <li><a href="fleet">Fleet</a></li>
-        <li><a href="../reservations">Reservations</a></li>
+        <li><a href="reservations">Reservations</a></li>
         <li><a href="customers">Customers</a></li>
         <li><a href="">Repairs</a></li>
         <li id="logout"><a href="/logout" th:text="'Logout: ' + ${session.user.username}" th:unless="${session.user == null}">Logout</a></li>
@@ -37,8 +38,7 @@
             <td th:text="${repairs.motorhomeId}"></td>
             <td th:text="${repairs.problem}"></td>
             <td th:text="${repairs.repairStatus}"></td>
-            <td> <a class="button button-details" th:href="'repair_details?repairId=' + ${repairs.repairId}">Details</a>
-                <a class="button button-update" th:href="'update_repair?repairId=' + ${repairs.repairId}">Update</a>
+            <td><a class="button button-update" th:href="'update_repair?repairId=' + ${repairs.repairId}">Update</a>
                 <a class="button button-delete" th:href="'delete_repair?repairId=' + ${repairs.repairId}">Delete</a></td>
         </tr>
         </tbody>

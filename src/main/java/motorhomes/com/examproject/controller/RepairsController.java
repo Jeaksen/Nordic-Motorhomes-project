@@ -1,10 +1,6 @@
 package motorhomes.com.examproject.controller;
-
 import motorhomes.com.examproject.applicationLogic.RepairsManager;
-import motorhomes.com.examproject.applicationLogic.ReservationsManager;
 import motorhomes.com.examproject.model.Repair;
-import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
-import motorhomes.com.examproject.repositories.RepairsDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,10 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.sql.SQLException;
 import java.util.List;
 
+/**
+ *  @ AlexandraCaragata
+ */
 @Controller
 public class RepairsController {
 
@@ -55,14 +52,6 @@ public class RepairsController {
     public String updateRepair(@ModelAttribute Repair repair){
         repairsManager.updateRepair(repair);
         return "redirect:/repairs";
-
-    }
-
-    @GetMapping ("/repair_details")
-    public String repairDetails(@RequestParam("repairId") int repairId, Model model){
-        Repair repair=repairsManager.getRepair(repairId);
-        model.addAttribute("repair", repair);
-        return"repairs/repairdetails";
 
     }
 

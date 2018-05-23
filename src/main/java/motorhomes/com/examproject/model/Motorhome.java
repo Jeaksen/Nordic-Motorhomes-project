@@ -1,5 +1,9 @@
 package motorhomes.com.examproject.model;
 
+/**
+ * @ AlexandraCaragata
+ */
+
 public class Motorhome {
 
     private int motorhomeId;
@@ -48,7 +52,6 @@ public class Motorhome {
     public void setMotorhomeStatus(String motorhomeStatus) {
         this.motorhomeStatus = motorhomeStatus;
     }
-
 
     @Override
     public String toString() {

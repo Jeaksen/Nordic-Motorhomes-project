@@ -1,14 +1,16 @@
 package motorhomes.com.examproject.applicationLogic;
 
-import motorhomes.com.examproject.model.Motorhome;
 import motorhomes.com.examproject.model.Repair;
-import motorhomes.com.examproject.repositories.MotorhomeDbRepository;
 import motorhomes.com.examproject.repositories.RepairsDbRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 import java.util.List;
+
+/**
+ * @ Alexandra Caragata
+ */
 
 @Component
 public class RepairsManager {

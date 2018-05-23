@@ -2,12 +2,12 @@ package motorhomes.com.examproject.model;
 
 public class User {
 
+    /**
+     * @ Alexandra Caragata
+     */
     private int userId;
     private String username;
     private String password;
-
-    public User() {
-    }
 
     public User(int userId, String username, String password) {
         this.userId = userId;

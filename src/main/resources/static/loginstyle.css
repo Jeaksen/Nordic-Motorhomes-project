@@ -14,7 +14,7 @@ body{
 .container{
     text-align: center;
     position: relative;
-    top: 20vh;
+    top: 15vh;
     left: 35vw;
     //margin-left: 38%;
     //margin-top: 8%;
@@ -26,7 +26,7 @@ input[type=text],input[type=password]{
     border: 2px solid #492270;
     border-radius: 4px;
     width:100%;
-    font-size: 30px;
+    font-size: 20px;
 }
 
 .button {
@@ -35,11 +35,15 @@ input[type=text],input[type=password]{
     background-color: #492270;
     color: white;
     font-size: 20px;
-    border:none;
+    border:#492270;
     padding: 20px 30px;
     cursor: pointer;
     border-radius: 5px;
     text-align: center;
+}
+.button:hover{
+    background-color:white;
+    color:black;
 }
 
 #error_message{

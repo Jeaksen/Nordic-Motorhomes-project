@@ -1,5 +1,4 @@
 package motorhomes.com.examproject.controller;
-
 import motorhomes.com.examproject.applicationLogic.CustomerManager;
 import motorhomes.com.examproject.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * @ AlexandraCaragata
+ */
 @Controller
 public class CustomerController {
     private CustomerManager customerManager;

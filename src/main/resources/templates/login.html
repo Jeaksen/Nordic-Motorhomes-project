@@ -8,7 +8,7 @@
 <body>
 <div class="container">
 <div>
-    <h1>Signup</h1>
+    <h1>Sign up</h1>
 
     <form action="/login" method="post">
         <p>Username:</p>
@@ -16,7 +16,6 @@
         <p>Password:</p>
         <input type="password" name="password"/>
         <p><input type="submit" value="Login" formaction="/login" class="button"/></p>
-        <p><input type="submit" value="Register" formaction="/register" class="button"/></p>
     </form>
 </div>
     <p th:text="${error_message}" id="error_message"></p>

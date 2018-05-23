@@ -2,7 +2,9 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <title>Add new motorhome</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="tablestyle.css"/>
 </head>
 <body>
 <nav>
@@ -14,9 +16,9 @@
         <li><a href="/repairs">Repairs</a></li>
     </ul>
 </nav>
-<div class="container">
-    <div>
-        <form action="/create_description" method="post">
+<div class="container" id="motorhome">
+    <div >
+        <form action="/create_description" method="post" >
             <h1>Add new model</h1>
             <p>Brand:</p>
             <input type="text" name="brand" />

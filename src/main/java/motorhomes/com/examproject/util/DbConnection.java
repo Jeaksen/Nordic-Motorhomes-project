@@ -4,6 +4,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * @ AlexandraCaragata
+ */
 public class DbConnection {
         private final static String USERNAME = "motorhomes4";
         private final static String PASSWORD = "#project";

@@ -9,6 +9,9 @@ import org.springframework.stereotype.Component;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * @ Alexandra Caragata
+ */
 @Component
 public class CustomerManager {
 

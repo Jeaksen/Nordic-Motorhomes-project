@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
     <title>Delete Motorhome</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
+
 </head>
 <body>
 <nav>
@@ -21,8 +22,8 @@
     <h2>All repairs connected with it will be delete as well</h2>
     <form method="post" action="/delete_motorhome">
         <input type="hidden" th:value="${motorhome.motorhomeId}" name="motorhome_id">
-        <input type="submit" value="Delete" class="button button-delete">
-        <input type="submit" value="Return" class="button button-details" formmethod="get" formaction="/fleet">
+        <input type="submit" value="Delete" class="delete">
+        <input type="submit" value="Return" formmethod="get" formaction="/fleet">
     </form>
 </div>
 </body>
