@@ -1,23 +1,36 @@
 package motorhomes.com.examproject.repositories;
 
 
-import motorhomes.com.examproject.util.DbConnection;
+import motorhomes.com.examproject.util.DBConnector;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @ Pawel Pohl
+ * This class is used to manipulate data in the database storing quantities of certain accessories associated with a reservation
+ */
+@Repository
 public class ReservationsAccessoriesRepository {
 
-    private Connection connection;
     private PreparedStatement statement;
-    private ResultSet resultSet;
+    private ResultSet result;
+    private DBConnector connector;
+    
 
-    public ReservationsAccessoriesRepository() throws SQLException {
-        this.connection = DbConnection.getConnection();
+    public ReservationsAccessoriesRepository() {
+
+    }
+
+    @Autowired
+    public void setConnector(DBConnector connector) {
+        System.out.println("RESERVATION_ACCESSORIES: OK");
+        this.connector = connector;
     }
 
 
@@ -29,14 +42,14 @@ public class ReservationsAccessoriesRepository {
      */
     public Map<Integer, Integer> readAll (int reservationId) throws SQLException {
         Map<Integer, Integer> accessoryIdToQuantity = new HashMap<>();
-        statement = connection.prepareStatement("SELECT * FROM `reservations-accessories` WHERE reservation_id=?;");
+        statement = connector.getConnection().prepareStatement("SELECT * FROM `reservations-accessories` WHERE reservation_id=?;");
         statement.setInt(1, reservationId);
-        resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            accessoryIdToQuantity.put(resultSet.getInt("accessory_id"), resultSet.getInt("quantity"));
+        result = statement.executeQuery();
+        while (result.next()) {
+            accessoryIdToQuantity.put(result.getInt("accessory_id"), result.getInt("quantity"));
         }
         statement = null;
-        resultSet = null;
+        result = null;
         return accessoryIdToQuantity;
     }
 
@@ -49,34 +62,47 @@ public class ReservationsAccessoriesRepository {
      * @throws SQLException if error occurs while getting the data
      */
     public int getQuantity (int reservationId, int accessoryId) throws SQLException {
-        statement = connection.prepareStatement("SELECT * FROM `reservations-accessories` WHERE reservation_id=? AND accessory_id=?");
+        statement = connector.getConnection().prepareStatement("SELECT * FROM `reservations-accessories` WHERE reservation_id=? AND accessory_id=?");
         statement.setInt(1, reservationId);
         statement.setInt(2, accessoryId);
-        resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            return resultSet.getInt("quantity");
+        result = statement.executeQuery();
+        if (result.next()) {
+            return result.getInt("quantity");
         }
 
         return -1;
     }
 
+    /**
+     * This method creates new row in the database with given reservationId, accessoryId and quantity
+     */
     public void create (int reservationId, int accessoryId, int quantity) throws SQLException {
-        statement = connection.prepareStatement("INSERT INTO `reservations-accessories` (reservation_id, accessory_id, quantity) VALUES (?,?,?);");
+        statement = connector.getConnection().prepareStatement("INSERT INTO `reservations-accessories` (reservation_id, accessory_id, quantity) VALUES (?,?,?);");
         statement.setInt(1, reservationId);
         statement.setInt(2, accessoryId);
         statement.setInt(3, quantity);
         statement.execute();
     }
 
+    /**
+     * This method deletes a row in the database where reservationId and accessoryId equals given ones
+     */
     public void delete (int reservationId, int accessoryId) throws SQLException {
-        statement = connection.prepareStatement("DELETE FROM `reservations-accessories` WHERE reservation_id = ? AND accessory_id=?;");
+        statement = connector.getConnection().prepareStatement("DELETE FROM `reservations-accessories` WHERE reservation_id = ? AND accessory_id=?;");
         statement.setInt(1, reservationId);
         statement.setInt(2, accessoryId);
         statement.execute();
     }
 
+    /**
+     * This method updates the quantity in a row where reservationId and accessoryId equals given ones
+     * @param reservationId
+     * @param accessoryId
+     * @param quantity
+     * @throws SQLException
+     */
     public void update (int reservationId, int accessoryId, int quantity) throws SQLException {
-        statement = connection.prepareStatement("UPDATE `reservations-accessories` SET quantity=? WHERE reservation_id=? AND accessory_id=?;");
+        statement = connector.getConnection().prepareStatement("UPDATE `reservations-accessories` SET quantity=? WHERE reservation_id=? AND accessory_id=?;");
         statement.setInt(1, quantity);
         statement.setInt(2, reservationId);
         statement.setInt(3, accessoryId);
