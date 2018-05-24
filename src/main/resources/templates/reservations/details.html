@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Details</title>
-    <link rel="stylesheet" href="tablestyle.css"/>
     <link rel="stylesheet" href="navbarstyle.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
+    <link rel="stylesheet" href="tablestyle.css"/>
 </head>
 <body>
 <nav>
@@ -22,7 +23,7 @@
     <article>
     <h2>Motorhome:</h2>
     <p th:text="'ID: ' + ${motorhome.motorhomeId}">ID</p>
-    <p th:text="'Licence Plate: ' + ${motorhome.licencePlate}">License Plate</p>
+    <p th:text="'License Plate: ' + ${motorhome.licencePlate}">License Plate</p>
     <p th:text="'Brand: ' + ${motorhome.motorhomeDescription.brand}">Brand</p>
     <p th:text="'Model: ' + ${motorhome.motorhomeDescription.model}">Model</p>
     <p th:text="'Base Price: ' + ${motorhome.motorhomeDescription.basePrice}">Base Price</p>
@@ -32,7 +33,7 @@
     <h2>Customer</h2>
     <p th:text="'ID: ' + ${customer.customerId}"></p>
     <p th:text="'Name:  ' + ${customer.customerName}"></p>
-    <p th:text="'Driving licence no: ' + ${customer.drivingLicenceNr}"></p>
+    <p th:text="'Driving license no: ' + ${customer.drivingLicenceNr}"></p>
     </article>
 
     <article th:if="${reservation.hasPickUp}">
