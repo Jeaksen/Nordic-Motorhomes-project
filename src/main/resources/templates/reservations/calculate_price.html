@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Calculate Price</title>
-    <link rel="stylesheet" href="style.css"/>
+    <link rel="stylesheet" href="formstyle.css"/>
+    <link rel="stylesheet" href="navbarstyle.css"/>
+
 </head>
 <body>
 <nav>
@@ -20,7 +22,7 @@
     <form method="post" action="/calculate_price">
         <input type="hidden" name="reservation_id" th:value="${reservation_id}" />
         <h2>Total kilometers driven</h2>
-        <input type="number" name="total_km" />
+        <input type="text" name="total_km" />
         <h2>Add fuel fee?</h2>
         <input type="checkbox" name="fuel_fee" />
         <p>
