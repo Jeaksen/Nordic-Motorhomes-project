@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 /**
  * @ Alicja Drankowska
- * todo comments?
  */
 public interface ICrudRepository<T> {
 

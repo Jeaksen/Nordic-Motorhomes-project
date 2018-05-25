@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * @ Alicja Drankowska
- * todo more comments?
  */
 public class CustomersArrayListRepository implements ICrudRepository<Customer> {
 

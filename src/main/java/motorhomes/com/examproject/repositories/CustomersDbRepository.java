@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 /**
  * @ Alicja Drankowska
- * todo comments
  */
 @Repository
 public class CustomersDbRepository{
