@@ -50,6 +50,7 @@ public class HomepageController {
         byte respond = homepageManager.login(user);
         switch (respond){
             case 1:
+                user.setPassword(null);
                 request.getSession().setAttribute("user", user);
                 return "redirect:/fleet";
             case 0:
@@ -84,6 +85,7 @@ public class HomepageController {
         byte respond = homepageManager.register(user);
         switch (respond){
             case 1:
+                user.setPassword(null);
                 request.getSession().setAttribute("user", user);
                 return "redirect:/fleet";
             case 0:

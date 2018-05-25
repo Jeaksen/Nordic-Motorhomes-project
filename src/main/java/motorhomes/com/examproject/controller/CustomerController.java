@@ -54,13 +54,13 @@ public class CustomerController {
         return "redirect:/customers";
 
     }
+
     @GetMapping("/delete_customer")
     public String deleteCustomer(@RequestParam("customerId") int customerId, Model model){
         Customer customer=customerManager.getCustomer(customerId);
         model.addAttribute("customer", customer);
         return"customer/deletecustomer";
     }
-
 
     @PostMapping("/delete_customer")
     public String deleteCustomer(@ModelAttribute Customer customer){
