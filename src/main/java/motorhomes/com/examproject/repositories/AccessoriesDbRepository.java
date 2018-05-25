@@ -13,7 +13,6 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo comments
  */
 @Repository
 public class AccessoriesDbRepository{

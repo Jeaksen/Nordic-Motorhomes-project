@@ -15,7 +15,6 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo ?????!!!
  */
 @Component
 public class MotorhomeManager {
@@ -149,17 +148,6 @@ public class MotorhomeManager {
             e.printStackTrace();
         }
     }
-
-/**
-    public void addNewModel(MotorhomeDescription motorhomeDescription){
-        try {
-            motorhomeDescriptionDbRepository.create(motorhomeDescription);
-        }catch (SQLException e){
-            System.out.println("Error occurred! Model not added!");
-            e.printStackTrace();
-        }
-    }
- */
 
     public void deleteMotorhome(int motorhomeId){
         try {

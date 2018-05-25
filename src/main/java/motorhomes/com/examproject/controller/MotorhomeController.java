@@ -19,7 +19,6 @@ import java.util.List;
 
 /**
  * @ Alicja Drankowska
- * todo details methods, post update method and comments!
  */
 @Controller
 public class MotorhomeController {

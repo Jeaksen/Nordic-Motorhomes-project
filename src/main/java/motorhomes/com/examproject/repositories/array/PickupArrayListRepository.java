@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 /**
  * @ Alicja Drankowska
- * todo comments
  */
 public class PickupArrayListRepository implements ICrudRepository<PickUp> {
 
