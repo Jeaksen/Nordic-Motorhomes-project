@@ -88,9 +88,10 @@ public class MotorhomeController {
     }
 
     @PostMapping("update_motorhome")
-    public String saveUpdateMotorhome(@RequestParam("motorhome_id") int motorhomeId, @RequestParam("motorhome_status") String motorhomeStatus){
+    public String saveUpdateMotorhome(@RequestParam("motorhome_id") int motorhomeId, @RequestParam("motorhome_status") String motorhomeStatus, @RequestParam("licencePlate") String licensePlate){
        Motorhome motorhome = motorhomeManager.getChosenMotorhome(motorhomeId);
        motorhome.setMotorhomeStatus(motorhomeStatus);
+       motorhome.setLicencePlate(licensePlate);
        motorhomeManager.updateMotorhome(motorhome);
 
        return "redirect:/fleet";
